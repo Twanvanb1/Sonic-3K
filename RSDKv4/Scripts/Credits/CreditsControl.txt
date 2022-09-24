@@ -1,0 +1,132 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Credits Control Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+private alias 1 : TYPE_CREDITSCONTROL
+
+public alias object.value0 : creditsControl.timer
+
+event ObjectMain
+	switch object.state
+	case 0
+		creditsControl.timer = 320
+		SetScreenFade(0, 0, 0, creditsControl.timer)
+		object.state++
+		if credits.screen == 0
+			PlayMusic(0)
+		end if
+		break
+	case 1
+		if creditsControl.timer > 0
+			creditsControl.timer -= 8
+		else
+			object.alpha = 128
+			object.state++
+		end if
+		SetScreenFade(0, 0, 0, creditsControl.timer)
+		break
+	case 2
+		creditsControl.timer++
+		if creditsControl.timer == 356
+			creditsControl.timer = 0
+			object.state++
+		end if
+		break
+	case 3
+		if creditsControl.timer < 256
+			if object.value3 == 21
+				creditsControl.timer += 4
+			else
+				creditsControl.timer += 8
+			end if
+			SetScreenFade(0, 0, 0, creditsControl.timer)
+		else
+			object.value3++
+			if object.value3 == 22
+				object.state = 4
+				screen.yoffset += 256
+			else
+				object.state = 1
+				if specialStage.emeralds >= 127
+					if object.value3 == 21
+						screen.yoffset = 0x1400
+						screen.yoffset += 0x40C
+					else
+						screen.yoffset += 256
+					end if
+				else
+					screen.yoffset += 256
+				end if
+			end if
+			SetScreenFade(0, 0, 0, 255)
+		end if
+		break
+	case 4
+		if creditsControl.timer > 0
+			creditsControl.timer -= 8
+		else
+			object.alpha = 128
+			object.state++
+		end if
+		SetScreenFade(0, 0, 0, creditsControl.timer)
+		break
+	case 5
+		creditsControl.timer++
+		if creditsControl.timer == 0x4B0
+			creditsControl.timer = 0
+			object.state++
+		end if
+		if inputPress.start == 1
+			creditsControl.timer = 0
+			object.state++
+		end if
+		if creditsControl.timer > 60
+			CheckTouchRect(0, 0, screen.xsize, screen.ysize)
+			if checkResult > -1
+				creditsControl.timer = 0
+				object.state++
+			end if
+		end if
+		break
+	case 6
+		if creditsControl.timer < 256
+			creditsControl.timer += 8
+			SetScreenFade(0, 0, 0, creditsControl.timer)
+		else
+			stage.activeList = PRESENTATION_STAGE
+			stage.listPos = 0
+			StopMusic()
+			options.attractMode = false
+			engine.state = 7
+			SetScreenFade(0, 0, 0, 255)
+		end if
+		break
+	end switch
+	temp0 = screen.xcenter
+	FlipSign(temp0)
+	temp0 += 256
+	screen.xoffset = temp0
+end event
+
+
+event ObjectStartup
+	SetMusicTrack("Credits.ogg", 0, 0)
+	options.touchControls = 0
+	screen.yoffset = -8
+	foreach (TypeName[Credits Control], arrayPos0, ALL_ENTITIES)
+		object[arrayPos0].priority = PRIORITY_ACTIVE
+	next
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

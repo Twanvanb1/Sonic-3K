@@ -1,0 +1,77 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Original Gem Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+private alias 76 : TYPE_ORIGINALGEM
+
+private alias object.value0 : object.timer
+
+private alias 0 : STATE_BLANK
+private alias 1 : STATE_FADEOUT
+
+event ObjectMain
+
+	// Check interaction with players
+	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+
+		BoxCollisionTest(C_BOX, object.entityPos, -24, -16, 24, 16, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+
+		if checkResult == true
+			if object.state == STATE_BLANK
+
+				// Start fading out to the level select
+				PlaySfx(SfxName[Exit SS], 0)
+				object.timer = -384
+				object.priority = PRIORITY_ACTIVE
+				object.state++
+
+			end if
+		end if
+
+	next
+
+	switch object.state
+	case STATE_FADEOUT
+		music.volume -= 2
+		
+		if object.timer < 384
+			object.timer += 8
+		else
+			starPostID = 0
+			stage.activeList = PRESENTATION_STAGE
+			stage.listPos = 5
+			LoadStage()
+		end if
+		
+		if object.timer > 0
+			SetScreenFade(0, 0, 0, object.timer)
+		end if
+		break
+
+	end switch
+
+end event
+
+
+event ObjectDraw
+	DrawSprite(0)
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("HPZ/Objects.gif")
+	SpriteFrame(-32, -16, 64, 32, 1, 223)
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

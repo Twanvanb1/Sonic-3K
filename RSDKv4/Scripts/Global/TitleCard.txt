@@ -1,0 +1,434 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Title Card Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+private alias object.value0 : object.timer
+private alias object.value6 : object.displayedActNo
+private alias object.value7 : object.vsReady
+private alias object.value8 : object.sentReadyFlag
+
+// Static Values
+public value TitleCard_value23 = 0;
+
+// Player Aliases
+private alias object.controlMode : player.controlMode
+private alias object.jumpPress 	 : player.jumpPress
+private alias object.jumpHold 	 : player.jumpHold
+private alias object.up 		 : player.up
+private alias object.down 		 : player.down
+private alias object.left 		 : player.left
+private alias object.right 		 : player.right
+private alias object.value1 	 : player.timer
+
+// Determines whether the act results will say got through zone or got through act [num]
+private alias TitleCard_value23 : TitleCard_showZoneText
+
+event ObjectMain
+
+	options.touchControls = false
+
+	switch object.state
+	case 0
+		object.alpha  = 0xFF
+		object.value1 = 720
+		object.value2 -= 720
+		object.value4 = 432
+		object.value5 = -320
+		switch object.propertyValue
+		case 0
+			object.displayedActNo = stage.actNum
+			TitleCard_showZoneText = false
+			break
+
+		case 1
+			object.displayedActNo 	= 1
+			TitleCard_showZoneText 	= false
+			break
+
+		case 2
+			object.displayedActNo 	= 2
+			TitleCard_showZoneText 	= false
+			break
+
+		case 3
+			object.displayedActNo 	= 3
+			TitleCard_showZoneText 	= false
+			break
+
+		default
+			TitleCard_showZoneText = true
+			break
+
+		end switch
+
+		if options.vsMode == true
+			object.vsReady 		 = false
+			object.sentReadyFlag = true
+		else
+			object.vsReady 		 = true
+			object.sentReadyFlag = false
+		end if
+
+		if credits.screen > 0
+			object.state = 7
+			object.timer = 272
+			stage.state = STAGE_RUNNING
+			SetScreenFade(0, 0, 0, 255)
+		else
+			object.state++
+		end if
+		break
+
+	case 1
+		if object.timer < 30
+			object.timer++
+		else
+			if options.vsMode == true
+				CallNativeFunction2(SendEntity, object.entityPos, 0)
+				if ReceiveValue == -1
+					object.vsReady = true
+				else
+					CallNativeFunction2(ReceiveEntity, 0x400, 1)
+					// we're ready to start if we got the other entity's 'sendReadyFlag'
+					object.vsReady = object[0x400].sentReadyFlag
+					ResetObjectEntity(0x400, TypeName[Blank Object], 0, 0, 0)
+				end if
+			end if
+
+			if object.vsReady == true
+				object.timer = 0
+				PlayMusic(0)
+				object.state++
+			end if
+		end if
+		break
+
+	case 2
+		if options.vsMode == true
+			CallNativeFunction2(SendEntity, object.entityPos, 0)
+		end if
+
+		if object.value3 < 240
+			object.value3 += 16
+		end if
+
+		if object.value4 > 0
+			object.value4 -= 16
+			object.value5 += 16
+		end if
+
+		if object.value1 > 0
+			object.value1 -= 16
+			object.value2 += 16
+		else
+			object.state++
+		end if
+		break
+
+	case 3
+		if object.timer < 60
+			if options.vsMode == true
+				CallNativeFunction2(SendEntity, object.entityPos, 0)
+				CallNativeFunction2(ReceiveEntity, 0x400, 1)
+				ResetObjectEntity(0x400, TypeName[Blank Object], 0, 0, 0)
+			end if
+			object.timer++
+		else
+			object.timer = 0
+			object.state++
+		end if
+		break
+
+	case 4
+		if object.value5 > -48
+			object.value5 -= 32
+		else
+			if object.value4 < 424
+				object.value4 += 32
+				if options.vsMode == true
+					CallNativeFunction2(ReceiveEntity, 0x400, 1)
+					ResetObjectEntity(0x400, TypeName[Blank Object], 0, 0, 0)
+				end if
+			else
+				if options.vsMode == true
+					stage.state = 4
+				else
+					stage.state = STAGE_RUNNING
+				end if
+				currentPlayer = 0
+				while currentPlayer < playerCount
+					player[currentPlayer].controlMode = -1
+					player[currentPlayer].up 		= false
+					player[currentPlayer].down 		= false
+					player[currentPlayer].left 		= false
+					player[currentPlayer].right 	= false
+					player[currentPlayer].jumpPress = false
+					player[currentPlayer].jumpHold 	= false
+					player[currentPlayer].timer 	= 0
+					currentPlayer++
+				loop
+				object.state++
+			end if
+		end if
+		break
+
+	case 5
+		if object.value3 > 0
+			object.value3 -= 32
+		else
+			currentPlayer = 0
+			while currentPlayer < playerCount
+				player[currentPlayer].controlMode = 0
+				currentPlayer++
+			loop
+			object.state++
+		end if
+		break
+
+	case 6
+		if object.timer < 48
+			object.timer++
+		else
+			object.timer = 0
+			stage.timeEnabled = true
+			object.state = 9
+		end if
+		break
+
+	case 7
+		if object.timer > 0
+			object.timer -= 16
+			SetScreenFade(0, 0, 0, object.timer)
+		else
+			currentPlayer = 0
+			while currentPlayer < playerCount
+				player[currentPlayer].controlMode = 0
+				currentPlayer++
+			loop
+			ResetObjectEntity(object.entityPos, TypeName[Blank Object], 0, 0, 0)
+		end if
+		break
+
+	case 8
+		if object.timer < 300
+			object.timer += 5
+			if credits.screen == 0
+				music.volume -= 2
+			end if
+		else
+			stage.activeList = PRESENTATION_STAGE
+			if credits.screen > 0
+				stage.listPos = 2
+			else
+				stage.listPos = 0
+				StopMusic()
+			end if
+			LoadStage()
+		end if
+		SetScreenFade(0, 0, 0, object.timer)
+		break
+
+	case 9
+		object.value1 += 32
+		object.value2 -= 32
+		if object.timer < 20
+			object.timer++
+		else
+			object.timer = 0
+			object.type = TypeName[Blank Object]
+		end if
+		break
+
+	end switch
+end event
+
+
+event ObjectDraw
+
+	temp2 = screen.xcenter
+	temp2 -= 160
+	temp2 >>= 1
+
+	switch object.state
+	case 0
+	case 1
+	case 2
+	case 3
+		SetActivePalette(0, 0, screen.ysize)
+		DrawRect(0, 0, screen.xsize, object.value3, 32, 64, 192, 255)
+		DrawRect(0, object.value3, screen.xsize, screen.ysize, 0, 0, 0, 255)
+		if options.vsMode == true
+			if object.state == 1
+				DrawSpriteScreenXY(32, screen.xsize, screen.ysize)
+			end if
+		end if
+		DrawRect(object.value4, 168, screen.xsize, 72, 224, 224, 0, 255)
+		temp0 = object.value4
+		temp0 += screen.xcenter
+		DrawSpriteScreenXY(31, temp0, 176)
+		DrawRect(0, 0, object.value5, screen.ysize, 224, 0, 0, 255)
+		DrawSpriteScreenXY(26, object.value5, 0)
+		temp0 = screen.xcenter
+		temp0 += temp2
+		temp0 += 128
+		temp0 += object.value1
+		DrawActName(0, temp0, 64, 0, 0, 16, 0)
+		temp0 = screen.xcenter
+		temp0 += temp2
+		temp0 += 41
+		temp0 += object.value2
+		DrawSpriteScreenXY(27, temp0, 88)
+		if object.value6 > 0
+			temp1 = 27
+			temp1 += object.value6
+			if temp1 > 30
+				temp1 = 30
+			end if
+			DrawSpriteScreenXY(temp1, temp0, 88)
+		end if
+		break
+
+	case 4
+	case 5
+		SetActivePalette(0, 0, screen.ysize)
+		DrawRect(0, 0, screen.xsize, object.value3, 32, 64, 192, 255)
+		DrawRect(object.value4, 168, screen.xsize, 72, 224, 224, 0, 255)
+		temp0 = object.value4
+		temp0 += screen.xcenter
+		DrawSpriteScreenXY(31, temp0, 176)
+		DrawRect(0, 0, object.value5, screen.ysize, 224, 0, 0, 255)
+		DrawSpriteScreenXY(26, object.value5, 0)
+		temp0 = screen.xcenter
+		temp0 += temp2
+		temp0 += 128
+		temp0 += object.value1
+		DrawActName(0, temp0, 64, 0, 0, 16, 0)
+		temp0 = screen.xcenter
+		temp0 += temp2
+		temp0 += 41
+		temp0 += object.value2
+		DrawSpriteScreenXY(27, temp0, 88)
+		if object.value6 > 0
+			temp1 = 27
+			temp1 += object.value6
+			if temp1 > 30
+				temp1 = 30
+			end if
+			DrawSpriteScreenXY(temp1, temp0, 88)
+		end if
+		break
+
+	case 6
+	case 9
+		SetActivePalette(0, 0, screen.ysize)
+		temp0 = screen.xcenter
+		temp0 += temp2
+		temp0 += 128
+		temp0 += object.value1
+		DrawActName(0, temp0, 64, 0, 0, 16, 0)
+		temp0 = screen.xcenter
+		temp0 += temp2
+		temp0 += 41
+		temp0 += object.value2
+		DrawSpriteScreenXY(27, temp0, 88)
+		if object.value6 > 0
+			temp1 = 27
+			temp1 += object.value6
+			if temp1 > 30
+				temp1 = 30
+			end if
+			DrawSpriteScreenXY(temp1, temp0, 88)
+		end if
+		break
+	end switch
+end event
+
+
+event ObjectStartup
+
+	LoadSpriteSheet("Global/Display.gif")
+
+	// Title card frames
+	SpriteFrame(0, 0, 15, 16, 37, 79)
+	SpriteFrame(0, 0, 16, 16, 53, 79)
+	SpriteFrame(0, 0, 16, 16, 70, 79)
+	SpriteFrame(0, 0, 16, 16, 87, 79)
+	SpriteFrame(0, 0, 15, 16, 104, 79)
+	SpriteFrame(0, 0, 15, 16, 120, 79)
+	SpriteFrame(0, 0, 16, 16, 136, 79)
+	SpriteFrame(0, 0, 16, 16, 153, 79)
+	SpriteFrame(0, 0, 8, 16, 170, 79)
+	SpriteFrame(0, 0, 16, 16, 179, 79)
+	SpriteFrame(0, 0, 16, 16, 196, 79)
+	SpriteFrame(0, 0, 16, 16, 213, 79)
+	SpriteFrame(0, 0, 23, 16, 43, 96)
+	SpriteFrame(0, 0, 16, 16, 67, 96)
+	SpriteFrame(0, 0, 16, 16, 84, 96)
+	SpriteFrame(0, 0, 16, 16, 101, 96)
+	SpriteFrame(0, 0, 16, 16, 118, 96)
+	SpriteFrame(0, 0, 16, 16, 135, 96)
+	SpriteFrame(0, 0, 16, 16, 152, 96)
+	SpriteFrame(0, 0, 16, 16, 169, 96)
+	SpriteFrame(0, 0, 16, 16, 186, 96)
+	SpriteFrame(0, 0, 16, 16, 203, 96)
+	SpriteFrame(0, 0, 22, 16, 220, 96)
+	SpriteFrame(0, 0, 15, 16, 43, 113)
+	SpriteFrame(0, 0, 16, 16, 59, 113)
+	SpriteFrame(0, 0, 16, 16, 76, 113)
+	SpriteFrame(0, 0, 8, 256, 248, 0)
+	SpriteFrame(0, 0, 62, 16, 83, 1)
+	SpriteFrame(63, 0, 16, 29, 42, 1)
+	SpriteFrame(63, 0, 23, 29, 59, 1)
+	SpriteFrame(63, 0, 23, 32, 42, 31)
+	SpriteFrame(0, 0, 140, 5, 37, 73)
+
+	if vs.playerID == 0
+		SpriteFrame(-160, -16, 136, 7, 110, 172)
+	else
+		SpriteFrame(-160, -16, 136, 7, 110, 164)
+	end if
+
+	if options.vsMode == true
+		CallNativeFunction2(ReceiveEntity, 0x400, 1)
+		ResetObjectEntity(0x400, TypeName[Blank Object], 0, 0, 0)
+	end if
+
+	// Cycle through all Title Card objects
+	arrayPos0 = 32
+	while arrayPos0 < 0x420
+		if object[arrayPos0].type == TypeName[Title Card]
+			object[arrayPos0].priority 	= PRIORITY_ACTIVE_PAUSED
+			object[arrayPos0].alpha 	= 0xFF
+			object[arrayPos0].drawOrder = 6
+			stage.state = STAGE_PAUSED
+
+			if object[arrayPos0].propertyValue == 5
+				CheckCurrentStageFolder("ZoneM")
+				if checkResult == false
+
+					// If the object has a property value of 5 & we're in Egg Gauntet, then go back to the title screen
+					// (Purpose unknown, IDK why this exists)
+					stage.activeList = PRESENTATION_STAGE
+					stage.listPos = 0
+					LoadStage()
+
+				end if
+			end if
+		end if
+
+		arrayPos0++
+	loop
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event
