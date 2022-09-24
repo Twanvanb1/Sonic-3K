@@ -1,0 +1,117 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+public value MenuSel = 0;
+private value object.timer = 0;
+
+public table winkframe
+	1, 2, 3, 3, 2, 1
+end table
+
+public table handframe
+	4, 5, 6, 5, 5, 4, 5, 6, 5, 5, 4, 5, 6, 5, 5,  
+end table
+
+
+
+event ObjectMain
+	if object.value13 != 1
+		object.value24 = engine.sfxVolume
+		object.value13 = 1
+	end if
+
+	if inputPress.Start == 1
+		if object.value9 == 0
+			object.value20 = 1
+			stage.ActiveList = REGULAR_STAGE
+			stage.listPos = 0
+		end if
+	end if
+
+	if object.value20 == 1
+		if object.value40 != 1
+			object.value40 = 1
+		end if
+		object.value21 += 10
+		music.volume -= 7
+		engine.sfxVolume -= 7
+		SetScreenFade(0, 0, 0, object.value21)
+
+		if object.value21 >= 255
+			engine.sfxVolume = object.value24
+			LoadStage()
+		end if
+	end if
+end event
+
+
+event ObjectDraw
+	if object.value47 == 0
+		object.value3 = 64
+		object.value47 = 1
+	end if
+
+	object.value0 = screen.xcenter
+	object.value0 -= 120
+	DrawSpriteScreenXY(0, object.value0, 13)
+	object.value0 = screen.xcenter
+	object.value0 -= 60
+	object.value2++
+	object.value2 %= 255
+	temp0 = object.value2
+	temp0 /= 4
+	GetTableValue(object.value1, temp0, winkframe)
+	DrawSpriteScreenXY(object.value1, object.value0, 56)
+	object.value3++
+	object.value3 %= 255
+	temp1 = object.value3
+	temp1 /= 8
+	GetTableValue(object.value4, temp1, handframe)
+	object.value0 = screen.xcenter
+	object.value0 += 12
+	DrawSpriteScreenXY(object.value4, object.value0, 72)
+
+	object.value10 = object.value9
+	object.value10 += 8
+	object.value5 = screen.xcenter
+	object.value5 -= 68
+	object.value6 = screen.ycenter
+	object.value6 += 68
+	object.value11 = object.value6
+	object.value11 += 16
+	object.value12 = object.value10
+	object.value12 += 4
+	object.draworder = 6
+
+	object.draworder = 2
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("S3Title/Sprites1.gif")
+	SpriteFrame(0, 0, 240, 171, 0, 0) //Sonic and ring
+	SpriteFrame(0, 0, 32, 48, 0, 180) // Wink start
+	SpriteFrame(0, 0, 32, 48, 33, 180)
+	SpriteFrame(0, 0, 32, 48, 66, 180) // Wink end
+	SpriteFrame(0, 0, 48, 56, 99, 172) // Finger wag start
+	SpriteFrame(0, 0, 48, 56, 148, 172)
+	SpriteFrame(0, 0, 48, 56, 197, 172)// Finger wag end
+
+
+
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("S3Title/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+end event

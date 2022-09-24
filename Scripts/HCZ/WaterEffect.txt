@@ -1,0 +1,86 @@
+// ----------------------------------
+// RSDK Project: Sonic 3G: Hydrocity Demo
+// Script Description: Water Effect
+// Script Author: Hydropper
+// ----------------------------------
+
+// Aliases
+
+// Function declarations
+
+event ObjectMain
+
+	// If button is pressed, make the object start animating and moving
+	if ButtonPressed1 == 1
+		object.value2 = 1
+	end if
+	if object.value2 == 1
+		object.value3++
+		if object.value3 == 2
+			object.value4++
+			object.xpos += 0x100000
+			object.frame++
+			object.value3 = 0
+
+			// If object is (x) into the tunnel, move it up 16px
+			if object.xpos > 0x5360000
+				object.ypos = 0x5900000
+				if object.xpos > 0x5660000
+					object.ypos = 0x5800000
+					if object.xpos > 0x9370000
+						object.type = TypeName[Blank Object]
+					end if
+				end if
+			end if
+		end if
+
+		// Loop the wave frames
+		if object.frame > 3
+			object.frame = 2
+		end if
+	end if
+end event
+
+
+event ObjectDraw
+	DrawSprite(object.frame)
+
+	// Gets object's coordinates in screen-space, then subtracts that from the camera xpos.
+	object.value8 = screen.xsize
+	temp3 = object.xpos
+	temp3 >>= 16
+	temp3 -= screen.xoffset
+	temp4 = temp3
+	temp4 -= screen.xsize
+	temp5 = temp3
+	if object.frame == 2
+		temp5 += 192
+	else
+		if object.frame == 3 
+			temp5 += 176
+		else
+			temp5 += 96
+		end if
+	end if
+	temp6 = object.ypos
+	temp6 >>= 16
+	temp6 -= screen.yoffset
+	DrawSpriteScreenXY(4, temp5, temp6)
+end event
+
+
+event ObjectStartup
+	object.value2 = 0
+	LoadSpriteSheet("HCZ/Objects5.gif")
+	SpriteFrame(-6, -32, 112, 64, 372, 0)
+	SpriteFrame(-6, -32, 144, 64, 226, 0)
+	SpriteFrame(-6, -32, 192, 96, 1, 64)
+	SpriteFrame(-6, -32, 176, 96, 194, 65)
+	SpriteFrame(-6, -32, 192, 96, 1, 160)
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event

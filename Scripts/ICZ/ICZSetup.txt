@@ -1,0 +1,295 @@
+// Aliases
+private alias 40 : TYPE_ICZSETUP
+private alias object.value0  : object.aniTileTimer
+private alias object.value5  : object.IceDuration
+private alias object.value6  : object.IceIndex
+
+// Function declarations
+reserve function ICZSetup_SpeedUpMusic1P
+reserve function ICZSetup_SlowDownMusic1P
+reserve function ICZSetup_SpeedUpMusic2P
+reserve function ICZSetup_SlowDownMusic2P
+
+// Static Values
+public value ICZSetup_value33 = 0;
+
+// Tables
+private table ICZSetup_IceOrbFrameTable
+	124, 1017, 1018, 1019, 1020, 1021, 1022
+end table
+
+private table ICZSetup_IceOrbLeftFrameTable
+	125, 1011, 1012, 1013, 1014, 1015, 1016
+end table
+
+private table ICZSetup_IceOrbRightFrameTable
+	126, 1005, 1006, 1007, 1008, 1009, 1010
+end table
+
+function ICZSetup_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("IceCap_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("IceCap_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function ICZSetup_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("IceCap.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("IceCap.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function ICZSetup_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("IceCap2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("IceCap2_F.ogg", 0, 0x136F4)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap2_F.ogg", 0, 0x136F4)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function ICZSetup_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("IceCap2.ogg", 0, 4, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("IceCap2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+event ObjectMain
+// Level wrap
+if stage.actNum == 1	
+	// top part of the level
+	if object[0].ypos >= 0x8F00000
+		temp1 = object[0].ypos
+		currentPlayer = 0
+		while currentPlayer < playerCount
+			temp0 = object[currentPlayer].ypos
+			temp0 -= temp1
+			Abs(temp0)
+			if temp0 < 0x8C0000
+				object[currentPlayer].ypos -= 0x8000000
+			end if
+			currentPlayer++
+		loop
+		if screen.cameraY >= 0x800
+			screen.cameraY -= 0x800
+			screen.yoffset -= 0x800
+		end if
+	end if
+
+	if object[0].ypos <= 0x900000
+		temp1 = object[0].ypos
+		currentPlayer = 0
+		while currentPlayer < playerCount
+			temp0 = object[currentPlayer].ypos
+			temp0 -= temp1
+			Abs(temp0)
+			if temp0 < 0x8C0000
+				object[currentPlayer].ypos += 0x8000000
+			end if
+			currentPlayer++
+		loop
+		if screen.cameraY <= 384
+			screen.cameraY += 0x800
+			screen.yoffset += 0x800
+		end if
+	end if
+
+	if screen.cameraY >= 0x610
+		if ICZSetup_value33 == 0
+			ICZSetup_value33 = 1
+			arrayPos0 = 32
+			while arrayPos0 < 0x4A0
+				if object[arrayPos0].ypos <= 0x2800000
+					object[arrayPos0].ypos += 0x8000000
+					object[arrayPos0].value31 += 0x8000000
+				end if
+				arrayPos0++
+			loop
+		end if
+	end if
+
+	if screen.cameraY <= 0x280
+		if ICZSetup_value33 == 1
+			ICZSetup_value33 = 0
+			arrayPos0 = 32
+			while arrayPos0 < 0x4A0
+				if object[arrayPos0].ypos >= 0x6800000
+					object[arrayPos0].ypos -= 0x8000000
+					object[arrayPos0].value31 -= 0x8000000
+				end if
+				arrayPos0++
+			loop
+		end if
+	end if
+end if
+
+// animated tiles
+if stage.actnum == 1
+	if object.animationTimer < 2
+			GetTableValue(temp0, object.IceIndex, ICZSetup_IceOrbFrameTable)
+			Copy16x16Tile(688, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.IceIndex, ICZSetup_IceOrbLeftFrameTable)
+			Copy16x16Tile(689, temp0)
+			temp0 += 6
+		
+			GetTableValue(temp0, object.IceIndex, ICZSetup_IceOrbRightFrameTable)
+			Copy16x16Tile(690, temp0)
+			temp0 += 6
+			
+
+			GetTableValue(object.IceDuration, object.IceIndex, ICZSetup_IceOrbFrameTable)
+			object.IceIndex++
+
+			object.IceIndex %= 7
+			object.animationTimer = 6
+		else
+			object.animationTimer--
+	end if
+end if
+
+// animated tiles
+if stage.actnum == 2
+	if object.animationTimer < 2
+			GetTableValue(temp0, object.IceIndex, ICZSetup_IceOrbFrameTable)
+			Copy16x16Tile(718, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.IceIndex, ICZSetup_IceOrbLeftFrameTable)
+			Copy16x16Tile(719, temp0)
+			temp0 += 6
+		
+			GetTableValue(temp0, object.IceIndex, ICZSetup_IceOrbRightFrameTable)
+			Copy16x16Tile(720, temp0)
+			temp0 += 6
+			
+
+			GetTableValue(object.IceDuration, object.IceIndex, ICZSetup_IceOrbFrameTable)
+			object.IceIndex++
+
+			object.IceIndex %= 7
+			object.animationTimer = 6
+		else
+			object.animationTimer--
+	end if
+end if
+end event
+
+event ObjectStartup
+	if stage.actNum == 1
+		SetMusicTrack("IceCap.ogg", 0, 1)
+		SpeedUpMusic = ICZSetup_SpeedUpMusic1P
+		SlowDownMusic = ICZSetup_SlowDownMusic1P
+	end if
+	if stage.actNum == 2
+		SetMusicTrack("IceCap2.ogg", 0, 1)
+		SpeedUpMusic = ICZSetup_SpeedUpMusic2P
+		SlowDownMusic = ICZSetup_SlowDownMusic2P
+	end if
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Ricky]
+	object[10].type = TypeName[ICZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	ICZSetup_value33 = 0
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

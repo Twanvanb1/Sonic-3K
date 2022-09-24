@@ -1,0 +1,49 @@
+// ----------------------------------
+// RSDK Project: Sonic 3G: Hydrocity Demo
+// Script Description: Button Door
+// Script Author: Hydropper
+// ----------------------------------
+
+// Aliases
+
+// Function declarations
+
+event ObjectMain
+	if ButtonPressed1 == 1
+		object.value1 = 1
+	end if
+	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			if object.value4 == 0
+				BoxCollisionTest(C_BOX, object.entityPos, -16, -32, 16, 32, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+			end if
+		next
+	object.xvel = 0x10000
+end event
+
+
+event ObjectDraw
+	if object.value1 == 1
+		object.value3++
+		if object.value3 > 3
+			if object.value4 < 2
+				object.value4++
+				object.value3 = 0
+			end if
+		end if
+	end if
+	DrawSprite(object.value4)
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("HCZ/Objects5.gif")
+	SpriteFrame(-16, -32, 32, 64, 371, 65)
+	SpriteFrame(-16, -32, 32, 32, 371, 65)
+	SpriteFrame(-16, -32, 0, 0, 0, 0)
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event

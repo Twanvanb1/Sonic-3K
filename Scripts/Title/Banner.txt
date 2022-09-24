@@ -1,0 +1,36 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+event ObjectMain
+end event
+
+
+event ObjectDraw
+	object.draworder = 3
+	object.value0 = screen.xcenter
+	object.value0 -= 128
+	DrawSpriteScreenXY(0, object.value0, 124)
+
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("Title/Sprites1.gif")
+	SpriteFrame(0, 0, 256, 74, 1, 229)
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("S3Title/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+end event

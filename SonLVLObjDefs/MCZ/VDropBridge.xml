@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjDef xmlns="http://www.sonicretro.org" Image="sprite">
+  <Images>
+    <ImageFromSheet id="log" sheet="MCZ/Objects.gif" sourcex="135" sourcey="131" width="16" height="16">
+      <Offset X="-8" Y="-8"/>
+    </ImageFromSheet>
+  </Images>
+  <Subtypes>
+    <Subtype id="00" name="Opens Right" image="log" />
+    <Subtype id="01" name="Opens Left" image="log" />
+  </Subtypes>
+  <DefaultImage>
+    <ImageRef image="log">
+      <Offset Y="-16" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-32" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-48" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-64" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-80" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-96" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-112" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-128" />
+    </ImageRef>
+  </DefaultImage>
+  <Display>
+    <DisplayOption>
+    <ImageRef image="log">
+      <Offset Y="-16" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-32" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-48" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-64" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-80" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-96" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-112" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset Y="-128" />
+    </ImageRef>
+    </DisplayOption>
+  </Display>
+</ObjDef>

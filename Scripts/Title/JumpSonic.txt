@@ -1,0 +1,64 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+
+event ObjectDraw
+	object.drawOrder = 6
+	object.value0++
+	object.value2++
+	if object.value2 >= 150
+		if object.value0 >= 10 // Every 6 frames, advance one SpriteFrame
+			object.value1++
+			object.value0 = 0
+		end if
+		if object.value1 >= 8
+			if object.value37 != 1
+				LoadSpriteSheet("Title/SonicJump1.gif")
+				object.value37 = 1
+			end if
+		end if
+		if object.value1 <= 10
+			DrawSpriteScreenXY(object.value1, 0, 0)
+			object[+1].type = TypeName[Start Message]
+			Object[+1].priority = PRIORITY_ACTIVE
+			object[+1].xpos = screen.xcenter
+			object[+1].ypos = 208
+		end if
+	end if
+end event
+
+
+event ObjectStartup
+	LoadSpriteSheet("Title/SonicJump.gif")
+    SpriteFrame(207, 51, 10, 14, 0, 0) // All sprite positions are done inside of the SpriteFrame, to avoid unnecessary code or wasting system resources. (X Offset, Y Offset, W, H, Xpos, Ypos)
+    SpriteFrame(211, 41, 14, 20, 11, 0)
+    SpriteFrame(218, 29, 19, 24, 26, 0)
+    SpriteFrame(226, 16, 24, 26, 46, 0)
+    SpriteFrame(232, 7, 35, 35, 71, 0)
+    SpriteFrame(195, 0, 107, 142, 0, 36)
+    SpriteFrame(0, 17, 424, 223, 0, 212)
+    SpriteFrame(27, 29, 398, 211, 111, 0)
+
+    SpriteFrame(96, 8, 189, 232, 0, 0)
+    SpriteFrame(121, 12, 161, 219, 190, 0)
+    SpriteFrame(148, 13, 132, 218, 352, 0)
+
+
+
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("S3Title/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+end event

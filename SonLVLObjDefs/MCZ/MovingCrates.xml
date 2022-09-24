@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjDef xmlns="http://www.sonicretro.org" Image="crate">
+  <Images>
+    <ImageFromSheet id="crate" sheet="MCZ/Objects.gif" sourcex="136" sourcey="1" width="64" height="64">
+      <Offset X="-32" Y="-32"/>
+    </ImageFromSheet>
+  </Images>
+  <Subtypes>
+    <Subtype id="00" name="Clockwise" image="crate" />
+    <Subtype id="01" name="Counter-Clockwise" image="crate" />
+  </Subtypes>
+  <DefaultImage>
+    <ImageRef image="crate" />
+    <ImageRef image="crate">
+      <Offset X="64" Y="64" />
+    </ImageRef>
+    <ImageRef image="crate">
+      <Offset X="-64" Y="64" />
+    </ImageRef>
+  </DefaultImage>
+  <Display>
+    <DisplayOption>
+    <ImageRef image="crate">
+      <Offset X="0" Y="0" />
+    </ImageRef>
+    <ImageRef image="crate">
+      <Offset X="64" Y="64" />
+    </ImageRef>
+    <ImageRef image="crate">
+      <Offset X="-64" Y="64" />
+    </ImageRef>
+    </DisplayOption>
+  </Display>
+</ObjDef>

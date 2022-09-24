@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjDef xmlns="http://www.sonicretro.org" Image="sprite">
+  <Images>
+    <ImageFromSheet id="log" sheet="MCZ/Objects.gif" sourcex="135" sourcey="131" width="16" height="16">
+      <Offset X="-8" Y="-8"/>
+    </ImageFromSheet>
+  </Images>
+  <DefaultImage>
+    <ImageRef image="log">
+      <Offset X="-8" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="-24" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="-40" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="-56" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="8" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="24" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="40" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="56" />
+    </ImageRef>
+  </DefaultImage>
+  <Display>
+    <DisplayOption>
+    <ImageRef image="log">
+      <Offset X="-8" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="-24" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="-40" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="-56" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="8" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="24" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="40" />
+    </ImageRef>
+    <ImageRef image="log">
+      <Offset X="56" />
+    </ImageRef>
+    </DisplayOption>
+  </Display>
+</ObjDef>

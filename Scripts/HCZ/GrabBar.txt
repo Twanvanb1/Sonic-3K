@@ -1,0 +1,84 @@
+// ----------------------------------
+// RSDK Project: Sonic 3G: Hydrocity Demo
+// Script Description: Breakable Bar
+// Script Author: Hydropper
+// ----------------------------------
+
+// Aliases
+
+// Static Values
+public value GrabBarOn = 0;
+
+// Function declarations
+reserve function GrabBar_DebugDraw
+reserve function GrabBar_DebugSpawn
+
+
+function GrabBar_DebugDraw
+	DrawSprite(0)
+end function
+
+
+function GrabBar_DebugSpawn
+	CreateTempObject(TypeName[Breakable Bar], 0, object.xpos, object.ypos)
+end function
+
+event ObjectMain
+	if object.value1 == 0
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			BoxCollisionTest(C_TOUCH, object.entityPos, -4, -64, 4, 64, currentPlayer, -16, -1, 1, 1)
+			if checkResult == 1
+				object[currentPlayer].animation = ANI_CLINGING
+				object[currentPlayer].state = PlayerObject_Clinging
+				object[currentPlayer].gravity = GRAVITY_AIR
+				object[currentPlayer].tileCollisions = 1
+				object[currentPlayer].direction = FLIP_NONE
+				if object[currentPlayer].jumpPress == 1
+					GrabBarOn = 0
+					object.value1 = 1
+					object.type = TypeName[Blank Object]
+				else
+					temp1 = object.xpos
+					temp1 += 0x120000
+					object[currentPlayer].xpos = temp1
+					GrabBarOn = 1
+				end if
+			end if
+		next
+	end if
+end event
+
+
+event ObjectDraw
+	if object.propertyvalue == 5
+		DrawSprite(0)
+	else
+		DrawSprite(1)
+	end if
+end event
+
+
+event ObjectStartup
+	object.value2 = 0
+	LoadSpriteSheet("HCZ/Objects4.gif")
+	SpriteFrame(-6, -32, 7, 64, 101, 1)
+	SpriteFrame(-6, -48, 7, 96, 109, 1)
+	SetTableValue(TypeName[Breakable Bar], DebugMode_ObjCount, DebugMode_TypesTable)
+	SetTableValue(GrabBar_DebugDraw, DebugMode_ObjCount, DebugMode_DrawTable)
+	SetTableValue(GrabBar_DebugSpawn, DebugMode_ObjCount, DebugMode_SpawnTable)
+	DebugMode_ObjCount++
+end event
+
+event RSDKDraw
+	if object.propertyvalue == 5
+		DrawSprite(0)
+	else
+		DrawSprite(1)
+	end if
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("CPZ/Objects4.gif")
+	SpriteFrame(-6, -32, 7, 64, 101, 1)
+	SpriteFrame(-6, -48, 7, 96, 109, 1)
+end event

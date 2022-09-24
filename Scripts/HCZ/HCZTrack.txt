@@ -1,0 +1,91 @@
+// ----------------------------------
+// RSDK Project: Sonic 3G: Hydrocity Demo
+// Script Description: Water Jet
+// Script Author: Hydropper
+// ----------------------------------
+
+// Aliases
+
+// Function declarations
+
+
+public value Conveyor1xpos = 0
+public value Conveyor2xpos = 0
+public value Conveyor1ypos = 0
+public value Conveyor2ypos = 0
+
+event ObjectMain
+
+
+
+	if object.value31 == 0
+		BoxCollisionTest(C_TOUCH, object.entityPos, 0, 2, object.value8, 2, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+		if checkResult == 1
+			if object[0].yvel >= 0
+			object[0].ypos = object.ypos
+			object[0].gravity = 0
+			end if
+			if object[0].jumpPress == 1
+				object.value31 = 1
+			end if
+			object[0].controlMode = -1
+			object[0].animation = ANI_BELTHANG
+			object[0].animationSpeed = 100
+			if inputDown.left == 1
+				temp0++
+				if temp0 >= 2
+					object[0].frame++
+					temp0 = 0
+				end if
+			else
+				if inputDown.right == 1
+					temp0++
+					if temp0 >= 2
+						object[0].frame++
+						temp0 = 0
+					end if
+				else
+					object[0].frame = 0
+				end if
+			end if
+		else
+		end if
+	else
+			if object[0].jumpPress == 1
+				object.value31 = 0
+			end if
+
+	end if
+end event
+
+
+event ObjectDraw
+
+
+	object.value37 = object.xpos
+	object.value37 >>= 16
+	object.value37 -= screen.xoffset
+	temp4 = object.value37
+	temp4 -= screen.xsize
+	temp6 = object.ypos
+	temp6 >>= 16
+	temp6 -= screen.yoffset
+	object.value8 = object.propertyvalue
+	object.value8 *= 4
+	object.value8 += 12
+
+end event
+
+
+event ObjectStartup
+	object.value2 = 0
+	object.value6 = 2646
+	LoadSpriteSheet("HCZ/Objects5.gif")
+	SpriteFrame(-6, -32, 224, 64, 1, 0)
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event

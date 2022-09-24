@@ -1,0 +1,69 @@
+// ----------------------------------
+// RSDK Project: Hydrocity RSDK
+// Script Description: Hand Grabber
+// Script Author: Hydropper
+// ----------------------------------
+
+event ObjectMain
+	object.value42 = object.xpos
+	object.value43 = object.ypos
+	object.value43 += 200
+	object.value3 = object.ypos
+	object.value3 += 3538944
+
+
+	object.direction = object[0].direction
+
+	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+		BoxCollisionTest(C_TOUCH, object.entityPos, -22, -50, 22, 6, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+		if checkResult == 1
+
+			// Hand Raise and lower
+			if object.value7 > object.ypos
+				object.value7 -= 524288
+			end if
+		else
+			if object.value7 < object.value3
+				object.value7 += 524288
+			end if
+		end if
+
+		// Inner ring hitbox
+		BoxCollisionTest(C_TOUCH, object.entityPos, -1, -1, 1, 1, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+
+		if checkResult == 1
+
+		end if
+	next
+	if object.value4 != 1
+		object.value7 = object.ypos
+		object.value4 = 1
+	end if
+
+	// Spinny frame cycle
+	object.frame++
+	if object.frame > 4
+		object.frame = 2
+	end if
+end event
+
+event ObjectDraw
+	DrawSpriteXY(0, object.xpos, object.value7)
+	DrawSpriteXY(5, object.xpos, object.value7)
+	DrawSpriteFX(object.frame, FX_FLIP, object.xpos, object.value7)
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event	
+
+event ObjectStartup
+	object.value47 = 0
+	LoadSpriteSheet("HCZ/Objects4.gif")
+	SpriteFrame(-4, -22, 8, 30, 68, 32)
+	SpriteFrame(-16, -16, 32, 16, 18, 89)
+	SpriteFrame(-32, 0, 64, 8, 2, 59)
+	SpriteFrame(-32, 0, 64, 8, 2, 69)
+	SpriteFrame(-32, 0, 64, 8, 2, 79)
+	SpriteFrame(-12, -46, 21, 24, 22, 15)
+end event

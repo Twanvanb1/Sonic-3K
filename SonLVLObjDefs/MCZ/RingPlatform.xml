@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjDef xmlns="http://www.sonicretro.org" Image="sprite">
+  <Images>
+    <ImageFromSheet id="ring" sheet="Global/Items.gif" sourcex="1" sourcey="1" width="16" height="16">
+      <Offset X="-8" Y="-8"/>
+    </ImageFromSheet>
+  </Images>
+  <Subtypes>
+    <Subtype id="00" name="Clockwise" image="ring" />
+    <Subtype id="01" name="Counter-Clockwise" image="ring" />
+  </Subtypes>
+  <DefaultImage>
+    <ImageRef image="ring" />
+    <ImageRef image="ring">
+      <Offset X="-16"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-32"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-48"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-64"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-80"/>
+    </ImageRef>
+  </DefaultImage>
+  <Display>
+    <DisplayOption>
+    <ImageRef image="ring" />
+    <ImageRef image="ring">
+      <Offset X="-16"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-32"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-48"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-64"/>
+    </ImageRef>
+    <ImageRef image="ring">
+      <Offset X="-80"/>
+    </ImageRef>
+    </DisplayOption>
+  </Display>
+</ObjDef>

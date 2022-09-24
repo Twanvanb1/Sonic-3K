@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjDef xmlns="http://www.sonicretro.org" Image="sprite">
+  <Images>
+    <ImageFromSheet id="sprite" sheet="MCZ/Objects.gif" sourcex="136" sourcey="66" width="64" height="48">
+      <Offset X="-32" Y="-24"/>
+    </ImageFromSheet>
+  </Images>
+  <Subtypes>
+    <Subtype id="00" name="Right" image="sprite" xflip="NeverFlip"/>
+    <Subtype id="01" name="Left" image="sprite" xflip="AlwaysFlip"/>
+  </Subtypes>
+</ObjDef>

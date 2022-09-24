@@ -1,0 +1,55 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: H Propeller Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+// Function declarations
+
+public value GrabBarOn = 0;
+
+event ObjectMain
+	if ButtonPressed1 == 1
+		object.value2 = 1
+	end if
+	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+		BoxCollisionTest(C_TOUCH, object.entityPos, -64, -64, 64, 56, currentPlayer, -1, -1, 1, 1)
+		if checkResult == 1
+			if object.value2 == 1
+				if GrabBarOn == 0
+					object[currentPlayer].animation = ANI_FANROTATE
+					object[currentPlayer].state = PlayerObject_Clinging
+					object[currentPlayer].gravity = GRAVITY_AIR
+					object[currentPlayer].tileCollisions = 1
+					object[currentPlayer].speed = 0x60000
+					object[currentPlayer].value1 = 0
+					object[currentPlayer].xvel = 0x60000
+					object[currentPlayer].yvel = 0
+					if object[0].xpos >= 0x40C0000
+						if object[0].xpos <= 166461440
+							object.xpos = object[0].xpos
+						end if
+					end if
+				end if
+			end if
+		end if
+	next
+end event
+
+
+event ObjectDraw
+end event
+
+
+event ObjectStartup
+	object.value2 = 0
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event

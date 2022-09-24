@@ -1,0 +1,237 @@
+// Aliases
+private alias 40 : TYPE_LBZSETUP
+private alias object.value0  : object.aniTileTimer
+private alias object.value5  : object.CilDuration
+private alias object.value6  : object.CilIndex
+
+// Function declarations
+reserve function LBZSETUP_SpeedUpMusic1P
+reserve function LBZSETUP_SlowDownMusic1P
+reserve function LBZSETUP_SpeedUpMusic2P
+reserve function LBZSETUP_SlowDownMusic2P
+
+// Static Values
+public value LBZSETUP_value33 = 0;
+
+// Tables
+
+private table LBZSETUP_CILFrameTable
+	682, 682
+end table
+
+private table LBZSETUP_CILFrameTable2
+	681, 690
+end table
+
+private table LBZSETUP_CILFrameTable3
+	683, 691
+end table
+
+private table LBZSETUP_CILFrameTable4
+	684, 692
+end table
+
+private table LBZSETUP_CILFrameTable5
+	685, 693
+end table
+
+private table LBZSETUP_CILFrameTable6
+	686, 694
+end table
+
+private table LBZSETUP_CILFrameTable7
+	687, 695
+end table
+
+function LBZSETUP_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("IceCap_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("IceCap_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function LBZSETUP_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("IceCap.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("IceCap.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function LBZSETUP_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("IceCap2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("IceCap2_F.ogg", 0, 0x136F4)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap2_F.ogg", 0, 0x136F4)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function LBZSETUP_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("IceCap2.ogg", 0, 4, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("IceCap2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+event ObjectMain
+
+
+// animated tiles
+//if stage.actnum == 1
+//	if object.animationTimer < 2
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable)
+//			Copy16x16Tile(220, temp0)
+//			temp0 += 6
+//			
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable2)
+//			Copy16x16Tile(237, temp0)
+//			temp0 += 6
+			
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable3)
+//			Copy16x16Tile(238, temp0)
+//			temp0 += 6
+		
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable4)
+//			Copy16x16Tile(241, temp0)
+//			temp0 += 6
+			
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable5)
+//			Copy16x16Tile(242, temp0)
+//			temp0 += 6
+			
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable6)
+//			Copy16x16Tile(239, temp0)
+//			temp0 += 6
+			
+//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable7)
+//			Copy16x16Tile(240, temp0)
+//			temp0 += 6
+			
+//			GetTableValue(object.CilDuration, object.CilIndex, LBZSETUP_CILFrameTable)
+//			object.CilIndex++
+
+//			object.CilIndex %= 2
+//			object.animationTimer = 6
+//		else
+//			object.animationTimer--
+//	end if
+//end if
+
+
+end event
+
+event ObjectStartup
+	if stage.actNum == 1
+		SetMusicTrack("IceCap.ogg", 0, 1)
+		SpeedUpMusic = LBZSETUP_SpeedUpMusic1P
+		SlowDownMusic = LBZSETUP_SlowDownMusic1P
+	end if
+	if stage.actNum == 2
+		SetMusicTrack("IceCap2.ogg", 0, 1)
+		SpeedUpMusic = LBZSETUP_SpeedUpMusic2P
+		SlowDownMusic = LBZSETUP_SlowDownMusic2P
+	end if
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Ricky]
+	object[10].type = TypeName[LBZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	LBZSETUP_value33 = 0
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

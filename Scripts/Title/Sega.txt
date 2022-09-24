@@ -1,0 +1,72 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Settings Setup Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+
+event ObjectMain	
+	TitleTimer++
+	if TitleTimer >= 100
+		object.value0 += 10
+	end if
+end event
+
+
+event ObjectDraw
+	object.drawOrder = 4
+	SetPaletteFade(3, 0, 1, object.value0, 0, 223)
+	object.value1 = screen.xcenter
+	object.value1 -= 92
+	object.value2 = screen.ycenter
+	object.value2 -= 29
+	DrawRect(0, 0, screen.xsize, screen.ysize, 255,255,255, object.value5)
+	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, object.value4)
+	object.inkEffect = INK_ALPHA
+	DrawSpriteScreenFX(0, FX_INK, object.value1, object.value2)
+	if object.value0 >= 600
+		object.value5 = 0
+		if TitleTimer >= 200
+			object.alpha = 0
+		end if
+		if TitleTimer >= 250
+			object.value4 = 0
+			DrawRect(0, 0, screen.xsize, screen.ysize, 255,255,255, object.value21)
+			if TitleTimer >= 275
+				object.value21 -= 10
+			end if
+		end if
+	else 
+		object.value4 = object.value0
+		object.value5 = 255
+		object.alpha = 255
+		object.value21 = 255
+	end if
+end event
+
+
+event ObjectStartup
+	LoadPalette("SegaBlack.act", 1, 0, 0, 256)
+	LoadSpriteSheet("S3Title/Sprites1.gif")
+	SpriteFrame(0, 0, 184, 58, 248, 1)
+
+
+
+
+
+	SetActivePalette(3, 0, 240)
+	PlaySfx(SfxName[Sega], 0)
+	SetPaletteFade(3, 0, 1, 255, 223, 255)
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("S3Title/BG.gif")
+	SpriteFrame(0, 0, 424, 240, 0, 0)
+end event

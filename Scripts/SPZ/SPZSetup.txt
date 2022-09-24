@@ -1,0 +1,478 @@
+
+// Aliases
+private alias 40 : TYPE_SPZSETUP
+private alias object.value12 : object.palCycle2Timer
+private alias object.value13 : object.palCycle2Index
+private alias object.value6  : object.bgLightFrame
+
+// Player Aliases
+private alias object.xpos : player.xpos
+private alias object.ypos : player.ypos
+
+private value SPZSetup_prevStageWrap 		= 0
+
+private alias object.value31 : object.wrapOffset.y
+
+// Player Aliases
+private alias object.xpos : player.xpos
+private alias object.ypos : player.ypos
+
+// Function declarations
+reserve function SPZSetup_SpeedUpMusic1P
+reserve function SPZSetup_SlowDownMusic1P
+reserve function SPZSetup_SpeedUpMusic2P
+reserve function SPZSetup_SlowDownMusic2P
+
+reserve function OOZSetup_Function97
+reserve function OOZSetup_Function99
+reserve function OOZSetup_Function100
+
+
+// Static Values
+public value SPZSetup_value33 = 0;
+
+function OOZSetup_Function97
+	object.animationSpeed = object.speed
+	if object.animationSpeed < 0
+		FlipSign(object.animationSpeed)
+	end if
+	object.animationSpeed *= 120
+	object.animationSpeed /= 0x60000
+	object.animationSpeed += 20
+end function
+
+function OOZSetup_Function99
+	if object.controlLock > 0
+		object.controlLock--
+		Sin256(temp0, object.angle)
+		temp0 *= 0x2000
+		temp0 >>= 8
+		object.speed += temp0
+	else
+		if object.left == 1
+			temp0 = object.value20
+			FlipSign(temp0)
+			if object.speed > temp0
+				object.speed -= 0x400
+			end if
+			if object.speed <= 0
+				object.direction = FLIP_X
+			end if
+		end if
+		if object.right == 1
+			if object.speed < object.value20
+				object.speed += 0x400
+			end if
+			if object.speed >= 0
+				object.direction = FLIP_NONE
+			end if
+		end if
+		temp0 = object.left
+		temp0 |= object.right
+		if temp0 == 0
+			if object.speed > 0
+				object.speed -= 4
+				if object.speed < 0
+					object.speed = 0
+				end if
+			else
+				object.speed += 4
+				if object.speed > 0
+					object.speed = 0
+				end if
+			end if
+			if object.speed > 0x2000
+				Sin256(temp0, object.angle)
+				temp0 *= 0x2000
+				temp0 >>= 8
+				object.speed += temp0
+			end if
+			if object.speed < -0x2000
+				Sin256(temp0, object.angle)
+				temp0 *= 0x2000
+				temp0 >>= 8
+				object.speed += temp0
+			end if
+			if object.angle > 192
+				if object.angle < 228
+					if object.speed > -0x10000
+						if object.speed < 0x10000
+							object.controlLock = 30
+						end if
+					end if
+				end if
+			end if
+			if object.angle > 28
+				if object.angle < 64
+					if object.speed > -0x10000
+						if object.speed < 0x10000
+							object.controlLock = 30
+						end if
+					end if
+				end if
+			end if
+		else
+			Sin256(temp0, object.angle)
+			temp0 *= 0x2000
+			temp0 >>= 8
+			object.speed += temp0
+			if object.right == 1
+				if object.left == 0
+					if object.angle > 192
+						if object.angle < 228
+							if object.speed < 0x28000
+								if object.speed > -0x20000
+									object.controlLock = 30
+								end if
+							end if
+						end if
+					end if
+				end if
+			else
+				if object.left == 1
+					if object.angle > 28
+						if object.angle < 64
+							if object.speed > -0x28000
+								if object.speed < 0x20000
+									object.controlLock = 30
+								end if
+							end if
+						end if
+					end if
+				end if
+			end if
+		end if
+	end if
+end function
+
+function OOZSetup_Function100
+	CallFunction(OOZSetup_Function99)
+	if object.gravity == GRAVITY_AIR
+		object.state = PlayerObject_HandleAir
+		CallFunction(PlayerObject_HandleAirMovement)
+	else
+		CallFunction(PlayerObject_ResetOnFloor)
+		if object.speed == 0
+			if object.collisionMode == CMODE_FLOOR
+				if object.value1 < 240
+					object.animation = ANI_STOPPED
+					object.value1++
+				else
+					object.animation = ANI_WAITING
+					if stage.playerListPos == 2
+						object.value1++
+						if object.value1 == 834
+							object.value1 = 0
+							object.animation = ANI_STOPPED
+						end if
+					end if
+				end if
+			end if
+		else
+			object.value1 = 0
+			if object.animation != ANI_WATERSLIDE
+				if object.speed > 0
+					if object.speed < 0x30000
+						object.animation = ANI_WALKING
+						CallFunction(OOZSetup_Function97)
+					else
+						object.animation = ANI_RUNNING
+						object.animationSpeed = 240
+					end if
+				else
+					if object.speed > -0x30000
+						object.animation = ANI_WALKING
+						CallFunction(OOZSetup_Function97)
+					else
+						object.animation = ANI_RUNNING
+						object.animationSpeed = 240
+					end if
+				end if
+			end if
+		end if
+		object.value14 = 0
+		if object.collisionMode == CMODE_FLOOR
+			if object.pushing == 2
+				object.animation = ANI_PUSHING
+				object.animationSpeed = 0
+			end if
+		end if
+		if object.jumpPress == 1
+			CallFunction(PlayerObject_StartJump)
+		end if
+	end if
+end function
+
+function SPZSetup_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("CarnavalNight_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("CarnavalNight_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("CarnavalNight_F", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function SPZSetup_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("CarnavalNight.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("CarnavalNight.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("CarnavalNight.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function SPZSetup_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("CarnavalNight2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("CarnavalNight2_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("CarnavalNight2_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function SPZSetup_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland2.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+
+end function
+
+
+event ObjectMain
+	object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			tileLayer[1].deformationOffset++
+			RotatePalette(0, 172, 175, 1)
+	end if
+	// Level wrap
+	if stage.actNum == 2	
+	// top part of the level
+	if object[0].ypos >= 0x8F00000
+		temp1 = object[0].ypos
+		currentPlayer = 0
+		while currentPlayer < playerCount
+			temp0 = player[currentPlayer].ypos
+			temp0 -= temp1
+			Abs(temp0)
+			if temp0 < 0x8C0000
+				player[currentPlayer].ypos -= 0x8000000
+			end if
+			currentPlayer++
+		loop
+
+		if camera[0].ypos >= 0x800
+			camera[0].ypos -= 0x800
+			screen.yoffset -= 0x800
+		end if
+	end if
+
+	if object[0].ypos <= 0x900000
+		temp1 = object[0].ypos
+		currentPlayer = 0
+		while currentPlayer < playerCount
+			temp0 = player[currentPlayer].ypos
+			temp0 -= temp1
+			Abs(temp0)
+			if temp0 < 0x8C0000
+				player[currentPlayer].ypos += 0x8000000
+			end if
+			currentPlayer++
+		loop
+		if camera[0].ypos <= 384
+			camera[0].ypos += 0x800
+			screen.yoffset += 0x800
+		end if
+	end if
+
+	// Stage Wrap (Bottom)
+	if camera[0].ypos >= 1552
+		if SPZSetup_prevStageWrap == 0
+			SPZSetup_prevStageWrap = 1
+			arrayPos0 = 0x20
+			while arrayPos0 < 0x4A0
+				if object[arrayPos0].ypos <= 0x2800000
+					object[arrayPos0].ypos += 0x8000000
+					object[arrayPos0].wrapOffset.y += 0x8000000
+				end if
+				arrayPos0++
+			loop
+		end if
+	end if
+
+	// Stage Wrap (Top)
+	if camera[0].ypos <= 640
+		if SPZSetup_prevStageWrap == 1
+			SPZSetup_prevStageWrap = 0
+			arrayPos0 = 32
+			while arrayPos0 < 0x4A0
+				if object[arrayPos0].ypos >= 0x6800000
+					object[arrayPos0].ypos -= 0x8000000
+					object[arrayPos0].wrapOffset.y -= 0x8000000
+				end if
+				arrayPos0++
+			loop
+		end if
+	end if
+end if
+	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+		temp1 = object[currentPlayer].xpos
+		temp1 >>= 16
+		temp2 = object[currentPlayer].ypos
+		temp2 >>= 16
+		temp2 += object[currentPlayer].collisionBottom
+		temp2--
+		if object[currentPlayer].gravity == GRAVITY_GROUND
+			Get16x16TileInfo(temp0, temp1, temp2, TILEINFO_ANGLEB)
+			if temp0 == 1
+				object[currentPlayer].state = OOZSetup_Function100
+				object[currentPlayer].state = PlayerObject_Waterslide
+				Get16x16TileInfo(temp0, temp1, temp2, TILEINFO_DIRECTION)
+				switch temp0
+				case 0
+					CallFunction(PlayerObject_HandleGround)
+				case 2
+					if object[currentPlayer].speed > -0x80000
+						object[currentPlayer].speed -= 0x4000
+					end if
+					break
+				case 1
+				case 3
+					if object[currentPlayer].speed < 0x80000
+						object[currentPlayer].speed += 0x4000
+					end if
+				end switch
+				if object[currentPlayer].speed < 0
+					object[currentPlayer].direction = FLIP_X
+				else
+					object[currentPlayer].direction = FLIP_NONE
+				end if
+				if currentPlayer == 0
+					object.value8++
+					object.value8 &= 15
+				end if
+			end if
+		end if
+	next
+end event
+
+event ObjectDraw
+
+end event
+
+event ObjectStartup
+	if Stage.actNum == 1
+		SetMusicTrack("LavaReef.ogg", 0, 1)
+		SpeedUpMusic = SPZSetup_SpeedUpMusic1P
+		SlowDownMusic = SPZSetup_SlowDownMusic1P
+	else
+		SetMusicTrack("Sanopollis2.ogg", 0, 1)
+		SpeedUpMusic = SPZSetup_SpeedUpMusic2P
+		SlowDownMusic = SPZSetup_SlowDownMusic2P
+	end if
+	
+	SPZSetup_prevStageWrap 		= 0
+
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Cucky]
+	object[10].type = TypeName[SPZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ObjDef xmlns="http://www.sonicretro.org" Image="Yellow">
+  <Images>
+    <ImageFromSheet id="Yellow" sheet="DSelect/Objects1.gif" sourcex="1" sourcey="1" width="90" height="178">
+      <Offset X="0" Y="0" />
+    </ImageFromSheet>
+    <ImageFromSheet id="Red" sheet="DSelect/Objects1.gif" sourcex="183" sourcey="1" width="78" height="178">
+      <Offset X="0" Y="0" />
+    </ImageFromSheet>
+    <ImageFromSheet id="NoSave" sheet="DSelect/Objects1.gif" sourcex="339" sourcey="1" width="73" height="82">
+      <Offset X="0" Y="0" />
+    </ImageFromSheet>
+    <ImageFromSheet id="Delete" sheet="DSelect/Objects1.gif" sourcex="339" sourcey="1" width="73" height="82">
+      <Offset X="0" Y="0" />
+    </ImageFromSheet>
+    <ImageFromSheet id="Robotnik" sheet="DSelect/Objects1.gif" sourcex="339" sourcey="1" width="73" height="82">
+      <Offset X="0" Y="0" />
+    </ImageFromSheet>
+  </Images>
+  <Subtypes>
+    <Subtype id="00" name="Yellow" image="Yellow" />
+    <Subtype id="01" name="Red" image="Red" />
+    <Subtype id="02" name="NoSave" image="NoSave" />
+    <Subtype id="03" name="Delete" image="Delete" />
+  </Subtypes>
+  <Properties>
+    <Property name="PanelType" type="PanelType" startbit="0" length="4" />
+  </Properties>
+  <Enums>
+    <Enum name="PanelType">
+      <EnumMember name="Yellow" />
+      <EnumMember name="Red" />
+      <EnumMember name="NoSave" />
+      <EnumMember name="Delete" />
+    </Enum>
+  </Enums>
+  <Display>
+    <DisplayOption>
+      <Condition property="PanelType" value="Yellow" />
+      <ImageRef image="Yellow" />
+    </DisplayOption>
+    <DisplayOption>
+      <Condition property="PanelType" value="Red" />
+      <ImageRef image="Red" />
+    </DisplayOption>
+    <DisplayOption>
+      <Condition property="PanelType" value="NoSave" />
+      <ImageRef image="NoSave" />
+    </DisplayOption>
+    <DisplayOption>
+      <Condition property="PanelType" value="Delete" />
+      <ImageRef image="Delete" />
+    </DisplayOption>
+  </Display>
+</ObjDef>

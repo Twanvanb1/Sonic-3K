@@ -1,0 +1,242 @@
+// Aliases
+private alias 40 : TYPE_MGZSetup
+private alias object.value31 : object.wrapOffset.y
+
+
+// Function declarations
+reserve function MGZSetup_SpeedUpMusic1P
+reserve function MGZSetup_SlowDownMusic1P
+reserve function MGZSetup_SpeedUpMusic2P
+reserve function MGZSetup_SlowDownMusic2P
+
+// Static Values
+private value MGZSetup_prevStageWrap 		= 0
+
+// Player Aliases
+private alias object.xpos : player.xpos
+private alias object.ypos : player.ypos
+
+// Tables
+
+
+
+function MGZSetup_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("IceCap_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("IceCap_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function MGZSetup_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("IceCap.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("IceCap.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function ICZSetup_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("IceCap2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("IceCap2_F.ogg", 0, 0x136F4)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap2_F.ogg", 0, 0x136F4)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function ICZSetup_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("IceCap2.ogg", 0, 4, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("IceCap2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("IceCap2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+event ObjectMain
+// Level wrap
+if stage.actNum == 1	
+	// top part of the level
+	if object[0].ypos >= 0x10280000
+		temp1 = object[0].ypos
+		currentPlayer = 0
+		while currentPlayer < playerCount
+			temp0 = player[currentPlayer].ypos
+			temp0 -= temp1
+			Abs(temp0)
+			if temp0 < 0x8C0000
+				player[currentPlayer].ypos -= 0x10180000
+			end if
+			currentPlayer++
+		loop
+
+		if camera[0].ypos >= 384
+			camera[0].ypos -= 0x1028
+			screen.yoffset -= 0x1028
+		end if
+	end if
+
+	if object[0].ypos <= 0x900000
+		temp1 = object[0].ypos
+		currentPlayer = 0
+		while currentPlayer < playerCount
+			temp0 = player[currentPlayer].ypos
+			temp0 -= temp1
+			Abs(temp0)
+			if temp0 < 0x8C0000
+				player[currentPlayer].ypos += 0x10180000
+			end if
+			currentPlayer++
+		loop
+		if camera[0].ypos <= 384
+			camera[0].ypos += 0x1028
+			screen.yoffset += 0x1028
+		end if
+	end if
+
+	// Stage Wrap (Bottom)
+	if camera[0].ypos >= 1552
+		if MGZSetup_prevStageWrap == 0
+			MGZSetup_prevStageWrap = 1
+			arrayPos0 = 0x20
+			while arrayPos0 < 0x4A0
+				if object[arrayPos0].ypos <= 0x2800000
+					object[arrayPos0].ypos += 0x10280000
+					object[arrayPos0].wrapOffset.y += 0x102800000
+				end if
+				arrayPos0++
+			loop
+		end if
+	end if
+
+	// Stage Wrap (Top)
+	if camera[0].ypos <= 640
+		if MGZSetup_prevStageWrap == 1
+			MGZSetup_prevStageWrap = 0
+			arrayPos0 = 32
+			while arrayPos0 < 0x4A0
+				if object[arrayPos0].ypos >= 0x6800000
+					object[arrayPos0].ypos -= 0x10280000
+					object[arrayPos0].wrapOffset.y -= 0x10280000
+				end if
+				arrayPos0++
+			loop
+		end if
+	end if
+end if
+
+
+end event
+
+event ObjectStartup
+	if stage.actNum == 1
+		SetMusicTrack("MarbleGarden.ogg", 0, 1)
+		SpeedUpMusic = MGZSetup_SpeedUpMusic1P
+		SlowDownMusic = MGZSetup_SlowDownMusic1P
+	end if
+	if stage.actNum == 2
+		SetMusicTrack("IceCap2.ogg", 0, 1)
+		SpeedUpMusic = MGZSetup_SpeedUpMusic2P
+		SlowDownMusic = MGZSetup_SlowDownMusic2P
+	end if
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Ricky]
+	object[10].type = TypeName[MGZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	MGZSetup_prevStageWrap = 0
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

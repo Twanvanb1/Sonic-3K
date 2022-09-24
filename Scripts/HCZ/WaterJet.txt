@@ -1,0 +1,70 @@
+// ----------------------------------
+// RSDK Project: Sonic 3G: Hydrocity Demo
+// Script Description: Water Jet
+// Script Author: Hydropper
+// ----------------------------------
+
+// Aliases
+
+// Function declarations
+
+public value GrabBarOn = 0;
+public value ButtonPressed1 = 0;
+
+event ObjectMain
+	switch object.propertyvalue
+	case 0
+		if ButtonPressed1 == 1
+			object.value3 = 1
+		end if
+		foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+			BoxCollisionTest(C_TOUCH, object.entityPos, -64, -64, 64, 56, currentPlayer, -1, -1, 1, 1)
+			if checkResult == 1
+				object.value2 = 0
+				if GrabBarOn == 0
+					object[currentPlayer].animation = ANI_WATERSLIDE
+					object[currentPlayer].state = PlayerObject_HandleAir
+					object[currentPlayer].gravity = GRAVITY_AIR
+					object[currentPlayer].tileCollisions = 1
+					object[currentPlayer].speed = 0x60000
+					object[currentPlayer].value1 = 0
+					object[currentPlayer].xvel = 0x6000
+				end if
+			end if
+		next
+		break
+	case 1
+		if object[0].xpos >= 159907840
+			if object[0].xpos <= 175243264
+				temp1 = object[0].xpos
+				temp2 = temp1
+				temp2 >>= 16
+				temp2 -= 50
+				temp3 = temp2
+				temp3 <<= 16
+				object.xpos = temp3
+			end if
+		end if
+	end switch
+end event
+
+
+event ObjectDraw
+	if object.propertyvalue == 1
+		DrawSprite(0)
+	end if
+end event
+
+
+event ObjectStartup
+	object.value2 = 0
+	object.value6 = 2646
+	LoadSpriteSheet("HCZ/Objects5.gif")
+	SpriteFrame(-6, -32, 224, 64, 1, 0)
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event

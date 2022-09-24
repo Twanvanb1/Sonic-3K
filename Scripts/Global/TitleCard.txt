@@ -1,0 +1,442 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Title Card Object
+// Script Author: Christan Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+//-------Aliases-------//
+private alias 6 : TYPE_TITLECARD
+
+
+// Static Values
+public value TitleCard_value23 = 0;
+public value TitleCard.Fade = 0;
+private value object.timer = 0;
+
+
+
+
+private alias object.controlMode : player.controlMode
+private alias object.jumpPress 	 : player.jumpPress
+private alias object.jumpHold 	 : player.jumpHold
+private alias object.up 		 : player.up
+private alias object.down 		 : player.down
+private alias object.left 		 : player.left
+private alias object.right 		 : player.right
+private alias object.value1 	 : player.timer
+
+public value RedFade = 0;
+public value GreenFade = 0;
+public value BlueFade = 0;
+public value FadeSpeed = 0;
+
+
+reserve function GenesisFadeIn
+reserve function GenesisFadeOut
+reserve function GenesisFadeSetup
+
+
+	function GenesisFadeSetup
+		if object.value28 != 1 // This makes the script only run once
+			object.value28 = 1
+			CopyPalette(0, 0, 7, 0, 255)
+			CopyPalette(6, 0, 0, 0, 255)
+		end if
+	end function
+
+
+
+	function GenesisFadeIn
+		while object.value21 <= 255
+			GetPaletteEntry(7, object.value21, object.value37) // Get Color limit
+			GetPaletteEntry(0, object.value21, RedFade) // Get current Color
+
+			object.value37 &= 0xFF0000 // Seperate Red (limit)
+			object.value37 >>= 16 // Right shift 16 (limit)
+
+			RedFade &= 0xFF0000 // Seperate Red
+			RedFade >>= 16 // Right shift 16
+
+			RedFade += FadeSpeed // Add color by value FadeSpeed
+
+			if RedFade > object.value37 // Red limiter
+				RedFade = object.value37
+			end if
+
+			RedFade <<= 16
+			GetPaletteEntry(7, object.value21, object.value38) // Get Color limit
+			GetPaletteEntry(0, object.value21, GreenFade) // Get current Color
+
+			object.value38 &= 0x00FF00 // Seperate Green (limit)
+			object.value38 >>= 8 // Right shift 8 (limit)
+			
+			GreenFade >>= 8 // Right shift 8
+			
+				GreenFade += FadeSpeed // Add color by value FadeSpeed
+				
+			if GreenFade > object.value38 // Green limiter
+				GreenFade = object.value38
+			end if
+			
+			GreenFade <<= 8
+			GetPaletteEntry(7, object.value21, object.value39) // Get Color limit
+			GetPaletteEntry(0, object.value21, BlueFade) // Get current Color
+
+			object.value39 &= 0x0000FF // Seperate Blue (limit)
+
+			BlueFade += FadeSpeed // Add color by value FadeSpeed
+
+
+			if BlueFade > object.value39 // Blue limiter
+				BlueFade = object.value39
+			end if
+
+			object.value40 = RedFade // Combine RGB
+			object.value40 += GreenFade
+			object.value40 += BlueFade
+
+			SetPaletteEntry(0, object.value21, object.value40) // Set to palette slot 0
+
+			object.value21++
+		loop
+		object.value21 = 0
+	end function
+
+
+	function GenesisFadeOut
+		while object.value21 <= 255
+			GetPaletteEntry(0, object.value21, RedFade) // Get color value from index object.value21
+			RedFade &= 0xFF0000 // Seperate Red
+			RedFade >>= 16 // Right shift 16
+
+			if RedFade > 7 // Make sure it doesn't go belo 0, that would break the colors
+				RedFade -= FadeSpeed
+			end if
+
+			RedFade <<= 16 // Left shift 16
+
+			GetPaletteEntry(0, object.value21, GreenFade) // Get color value from index object.value21
+			GreenFade &= 0x00FF00 // Seperate Green
+			GreenFade >>= 8 // Right shift 8
+
+			if GreenFade > 7 // Make sure it doesn't go belo 0, that would break the colors
+				GreenFade -= FadeSpeed
+			end if
+
+			GreenFade <<= 8 // Left shift 8
+
+			GetPaletteEntry(0, object.value21, BlueFade) // Get color value from index object.value21
+			BlueFade &= 0x0000FF // Seperate Blue
+			BlueFade >>= 8
+
+			if BlueFade > 7 // Make sure it doesn't go belo 0, that would break the colors
+				BlueFade -= FadeSpeed
+			end if
+
+			BlueFade <<= 8 // Left shift 8
+			object.value40 = RedFade // Combine RGB
+			object.value40 += GreenFade
+			object.value40 += BlueFade
+
+			SetPaletteEntry(0, object.value21, object.value40) // Set color to combined RGB
+
+
+			object.value21++
+		loop
+		object.value21 = 0
+	end function
+
+
+
+
+
+// Tables
+
+event ObjectMain
+
+	if object.value47 != 1
+		object.value0 = 255
+		object.value47 = 1
+		object.value2 = 1
+		object.value9 = 1060 // Actname oFFset (?????????)
+		object.value10 = 1140
+		object.value11 = 1164
+		if object.state != 8
+			PlayMusic(0)
+		end if
+
+	end if
+	if object.timer >= 150
+		if object.timer <= 152
+			stage.timeEnabled = 1
+		end if
+	end if
+
+	object.timer++
+
+	switch object.state
+	case 8
+		object.value29++
+		music.volume -= 2
+		FadeSpeed = 8
+		CallFunction(GenesisFadeOut)
+		if object.value29 >= 60
+			stage.activeList = PRESENTATION_STAGE
+			stage.listPos = 0
+			LoadStage()
+		end if
+	break
+	end switch
+
+		if object.value5 > -48
+			object.value5 -= 32
+		else
+			if object.value4 < 424
+				object.value4 += 32
+				if options.vsMode == true
+					CallNativeFunction2(ReceiveEntity, 0x400, 1)
+					ResetObjectEntity(0x400, TypeName[Blank Object], 0, 0, 0)
+				end if
+			else
+				if options.vsMode == true
+					stage.state = 4
+				else
+					stage.state = STAGE_RUNNING
+				end if
+				currentPlayer = 0
+				while currentPlayer < playerCount
+					player[currentPlayer].controlMode = -1
+					player[currentPlayer].up 		= false
+					player[currentPlayer].down 		= false
+					player[currentPlayer].left 		= false
+					player[currentPlayer].right 	= false
+					player[currentPlayer].jumpPress = false
+					player[currentPlayer].jumpHold 	= false
+					player[currentPlayer].timer 	= 0
+					currentPlayer++
+				loop
+				object.state++
+			end if
+		end if
+
+end event
+
+
+event ObjectDraw
+
+SetPaletteEntry(7, 64, 0xE00000)
+SetPaletteEntry(7, 65, 0xD8D8FC)
+SetPaletteEntry(7, 66, 0xFCFCFC)
+SetPaletteEntry(7, 67, 0xB4B4D8)
+SetPaletteEntry(7, 68, 0x202020)
+SetPaletteEntry(7, 69, 0xFCB400)
+SetPaletteEntry(7, 70, 0x2244CC)
+
+	CopyPalette(7, 64, 0, 64, 7)
+
+
+	temp2 = screen.xcenter
+	temp2 -= 160
+	temp2 >>= 1
+
+
+	if object.timer <= 150
+		object[currentPlayer].controlMode = -1
+	else
+
+		object[currentPlayer].controlMode = 0
+	end if
+
+	if object.timer >= 100
+		object.value0-= 24
+	end if
+		FadeSpeed = 8
+		if object.timer >= 120
+			if object.timer <= 200
+				stage.state = STAGE_RUNNING
+
+				CallFunction(GenesisFadeIn)
+			end if
+		else
+			DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, 255)
+		end if
+		
+		if stage.actNum == 1
+			object.value12 = 28
+		else
+			if stage.actnum == 2
+				object.value12 = 29
+			else
+				object.value12 = 30
+			end if
+		end if
+		
+		if stage.Actnum == 0
+			object.value12 = 32
+		end if
+
+	if object.value2 > 0
+		object.value2++
+		if object.value4 == 0
+			if object.value3 <= 166
+				object.value4 = 0
+			else
+				object.value4 = 1
+			end if
+		end if
+		if object.state != 8
+		if object.value4 == 0
+			if object.timer >= 25
+				object.value3 += 16
+			end if
+		else
+			if object.timer >= 150
+				object.value4 = 2
+			end if
+			if object.value4 == 2
+				object.value3 -= 16
+			end if
+		end if
+
+		DrawRect(116, 0, 64, object.value3, 224, 0, 0, 255) // Red bar
+		DrawSpriteScreenXY(26, 124, object.value3) // "Sonic 3" text
+	end if 
+	object.value5 = screen.xsize
+	object.value5 -= object.value3
+	object.value5 += 98
+
+	if object.timer <= 45
+		object.value9 -=16
+	end if
+
+	if object.timer >= 135
+		object.value9 +=16
+	end if                    // Act name slide in
+
+	if object.timer <= 50
+		object.value10 -=16
+	end if
+
+	if object.timer >= 137
+		object.value10 +=16
+	end if                   // Zone text slide in
+
+
+	if object.timer <= 55
+		object.value11 -=16
+	end if
+
+	if object.timer >= 140
+		object.value11 +=16
+	end if                  // Act num slide in
+
+	end if
+
+	DrawActName(0, object.value9, 96, 0, 0, 16, 0) // Act name
+	DrawSpriteScreenXY(27, object.value10, 96) // 'Zone' text
+	
+	temp0 = screen.Xcenter
+	temp0 -= 10
+	
+	
+	DrawSpriteScreenXY(object.value12, object.value11, 128) // Act Number
+	SetActivePalette(0, 0, 240)
+
+	if object.timer >= 1500
+	end if
+
+end event
+
+
+event ObjectStartup
+			engine.state = 1
+	CopyPalette(0, 0, 5, 0, 255)
+	LoadSpriteSheet("Global/S3TCard.gif")
+	SpriteFrame(0, 0, 17, 24, 10, 84) // A
+	SpriteFrame(0, 0, 16, 24, 28, 84) // B
+	SpriteFrame(0, 0, 15, 24, 45, 84) // C
+	SpriteFrame(0, 0, 15, 24, 61, 84) // D
+	SpriteFrame(0, 0, 15, 24, 77, 84) // E
+	SpriteFrame(0, 0, 15, 24, 95, 84) // F
+	SpriteFrame(0, 0, 16, 24, 112, 84) // G
+	SpriteFrame(0, 0, 16, 24, 10, 109) // H
+	SpriteFrame(0, 0, 9, 24, 27, 109) // I
+	SpriteFrame(0, 0, 16, 24, 37, 109) // J
+	SpriteFrame(0, 0, 16, 24, 47, 109) // K
+	SpriteFrame(0, 0, 8, 24, 64, 109) // L
+	SpriteFrame(0, 0, 24, 24, 73, 109) // M
+	SpriteFrame(0, 0, 15, 24, 98, 109) // N
+	SpriteFrame(0, 0, 24, 24, 114, 109) // O
+	SpriteFrame(0, 0, 16, 24, 10, 134) // P
+	SpriteFrame(0, 0, 24, 24, 27, 134) // Q
+	SpriteFrame(0, 0, 16, 24, 52, 134) // R
+	SpriteFrame(0, 0, 16, 24, 69, 134) // S
+	SpriteFrame(0, 0, 16, 24, 86, 134) // T
+	SpriteFrame(0, 0, 16, 24, 103, 134) // U
+	SpriteFrame(0, 0, 15, 24, 120, 134) // V
+	SpriteFrame(0, 0, 22, 24, 10, 96) // W
+	SpriteFrame(0, 0, 15, 24, 34, 113) // X
+	SpriteFrame(0, 0, 15, 24, 51, 159) // Y
+	SpriteFrame(0, 0, 16, 24, 67, 113) // Z
+	SpriteFrame(0, -24, 48, 16, 10, 67) // "Sonic 3" text
+	SpriteFrame(-72, 32, 72, 24, 60, 1) // "Zone" text
+	SpriteFrame(0, 32, 49, 32, 10, 1) // act 1
+	SpriteFrame(0, 32, 49, 32, 10, 34) // act 2
+	SpriteFrame(0, 32, 48, 32, 60, 26) // act 3
+	SpriteFrame(-15, 0, 140, 5, 37, 73)
+	SpriteFrame(0, 0, 0, 0, 0, 0) //Blank
+	if vs.playerID == 0
+		SpriteFrame(-160, -16, 136, 7, 110, 172)
+	else
+		SpriteFrame(-160, -16, 136, 7, 110, 164)
+	end if
+	if options.vsMode == 1
+		CallNativeFunction2(ReceiveEntity, 0x400, 1)
+		ResetObjectEntity(0x400, TypeName[Blank Object], 0, 0, 0)
+	end if
+	arrayPos0 = 32
+	while arrayPos0 < 0x420
+		if object[arrayPos0].type == TypeName[Title Card]
+			object[arrayPos0].priority = PRIORITY_ACTIVE_PAUSED
+			object[arrayPos0].alpha = 255
+			object[arrayPos0].drawOrder = 6
+			stage.state = STAGE_PAUSED
+			if object[arrayPos0].propertyValue == 5
+				CheckCurrentStageFolder("ZoneM")
+				if checkResult == 0
+					stage.activeList = PRESENTATION_STAGE
+					stage.listPos = 0
+					LoadStage()
+				end if
+			end if
+		end if
+		arrayPos0++
+	loop
+
+
+
+
+
+	object.value47 = 0
+	object.timer = 0
+	object.value28 = 0
+
+	CopyPalette(5, 0, 0, 0, 255)
+
+	SetActivePalette(0, 0, 240)
+
+
+
+
+CallFunction(GenesisFadeSetup)
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

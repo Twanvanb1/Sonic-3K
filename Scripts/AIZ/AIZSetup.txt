@@ -1,0 +1,227 @@
+
+// Aliases
+private alias 40 : TYPE_AIZSETUP
+
+// Function declarations
+reserve function AIZSetup_SpeedUpMusic1P
+reserve function AIZSetup_SlowDownMusic1P
+reserve function AIZSetup_SpeedUpMusic2P
+reserve function AIZSetup_SlowDownMusic2P
+
+// Static Values
+public value AIZSetup_value33 = 0;
+
+public alias AIZSetup_value33 : AIZSetup_flashTimer
+
+function AIZSetup_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("AngelIsland_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function AIZSetup_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function AIZSetup_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("AngelIsland2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function AIZSetup_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland2.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+event ObjectMain
+
+	object.value1++
+	if object.value1 == 2
+		tileLayer[0].deformationOffsetW++
+	end if
+
+	if object.value1 == 4
+		tileLayer[0].deformationOffsetW++
+		tileLayer[1].deformationOffsetW++
+		object.value1 = 0
+	end if
+
+	if Stage.actNum == 1
+		object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			RotatePalette(0, 171, 173, 0)
+			RotatePalette(1, 171, 173, 0)
+		end if
+	end if
+
+	if Stage.actNum == 2
+		Object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			RotatePalette(0, 188, 191, 0)
+			RotatePalette(1, 188, 191, 0)
+		end	if
+	end if
+
+	if AIZSetup_flashTimer > 0
+		AIZSetup_flashTimer--
+	end if
+	
+end event
+
+event ObjectDraw
+
+	temp0 = stage.waterLevel
+	temp0 -= screen.yoffset
+
+	if temp0 < 0
+		temp0 = 0
+	end if
+
+	if temp0 > screen.ysize
+		temp0 = screen.ysize
+	end if
+
+	SetActivePalette(0, 0, temp0)
+	if AIZSetup_flashTimer > 0
+		SetActivePalette(2, temp0, screen.ysize)
+	else
+		SetActivePalette(1, temp0, screen.ysize)
+	end if
+end event
+
+event ObjectStartup
+	if Stage.actNum == 1
+		SetMusicTrack("AngelIsland.ogg", 0, 1)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic1P
+		SlowDownMusic = AIZSetup_SlowDownMusic1P
+	else
+		SetMusicTrack("AngelIsland2.ogg", 0, 1)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic2P
+		SlowDownMusic = AIZSetup_SlowDownMusic2P
+	end if
+	
+	SetLayerDeformation(1, 64, 2, 0, 0, 0)
+
+	if Stage.actNum == 1
+		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 191)
+	else
+		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
+		LoadPalette("AIZ2_WaterPal.act", 1, 129, 129, 191)
+	end if
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Cucky]
+	object[10].type = TypeName[AIZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

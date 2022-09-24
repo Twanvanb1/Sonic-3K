@@ -1,0 +1,177 @@
+// ----------------------------------
+// RSDK Project: Sonic 3G: Hydrocity Demo
+// Script Description: Background object
+// Script Author: Hydropper
+// ----------------------------------
+
+// Aliases
+
+// Static Values
+public value StartHeight = 0;
+public value NewHeight = 0;
+public value Height = 0;
+public value YFactor = 0;
+public value Xleft = 0;
+public value Xright = 0;
+public value offset = 0;
+public value WaterLevelApparent = 0;
+public value Min = 0;
+
+
+// Function declarations
+
+event ObjectMain
+
+	// Defining X right frame and X left frame
+	Xleft = screen.xoffset
+	Xright = Xleft
+	Xright += screen.xsize
+
+
+	YFactor = 62586
+
+	offset = Xleft
+	offset <<= 16
+	offset *= 32768
+
+	object.xpos = Xleft
+
+
+	if NewHeight >= 0
+		object.ypos = WaterLevelApparent
+		NewHeight = screen.yoffset
+		NewHeight <<= 16
+		NewHeight *= YFactor
+
+		if NewHeight < StartHeight
+			Min = NewHeight
+		else
+			Min = StartHeight
+		end if
+
+		Height = Min
+
+
+
+
+
+	end if
+
+
+
+end event
+
+
+event ObjectDraw
+	DrawSprite(97)
+end event
+
+
+event ObjectStartup
+	object.ypos = 0
+	LoadSpriteSheet("HCZ/hczbg.gif")
+	SpriteFrame(0, 0, 512, 1, 0, 0)
+	SpriteFrame(0, 0, 512, 1, 0, 1)
+	SpriteFrame(0, 0, 512, 1, 0, 2)
+	SpriteFrame(0, 0, 512, 1, 0, 3)
+	SpriteFrame(0, 0, 512, 1, 0, 4)
+	SpriteFrame(0, 0, 512, 1, 0, 5)
+	SpriteFrame(0, 0, 512, 1, 0, 6)
+	SpriteFrame(0, 0, 512, 1, 0, 7)
+	SpriteFrame(0, 0, 512, 1, 0, 8)
+	SpriteFrame(0, 0, 512, 1, 0, 9)
+	SpriteFrame(0, 0, 512, 1, 0, 10)
+	SpriteFrame(0, 0, 512, 1, 0, 11)
+	SpriteFrame(0, 0, 512, 1, 0, 12)
+	SpriteFrame(0, 0, 512, 1, 0, 13)
+	SpriteFrame(0, 0, 512, 1, 0, 14)
+	SpriteFrame(0, 0, 512, 1, 0, 15)
+	SpriteFrame(0, 0, 512, 1, 0, 16)
+	SpriteFrame(0, 0, 512, 1, 0, 17)
+	SpriteFrame(0, 0, 512, 1, 0, 18)
+	SpriteFrame(0, 0, 512, 1, 0, 19)
+	SpriteFrame(0, 0, 512, 1, 0, 20)
+	SpriteFrame(0, 0, 512, 1, 0, 21)
+	SpriteFrame(0, 0, 512, 1, 0, 22)
+	SpriteFrame(0, 0, 512, 1, 0, 23)
+	SpriteFrame(0, 0, 512, 1, 0, 24)
+	SpriteFrame(0, 0, 512, 1, 0, 25)
+	SpriteFrame(0, 0, 512, 1, 0, 26)
+	SpriteFrame(0, 0, 512, 1, 0, 27)
+	SpriteFrame(0, 0, 512, 1, 0, 28)
+	SpriteFrame(0, 0, 512, 1, 0, 29)
+	SpriteFrame(0, 0, 512, 1, 0, 30)
+	SpriteFrame(0, 0, 512, 1, 0, 31)
+	SpriteFrame(0, 0, 512, 1, 0, 32)
+	SpriteFrame(0, 0, 512, 1, 0, 33)
+	SpriteFrame(0, 0, 512, 1, 0, 34)
+	SpriteFrame(0, 0, 512, 1, 0, 35)
+	SpriteFrame(0, 0, 512, 1, 0, 36)
+	SpriteFrame(0, 0, 512, 1, 0, 37)
+	SpriteFrame(0, 0, 512, 1, 0, 38)
+	SpriteFrame(0, 0, 512, 1, 0, 39)
+	SpriteFrame(0, 0, 512, 1, 0, 40)
+	SpriteFrame(0, 0, 512, 1, 0, 41)
+	SpriteFrame(0, 0, 512, 1, 0, 42)
+	SpriteFrame(0, 0, 512, 1, 0, 43)
+	SpriteFrame(0, 0, 512, 1, 0, 44)
+	SpriteFrame(0, 0, 512, 1, 0, 45)
+	SpriteFrame(0, 0, 512, 1, 0, 46)
+	SpriteFrame(0, 0, 512, 1, 0, 47)
+	SpriteFrame(0, 0, 512, 1, 0, 48)
+	SpriteFrame(0, 0, 512, 1, 0, 49)
+	SpriteFrame(0, 0, 512, 1, 0, 50)
+	SpriteFrame(0, 0, 512, 1, 0, 51)
+	SpriteFrame(0, 0, 512, 1, 0, 52)
+	SpriteFrame(0, 0, 512, 1, 0, 53)
+	SpriteFrame(0, 0, 512, 1, 0, 54)
+	SpriteFrame(0, 0, 512, 1, 0, 55)
+	SpriteFrame(0, 0, 512, 1, 0, 56)
+	SpriteFrame(0, 0, 512, 1, 0, 57)
+	SpriteFrame(0, 0, 512, 1, 0, 58)
+	SpriteFrame(0, 0, 512, 1, 0, 59)
+	SpriteFrame(0, 0, 512, 1, 0, 60)
+	SpriteFrame(0, 0, 512, 1, 0, 61)
+	SpriteFrame(0, 0, 512, 1, 0, 62)
+	SpriteFrame(0, 0, 512, 1, 0, 63)
+	SpriteFrame(0, 0, 512, 1, 0, 64)
+	SpriteFrame(0, 0, 512, 1, 0, 65)
+	SpriteFrame(0, 0, 512, 1, 0, 66)
+	SpriteFrame(0, 0, 512, 1, 0, 67)
+	SpriteFrame(0, 0, 512, 1, 0, 68)
+	SpriteFrame(0, 0, 512, 1, 0, 69)
+	SpriteFrame(0, 0, 512, 1, 0, 70)
+	SpriteFrame(0, 0, 512, 1, 0, 71)
+	SpriteFrame(0, 0, 512, 1, 0, 72)
+	SpriteFrame(0, 0, 512, 1, 0, 73)
+	SpriteFrame(0, 0, 512, 1, 0, 74)
+	SpriteFrame(0, 0, 512, 1, 0, 75)
+	SpriteFrame(0, 0, 512, 1, 0, 76)
+	SpriteFrame(0, 0, 512, 1, 0, 77)
+	SpriteFrame(0, 0, 512, 1, 0, 78)
+	SpriteFrame(0, 0, 512, 1, 0, 79)
+	SpriteFrame(0, 0, 512, 1, 0, 80)
+	SpriteFrame(0, 0, 512, 1, 0, 81)
+	SpriteFrame(0, 0, 512, 1, 0, 82)
+	SpriteFrame(0, 0, 512, 1, 0, 83)
+	SpriteFrame(0, 0, 512, 1, 0, 84)
+	SpriteFrame(0, 0, 512, 1, 0, 85)
+	SpriteFrame(0, 0, 512, 1, 0, 86)
+	SpriteFrame(0, 0, 512, 1, 0, 87)
+	SpriteFrame(0, 0, 512, 1, 0, 88)
+	SpriteFrame(0, 0, 512, 1, 0, 89)
+	SpriteFrame(0, 0, 512, 1, 0, 90)
+	SpriteFrame(0, 0, 512, 1, 0, 91)
+	SpriteFrame(0, 0, 512, 1, 0, 92)
+	SpriteFrame(0, 0, 512, 1, 0, 93)
+	SpriteFrame(0, 0, 512, 1, 0, 94)
+	SpriteFrame(0, 0, 512, 1, 0, 95)
+	SpriteFrame(0, 0, 512, 1, 0, 96)
+	SpriteFrame(0, 0, 512, 96, 0, 0)
+end event
+
+event RSDKDraw
+end event
+
+event RSDKLoad
+end event
