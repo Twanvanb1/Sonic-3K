@@ -1,12 +1,11 @@
 # **Sonic-3K**
-+ A Verry WIP port of S3k to RSDKv4.
++ A Very WIP port of S3k to RSDKv4.
 + Only made to test stuff in RSDKv4.
 
 
 # **Please support the original sonic 3 and knuckles remake in sonic origins**
 + You can get the official release of Sonic Origins from:
     [Via Steam](https://store.steampowered.com/app/1794960/Sonic_Origins/)
-
 
 # FAQ
 ### Q: I found a bug/I have a feature request!
