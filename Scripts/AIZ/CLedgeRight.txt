@@ -5,7 +5,7 @@
 // Unpacked by Rubberduckycooly's script unpacker
 // ----------------------------------
 
-// Aliases
+//-------Aliases-------//
 private alias 53 : TYPE_CLEDGERIGHT
 
 // Function declarations
@@ -15,7 +15,8 @@ reserve function CLedgeRight_DebugSpawn
 // Static Values
 
 // Tables
-public table CLedgeLeft_table25
+
+public table CLedgeRight_table25
 	32, 32, 32, 32, 32, 32, 32, 32, 33, 33, 34, 34, 35, 35, 36, 36, 37, 37, 38, 38, 39, 39, 40, 40, 41, 41, 42, 42, 43, 43, 44, 44, 45, 45, 46, 46, 47, 47, 48, 48, 48, 48, 48, 48, 48, 48, 48, 48
 end table
 
@@ -103,11 +104,11 @@ event ObjectMain
 				if temp0 > 47
 					temp0 = 47
 				end if
-				GetTableValue(temp1, temp0, CLedgeLeft_table25)
-				temp1 -= 84
+				GetTableValue(temp1, temp0, CLedgeRight_table25)
+				temp1 -= 64
 				temp0 = temp1
 				temp0 += 32
-				BoxCollisionTest(C_PLATFORM, object.entityPos, -48, temp1, 48, temp0, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+				BoxCollisionTest(C_PLATFORM, object.entityPos, -48, -30, 48, 34, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
 				if checkResult == 1
 					object[currentPlayer].ypos += 0x40000
 					if object.state == 0
@@ -135,13 +136,14 @@ end event
 
 
 event ObjectStartup
-	LoadSpriteSheet("AIZ/Objects.gif")
-	SpriteFrame(-48, -64, 96, 96, 1, 148)
-	temp0 = 148
-	while temp0 < 244
-		temp1 = 1
-		while temp1 < 97
-			SpriteFrame(-8, -8, 16, 16, temp1, temp0)
+	LoadSpriteSheet("AIZ/Objects2.gif")
+	SpriteFrame(-48, -30, 96, 64, 415, 192) // Full Platform - #0
+	
+	temp0 = 192
+	while temp0 < 193
+		temp1 = 415
+		while temp1 < 500
+			SpriteFrame(-8, 26, 16, 64, temp1, temp0)
 			temp1 += 16
 		loop
 		temp0 += 16

@@ -268,6 +268,7 @@ end if
 end event
 
 event ObjectStartup
+
 	if stage.actNum == 1
 		SetMusicTrack("IceCap.ogg", 0, 1)
 		SpeedUpMusic = ICZSetup_SpeedUpMusic1P
@@ -278,10 +279,13 @@ event ObjectStartup
 		SpeedUpMusic = ICZSetup_SpeedUpMusic2P
 		SlowDownMusic = ICZSetup_SlowDownMusic2P
 	end if
+	
 	animalType1 = TypeName[Flicky]
 	animalType2 = TypeName[Ricky]
+	
 	object[10].type = TypeName[ICZ Setup]
 	object[10].priority = PRIORITY_ACTIVE
+	
 	ICZSetup_value33 = 0
 end event
 

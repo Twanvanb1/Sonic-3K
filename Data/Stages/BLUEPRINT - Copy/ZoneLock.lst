@@ -1,0 +1,24 @@
+Patch "Remove Zone Lock" Required
+writenop 000DBBC1 2
+writenop 00190991 2
+writenop 00173EE1 2
+writenop 0017B313 2
+writenop 00173196 2
+writenop 00111F31 2
+writenop 00111811 2
+writenop 00075924 2
+writenop 000A1C1B 2
+writenop 000F09E1 2
+writenop 00025780 2
+writenop 00086670 2
+writenop 0001C4E2 2
+writenop 00024ED0 2
+writenop 0019C841 2
+writenop 00088C50 2
+writenop 00128AD1 2
+writenop 0013392A 2
+writenop 000E4786 2
+writenop 000A3E66 2
+writenop 00112D11 2
+writenop 00112900 2
+writenop 000DE970 2

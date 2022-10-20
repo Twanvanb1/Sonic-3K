@@ -133,6 +133,34 @@ end function
 
 event ObjectMain
 
+
+object.value0++
+	if object.value0 > 1
+		object.value0 = 0
+		Copy16x16Tile(760, object.value2)
+		object.value2++
+		Copy16x16Tile(761, object.value2)
+		object.value2++
+		Copy16x16Tile(762, object.value2)
+		object.value2++
+		Copy16x16Tile(763, object.value2)
+		object.value2++
+		Copy16x16Tile(764, object.value2)
+		object.value2++
+		Copy16x16Tile(765, object.value2)
+		object.value2++
+		Copy16x16Tile(766, object.value2)
+		object.value2++
+		Copy16x16Tile(767, object.value2)
+		object.value2++
+	end if
+
+	//if set to 768 funny result
+	if object.value2 == 824
+		object.value2 = 768
+	end if
+
+
 end event
 
 event ObjectDraw
