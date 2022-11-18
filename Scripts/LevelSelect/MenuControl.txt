@@ -80,10 +80,10 @@ end table
 // -> Sixth is the icon the entry uses
 
 public table MenuControl_EntryTable
-	MENU_1, 0,  REGULAR_STAGE, 0, 14, 1		// Angel Island 1
-	MENU_1, 1,  REGULAR_STAGE, 1, 15, 1		// Angel Island 2
-	MENU_1, 3,  REGULAR_STAGE, 2, 17, 2		// Hydrocity 1
-	MENU_1, 4,  REGULAR_STAGE, 3, 17, 2		// Hydrocity 2
+	MENU_1, 0,  REGULAR_STAGE, 0, 20, 1		// Angel Island 1
+	MENU_1, 1,  REGULAR_STAGE, 1, 20, 1		// Angel Island 2
+	MENU_1, 3,  REGULAR_STAGE, 2, 21, 2		// Hydrocity 1
+	MENU_1, 4,  REGULAR_STAGE, 3, 22, 2		// Hydrocity 2
 	MENU_1, 6,  REGULAR_STAGE, 4, 18, 3		// Marble Garden 1
 	MENU_1, 7,  REGULAR_STAGE, 5, 18, 3		// Marble Garden 2
 	MENU_1, 9,  REGULAR_STAGE, 6, 19, 4		// Carnival Night 1
@@ -98,23 +98,25 @@ public table MenuControl_EntryTable
 	MENU_1, 22, REGULAR_STAGE, 15, 1, 9		// Flying battery 2
 	MENU_1, 24, REGULAR_STAGE, 16, 0, 10	// Sandopolis 1
 	MENU_1, 25, REGULAR_STAGE, 17, 1, 10	// Sandopolis 2
-	
-	
-	MENU_2, 0,  REGULAR_STAGE, 18, 0, 11	// Lava reef 1
-	MENU_2, 1,  REGULAR_STAGE, 19, 0, 11	// Lava reef 2
-	MENU_2, 3,  REGULAR_STAGE, 20, 1, 7		// Lava reef 3
-	MENU_2, 4,  REGULAR_STAGE, _, 0, 7		// Lava reef 4
-	MENU_2, 6,  REGULAR_STAGE, 21, 2, 12	// Sky Sanctuary 1
-	MENU_2, 7,  REGULAR_STAGE, _, 0, 12		// Sky Sanctuary 2
-	MENU_2, 9,  REGULAR_STAGE, 22, 2, 12	// Death Egg 1
-	MENU_2, 10, REGULAR_STAGE, 23-, 4, 12	// Death Egg 1
-	MENU_2, 12,  REGULAR_STAGE, 17, 2, 12	// The Doomsday 1
-	MENU_2, 13, REGULAR_STAGE, 18, 4, 12	// The Doomsday 2
-	MENU_2, 15, SPECIAL_STAGE, 0, 10, 13	// Bonus 1
-	MENU_2, 16, SPECIAL_STAGE, 0, 10, 13	// Bonus 2
-	MENU_2, 18, SPECIAL_STAGE, 0, 10, 13	// Special Stage 1
-	MENU_2, 19, SPECIAL_STAGE, 0, 10, 13	// Special Stage 2
-	MENU_2, 21, 0, 0, 67, 0 				// Sound test
+	MENU_1, 27,  REGULAR_STAGE, 18, 0, 11	// Lava reef 1
+	MENU_1, 28,  REGULAR_STAGE, 19, 0, 11	// Lava reef 2
+
+	MENU_2, 0,  REGULAR_STAGE, 20, 0, 12	// Hidden Palace
+	MENU_2, 3,  REGULAR_STAGE, 21, 2, 12	// Sky Sanctuary S
+	MENU_2, 4,  REGULAR_STAGE, _, 3, 12		// Sky Sanctuary K
+	MENU_2, 6,  REGULAR_STAGE, 22, 2, 12	// Death Egg 1
+	MENU_2, 7, 	REGULAR_STAGE, 23, 4, 12	// Death Egg 2
+	MENU_2, 9, 	REGULAR_STAGE, 17, 2, 12	// The Doomsday 
+	MENU_2, 11, REGULAR_STAGE, _, 4, 12		// Bonus G
+	MENU_2, 12, SPECIAL_STAGE, _, 10, 13	// 		 R
+	MENU_2, 13, SPECIAL_STAGE, _, 10, 13	// 		 S
+	MENU_2, 15, SPECIAL_STAGE, 0, 10, 13	// Special Stage
+	MENU_2, 17, BONUS_STAGE, 1, 10, 13		// Azure Lake
+	MENU_2, 19, BONUS_STAGE, 2, 10, 13		// Baloon Park
+	MENU_2, 21, BONUS_STAGE, 3, 10, 13		// Chrome Gadget
+	MENU_2, 23, BONUS_STAGE, 4, 10, 13		// Desert Palace
+	MENU_2, 25, BONUS_STAGE, 5, 10, 13		// Endless mine
+	MENU_2, 27, 0, 0, 67, 0 				// Sound test
 end table
 
 
@@ -407,7 +409,7 @@ event ObjectMain
 	case STATE_INIT
 		menuControl.fadeValue = 320
 		SetScreenFade(0, 0, 0, menuControl.fadeValue)
-		object[+1].ypos = 170
+		object[+1].ypos = 218
 		object[+1].priority = PRIORITY_ACTIVE
 		object.state++
 		break
@@ -451,12 +453,12 @@ event ObjectMain
 
 			end if
 
-			if menuControl.currentSelection > 32
+			if menuControl.currentSelection > 35
 				menuControl.currentSelection = 0
 			end if
 
 			if menuControl.currentSelection < 0
-				menuControl.currentSelection = 32
+				menuControl.currentSelection = 35
 			end if
 
 			temp0 = menuControl.currentSelection
@@ -672,50 +674,67 @@ event ObjectStartup
 	// Add the entries
 	AddMenuEntry(MENU_1, "ANGEL ISLAND@@ 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "HYDROCITY@@@@@ 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "MARBLE GARDEN@ 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "CARNIVAL NIGHT 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "ICE CAP@@@@@@@ 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(Menu_1, "Launch Base @@ 1", 1)
 	AddMenuEntry(Menu_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "MUSHROOM HILL@ 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "FLYING BATTERY 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
 	AddMenuEntry(MENU_1, "SANDOPOLIS@@@@ 1", 1)
-	AddMenuEntry(MENU_1, "2", 0)	
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)	
 	AddMenuEntry(MENU_1, "LAVA REEF@@@@@ 1", 1)
 	AddMenuEntry(MENU_1, "2", 0)
-	AddMenuEntry(MENU_1, "B", 0)
-	AddMenuEntry(MENU_1, "HIDDEN PALACE@@@", 1)
-	AddMenuEntry(MENU_1, "SKY SANCTUARY@ S", 1)
-	AddMenuEntry(MENU_1, "K", 0)
+	
 	
 
 	// Setup menu 2 (right column)
 	SetupMenu(MENU_2, 0, 3, 1)
 
 	// Add its entries
-	
+
+	AddMenuEntry(MENU_2, "HIDDEN PALACE@@@", 1)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "SKY SANCTUARY@ S", 1)
+	AddMenuEntry(MENU_2, "K", 0)
+	AddMenuEntry(MENU_2, " ", 0)
 	AddMenuEntry(MENU_2, "DEATH EGG@@@@@ 1", 1)
 	AddMenuEntry(MENU_2, "2", 0)
-	AddMenuEntry(MENU_2, "B", 0)
 	AddMenuEntry(MENU_2, " ", 0)
 	AddMenuEntry(MENU_2, "THE DOOMSDAY@@@@", 1)
 	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "BONUS@@@@@@@@@ G", 1)
+	AddMenuEntry(MENU_2, "R", 0)
+	AddMenuEntry(MENU_2, "S", 0)
 	AddMenuEntry(MENU_2, " ", 0)
-	AddMenuEntry(MENU_2, "THE DOOMSDAY@@ 1", 1)
-	AddMenuEntry(MENU_2, "2", 0)
+	AddMenuEntry(MENU_2, "SPECIAL STAGE@@@", 1)
 	AddMenuEntry(MENU_2, " ", 0)
-	AddMenuEntry(MENU_2, "BONUS@@@@@@@@@ 1", 1)
-	AddMenuEntry(MENU_2, "2", 0)
+	AddMenuEntry(MENU_2, "AZURE LAKE@@@@@@", 1)
 	AddMenuEntry(MENU_2, " ", 0)
-	AddMenuEntry(MENU_2, "SPECIAL STAGE@ 1", 1)
-	AddMenuEntry(MENU_2, "2", 0)
+	AddMenuEntry(MENU_2, "BALOON PARK@@@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "CHROME GADGET@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "DESERT PALACE@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "ENDLESS MINE@@@@", 0)
 	AddMenuEntry(MENU_2, " ", 0)
 	AddMenuEntry(MENU_2, "SOUND TEST@ *@@*", 1)
 

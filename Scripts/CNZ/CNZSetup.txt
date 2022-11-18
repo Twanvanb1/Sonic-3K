@@ -13,6 +13,44 @@ public value CNZSetup_value33 = 0;
 
 public alias CNZSetup_value33 : CNZSetup_flashTimer
 
+// main green pallate sycle
+public table MPZSetup_table38
+	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00
+end table
+
+public table MPZSetup_table39
+	0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000 ,0x242400, 0x484800, 0x6C6C00, 0x909000
+end table
+
+public table MPZSetup_table40
+	0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000
+end table
+
+//smaller one
+
+public table MPZSetup_table41
+	0x00FC00, 0x00FC24, 0x48FC6C, 0x6CFC90, 0x90FCB4, 0xB4FCD8, 0xD8FCFC, 0xFCFCFC, 0xD8FCFC, 0x484800, 0xB4FCD8, 0x90FCB4, 0x6CFC90, 0x48FC6C, 0x00FC24, 0x00FC00
+end table
+
+public table MPZSetup_table42
+	0xFCFCFC, 0xFCD8FC, 0xD8B4FC, 0xB490FC, 0x906CFC, 0x6C48FC, 0x4824FC, 0x2400FC, 0x0000FC, 0x2400FC, 0x4824FC, 0x6C48FC, 0x906CFC, 0xB490FC, 0xD8B4FC, 0xFCD8FC 
+end table
+
+// other large one
+public table MPZSetup_table43
+	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00
+end table
+
+public table MPZSetup_table44
+	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00
+end table
+
+public table MPZSetup_table45
+	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00
+end table
+
+
+
 function CNZSetup_SpeedUpMusic1P
 	CheckEqual(object[25].type, TypeName[Music Event])
 	temp0 = checkResult
@@ -135,11 +173,52 @@ end function
 
 event ObjectMain
 
-	object.value0++
-	if object.value0 > 7
-		object.value0 = 0
-		RotatePalette(0, 185, 187, 1)
-		RotatePalette(0, 167, 171, 1)
+
+
+	//	RotatePalette(0, 167, 171, 1)
+
+
+	// Pulsing palette
+	object.value1++
+	if object.value1 > 7
+		//main green pallete
+		object.value1 = 0
+		object.value3 += 4
+		object.value3 &= 15
+		GetTableValue(temp0, object.value3, MPZSetup_table38)
+		SetPaletteEntry(0, 185, temp0)
+		object.value4 += 4
+		object.value4 &= 15
+		GetTableValue(temp1, object.value4, MPZSetup_table39)
+		SetPaletteEntry(0, 186, temp1)
+		object.value5 += 4
+		object.value5 &= 15
+		GetTableValue(temp2, object.value5, MPZSetup_table40)
+		SetPaletteEntry(0, 187, temp2)
+
+		//small one
+		object.value6 += 4			
+		object.value6 &= 15
+		GetTableValue(temp1, object.value6, MPZSetup_table41)
+		SetPaletteEntry(0, 167, temp1)
+		object.value7 += 4
+		object.value7 &= 15
+		GetTableValue(temp2, object.value7, MPZSetup_table42)
+		SetPaletteEntry(0, 168, temp2)
+
+		// other large one
+		//object.value8 += 4			
+		//object.value8 &= 29
+		//GetTableValue(temp1, object.value8, MPZSetup_table43)
+		//SetPaletteEntry(0, 169, temp1)
+		//object.value9 += 4
+		//object.value9 &= 29
+		//GetTableValue(temp2, object.value9, MPZSetup_table44)
+		//SetPaletteEntry(0, 170, temp2)
+		//object.value10 += 4			
+		//object.value10 &= 29
+		//GetTableValue(temp1, object.value10, MPZSetup_table45)
+		//SetPaletteEntry(0, 171, temp1)
 	end if
 
 

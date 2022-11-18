@@ -326,11 +326,14 @@ end function
 
 event ObjectMain
 	object.value0++
-		if object.value0 > 7
-			object.value0 = 0
-			tileLayer[1].deformationOffset++
-			RotatePalette(0, 172, 175, 1)
+	if object.value0 > 7
+		object.value0 = 0
+		tileLayer[0].deformationOffset++
+		tileLayer[1].deformationOffset++
+		tileLayer[2].deformationOffset++
+		RotatePalette(0, 172, 175, 1)
 	end if
+	
 	// Level wrap
 	if stage.actNum == 2	
 	// top part of the level
@@ -465,7 +468,14 @@ event ObjectStartup
 	object[10].priority = PRIORITY_ACTIVE
 	object[10].drawOrder = 0
 
-
+	temp0 = 0
+	while temp0 < 256
+		Rand(temp1, 2)
+		SetLayerDeformation(0, 6, temp1, 1, temp0, 16)
+		SetLayerDeformation(1, 6, temp1, 1, temp0, 16)
+		SetLayerDeformation(2, 6, temp1, 1, temp0, 16)
+		temp0 += 16
+	loop
 end event
 
 event RSDKDraw

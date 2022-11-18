@@ -11,7 +11,7 @@
       <Offset X="-16" Y="-8"/>
     </ImageFromSheet>
     <ImageFromSheet id="Tiny" sheet="HCZ/Objects.gif" sourcex="75" sourcey="18" width="24" height="32">
-      <Offset X="-16" Y="0"/>
+      <Offset X="-15" Y="-4"/>
     </ImageFromSheet>
   </Images>
   <Properties>

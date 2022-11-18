@@ -134,16 +134,19 @@ end function
 
 
 event ObjectMain
-
-	object.value1++
-	if object.value1 == 2
-		tileLayer[0].deformationOffsetW++
-	end if
-
-	if object.value1 == 4
-		tileLayer[0].deformationOffsetW++
-		tileLayer[1].deformationOffsetW++
-		object.value1 = 0
+	if Stage.actNum == 2
+		object.value1++
+		if object.value1 >= 2
+			// FG Deformation
+			tileLayer[0].deformationOffset++
+			// FG Water Deformation
+			tileLayer[0].deformationOffsetW++
+			// FG Deformation
+			tileLayer[1].deformationOffset++
+			// FG Water Deformation
+			tileLayer[1].deformationOffsetW++
+			object.value1 = 0
+		end if
 	end if
 
 	if Stage.actNum == 1
@@ -201,8 +204,6 @@ event ObjectStartup
 		SpeedUpMusic = AIZSetup_SpeedUpMusic2P
 		SlowDownMusic = AIZSetup_SlowDownMusic2P
 	end if
-	
-	SetLayerDeformation(1, 64, 2, 0, 0, 0)
 
 	if Stage.actNum == 1
 		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 191)
@@ -215,6 +216,17 @@ event ObjectStartup
 	object[10].type = TypeName[AIZ Setup]
 	object[10].priority = PRIORITY_ACTIVE
 	object[10].drawOrder = 0
+
+	SetLayerDeformation(1, 32, 1, 0, 0, 0)
+	SetLayerDeformation(3, 64, 2, 0, 0, 0)
+
+	temp0 = 0
+	while temp0 < 256
+		Rand(temp1, 2)
+		SetLayerDeformation(0, 6, temp1, 1, temp0, 16)
+		SetLayerDeformation(2, 6, temp1, 1, temp0, 16)
+		temp0 += 16
+	loop
 end event
 
 event RSDKDraw

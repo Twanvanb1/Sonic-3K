@@ -100,8 +100,8 @@ end event
 
 
 event ObjectStartup
-	LoadSpriteSheet("Global/Display.gif")
-	SpriteFrame(-8, -7, 16, 14, 1, 176)
+	LoadSpriteSheet("Global/Items.gif")
+	SpriteFrame(-8, -7, 16, 14, 35, 126)
 	SpriteFrame(-8, -7, 16, 14, 17, 176)
 	SpriteFrame(-8, -7, 16, 14, 1, 190)
 	foreach (TypeName[Lava], arrayPos0, ALL_ENTITIES)

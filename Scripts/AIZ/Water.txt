@@ -427,7 +427,7 @@ event ObjectStartup
 		object[arrayPos0].priority = PRIORITY_ACTIVE
 		object[arrayPos0].drawOrder = 5
 		object[arrayPos0].inkEffect = INK_ALPHA
-		object[arrayPos0].alpha = 0
+		object[arrayPos0].alpha = 255
 		if credits.screen == 0
 			stage.newWaterLevel = object[arrayPos0].ypos
 		else
@@ -481,7 +481,11 @@ event ObjectStartup
 			object[arrayPos0].value1 = 52
 		end if
 	next
-
+	LoadSpriteSheet("ARZ/Objects2.gif")
+	SpriteFrame(0, -7, 256, 16, 0, 0)
+	SpriteFrame(0, -7, 256, 16, 0, 16)
+	SpriteFrame(0, -7, 256, 16, 0, 32)
+	SpriteFrame(0, -7, 256, 16, 0, 48)
 	BrokenMonitor_value27 = Water_Function107
 end event
 
