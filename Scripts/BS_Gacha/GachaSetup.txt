@@ -1,0 +1,350 @@
+
+// Aliases
+private alias 40 : TYPE_AIZSETUP
+private alias object.value10 : object.aniTileTimer
+private alias object.value5  : object.FlameDuration
+private alias object.value6  : object.FlameIndex
+private alias object.value7  : object.PlantIndex
+
+
+// Function declarations
+reserve function AIZSetup_SpeedUpMusic1P
+reserve function AIZSetup_SlowDownMusic1P
+reserve function AIZSetup_SpeedUpMusic2P
+reserve function AIZSetup_SlowDownMusic2P
+
+// Static Values
+public value AIZSetup_value33 = 0;
+
+
+// Tables
+private table AIZSetup_BG1FrameTable
+	919, 929, 939, 949
+end table
+private table AIZSetup_BG2FrameTable
+	910, 920, 930, 940
+end table
+private table AIZSetup_BG3FrameTable
+	911, 921, 931, 941
+end table
+private table AIZSetup_BG4FrameTable
+	912, 922, 932, 942
+end table
+private table AIZSetup_BG5FrameTable
+	913, 923, 933, 943
+end table
+private table AIZSetup_BG6FrameTable
+	914, 924, 934, 944
+end table
+private table AIZSetup_BG7FrameTable
+	915, 925, 935, 945
+end table
+private table AIZSetup_BG8FrameTable
+	916, 926, 936, 946
+end table
+private table AIZSetup_BG9FrameTable
+	917, 927, 937, 947
+end table
+private table AIZSetup_BG10FrameTable
+	918, 928, 938, 948
+end table
+
+
+//plants
+private table AIZSetup_FG1FrameTable
+	0, 0, 0, 987, 993
+end table
+
+private table AIZSetup_FG2FrameTable
+	979, 982, 985, 988
+end table
+
+private table AIZSetup_FG3FrameTable
+	980, 983, 986, 989
+end table
+
+private table AIZSetup_FG4FrameTable
+	918, 928, 938, 948
+end table
+
+
+public alias AIZSetup_value33 : AIZSetup_flashTimer
+
+function AIZSetup_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("AngelIsland_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function AIZSetup_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function AIZSetup_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("AngelIsland2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function AIZSetup_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland2.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+event ObjectMain
+
+
+
+if stage.actnum == 2
+	if object.value10 < 1
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG1FrameTable)
+			Copy16x16Tile(136, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG2FrameTable)
+			Copy16x16Tile(127, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG3FrameTable)
+			Copy16x16Tile(128, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG4FrameTable)
+			Copy16x16Tile(129, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG5FrameTable)
+			Copy16x16Tile(130, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG6FrameTable)
+			Copy16x16Tile(131, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG7FrameTable)
+			Copy16x16Tile(132, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG8FrameTable)
+			Copy16x16Tile(133, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG9FrameTable)
+			Copy16x16Tile(134, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG10FrameTable)
+			Copy16x16Tile(135, temp0)
+			temp0 += 5
+
+			object.FlameIndex++
+
+			object.FlameIndex %= 4
+			object.value10 = 5
+		else
+			object.value10--
+	end if
+end if
+
+	if Stage.actNum == 2
+		object.value1++
+		if object.value1 >= 2
+			// FG Deformation
+			tileLayer[0].deformationOffset++
+			// FG Water Deformation
+			tileLayer[0].deformationOffsetW++
+			// BG Deformation
+			tileLayer[1].deformationOffset++
+			// BG Water Deformation
+			tileLayer[1].deformationOffsetW++
+			object.value1 = 0
+		end if
+	end if
+
+	if Stage.actNum == 1
+		object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			RotatePalette(0, 171, 173, 0)
+			RotatePalette(1, 171, 173, 0)
+		end if
+	end if
+
+	if Stage.actNum == 2
+		Object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			RotatePalette(0, 188, 191, 0)
+			RotatePalette(1, 188, 191, 0)
+		end	if
+	end if
+
+	if AIZSetup_flashTimer > 0
+		AIZSetup_flashTimer--
+	end if
+	
+end event
+
+event ObjectDraw
+
+	temp0 = stage.waterLevel
+	temp0 -= screen.yoffset
+
+	if temp0 < 0
+		temp0 = 0
+	end if
+
+	if temp0 > screen.ysize
+		temp0 = screen.ysize
+	end if
+
+	SetActivePalette(0, 0, temp0)
+	if AIZSetup_flashTimer > 0
+		SetActivePalette(2, temp0, screen.ysize)
+	else
+		SetActivePalette(1, temp0, screen.ysize)
+	end if
+end event
+
+event ObjectStartup
+	if Stage.actNum == 1
+		SetMusicTrack("AngelIsland.ogg", 0, 1)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic1P
+		SlowDownMusic = AIZSetup_SlowDownMusic1P
+	else
+		SetMusicTrack("AngelIsland2.ogg", 0, 1)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic2P
+		SlowDownMusic = AIZSetup_SlowDownMusic2P
+	end if
+
+	if Stage.actNum == 1
+		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 191)
+	else
+		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
+		LoadPalette("AIZ2_WaterPal.act", 1, 129, 129, 191)
+	end if
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Cucky]
+	object[10].type = TypeName[AIZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+
+	SetLayerDeformation(1, 32, 1, 0, 0, 0)
+	SetLayerDeformation(3, 64, 2, 0, 0, 0)
+
+	temp0 = 0
+	while temp0 < 256
+		Rand(temp1, 2)
+		SetLayerDeformation(0, 6, temp1, 1, temp0, 16)
+		SetLayerDeformation(2, 6, temp1, 1, temp0, 16)
+		temp0 += 16
+	loop
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

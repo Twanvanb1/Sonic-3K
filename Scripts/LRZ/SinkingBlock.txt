@@ -63,11 +63,11 @@ event ObjectMain
 		end if
 		if temp1 == 1
 			temp1 = object[currentPlayer].yvel
-			BoxCollisionTest(C_TOUCH, object.entityPos, -14, -20, 18, 20, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+			BoxCollisionTest(C_TOUCH, object.entityPos, -16, -16, 18, 20, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
 			if checkResult == 1
 				object[currentPlayer].yvel = 0x10000
 			end if
-			BoxCollisionTest(C_BOX2, object.entityPos, -14, -20, 18, -4, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+			BoxCollisionTest(C_BOX2, object.entityPos, -16, -16, 18, -4, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
 			if checkResult == 1
 				object[currentPlayer].ypos += object.value2
 				object.value3 |= 1
@@ -75,7 +75,7 @@ event ObjectMain
 				object[currentPlayer].yvel = temp1
 			end if
 		else
-			BoxCollisionTest(C_BOX2, object.entityPos, -14, -20, 18, 10, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
+			BoxCollisionTest(C_BOX2, object.entityPos, -16, -16, 18, 10, currentPlayer, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
 			if checkResult == 1
 				object[currentPlayer].yvel = 0x70000
 				object[currentPlayer].ypos += object.value2
@@ -94,7 +94,7 @@ end event
 
 event ObjectStartup
 	LoadSpriteSheet("LRZ/Objects.gif")
-	SpriteFrame(-14, -20, 32, 32, 163, 34)
+	SpriteFrame(-16, -16, 32, 32, 163, 34)
 	foreach (TypeName[Sinking Block], arrayPos0, ALL_ENTITIES)
 		object[arrayPos0].value1 = object[arrayPos0].ypos
 	next

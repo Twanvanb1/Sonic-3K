@@ -51,9 +51,9 @@ event ObjectMain
 		else
 		end if
 	else
-			if object[0].jumpPress == 1
-				object.value31 = 0
-			end if
+		if object[0].jumpPress == 1
+			object.value31 = 0
+		end if
 
 	end if
 end event

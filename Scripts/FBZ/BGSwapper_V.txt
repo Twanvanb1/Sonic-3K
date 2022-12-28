@@ -1,6 +1,3 @@
-//------------Sonic CD BG Swapper Script-------------//
-//--------Scripted by Christian Whitehead 'The Taxman'--------//
-//-------Unpacked By Rubberduckycooly's Script Unpacker-------//
 
 //-------Aliases-------//
 #alias 35: TYPE_BGSWAPPER_V
@@ -30,13 +27,6 @@ event ObjectStartup
 	Temp1 = 0
 	ArrayPos0 = 32
 	foreach (TypeName[BGSwapper_V], ArrayPos0, ALL_ENTITIES)
-		if Object[ArrayPos0].iyPos < Temp0
-				Temp0 = Object[ArrayPos0].iyPos
-			end if
-			if Object[ArrayPos0].iyPos > Temp1
-				Temp1 = Object[ArrayPos0].iyPos
-			end if
-		end if
 		ArrayPos0++
 	next
 end event

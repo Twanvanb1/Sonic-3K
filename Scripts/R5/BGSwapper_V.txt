@@ -26,30 +26,9 @@ end event
 
 
 event ObjectStartup
-	Temp0 = 16384
-	Temp1 = 0
-	ArrayPos0 = 32
 	foreach (TypeName[BGSwapper_V], ArrayPos0, ALL_ENTITIES)
-		if Object[ArrayPos0].iyPos < Temp0
-				Temp0 = Object[ArrayPos0].iyPos
-			end if
-			if Object[ArrayPos0].iyPos > Temp1
-				Temp1 = Object[ArrayPos0].iyPos
-			end if
-		end if
 		ArrayPos0++
 	next
-	Temp2 = object[currentPlayer].ypos
-	Temp2 >>= 16
-	if Temp2 > Temp0
-		if Temp2 > Temp1
-			Stage.ActiveLayer[0] = 1
-		else
-			Stage.ActiveLayer[0] = 2
-		end if
-	else
-		Stage.ActiveLayer[0] = 1
-	end if
 end event
 
 event RSDK

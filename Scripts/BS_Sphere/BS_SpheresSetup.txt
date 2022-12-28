@@ -1,0 +1,49 @@
+
+// Aliases
+private alias 40 : TYPE_BSSZSETUP
+
+private alias object.value10 : object.aniTileTimer
+private alias object.value5  : object.FlameDuration
+private alias object.value6  : object.FlameIndex
+private alias object.value7  : object.PlantIndex
+
+
+private table BSSSetup_ORBTFrameTable
+	138, 929, 939, 949
+end table
+
+
+
+event ObjectMain
+	if object.value10 < 1
+				GetTableValue(temp0, object.FlameIndex, BSSSetup_ORBTFrameTable)
+				Copy16x16Tile(50, temp0)
+				temp0 += 5
+
+				object.FlameIndex++
+
+				object.FlameIndex %= 4
+				object.value10 = 5
+			else
+				object.value10--
+		end if
+
+end event
+
+event ObjectStartup
+
+	object[10].type = TypeName[BS_SpheresSetup]
+	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+	
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

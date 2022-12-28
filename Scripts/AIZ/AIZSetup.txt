@@ -1,6 +1,14 @@
 
 // Aliases
 private alias 40 : TYPE_AIZSETUP
+private alias object.value10 : object.aniTileTimer
+private alias object.value5  : object.FlameDuration
+private alias object.value6  : object.FlameIndex
+private alias object.value7  : object.PlantIndex
+private alias object.value12  : object.Vine1Index
+private alias object.value13  : object.Vine2Index
+
+
 
 // Function declarations
 reserve function AIZSetup_SpeedUpMusic1P
@@ -10,6 +18,153 @@ reserve function AIZSetup_SlowDownMusic2P
 
 // Static Values
 public value AIZSetup_value33 = 0;
+
+
+// Tables
+private table AIZSetup_BG1FrameTable
+	919, 929, 939, 949
+end table
+private table AIZSetup_BG2FrameTable
+	910, 920, 930, 940
+end table
+private table AIZSetup_BG3FrameTable
+	911, 921, 931, 941
+end table
+private table AIZSetup_BG4FrameTable
+	912, 922, 932, 942
+end table
+private table AIZSetup_BG5FrameTable
+	913, 923, 933, 943
+end table
+private table AIZSetup_BG6FrameTable
+	914, 924, 934, 944
+end table
+private table AIZSetup_BG7FrameTable
+	915, 925, 935, 945
+end table
+private table AIZSetup_BG8FrameTable
+	916, 926, 936, 946
+end table
+private table AIZSetup_BG9FrameTable
+	917, 927, 937, 947
+end table
+private table AIZSetup_BG10FrameTable
+	918, 928, 938, 948
+end table
+
+
+//plants
+private table AIZSetup_FG1FrameTable
+	978, 981, 987, 993
+end table
+
+private table AIZSetup_FG2FrameTable
+	979, 982, 985, 988
+end table
+
+private table AIZSetup_FG3FrameTable
+	980, 983, 986, 989
+end table
+
+private table AIZSetup_FG4FrameTable
+	980, 983, 986, 989
+end table
+
+//ground fire
+
+private table AIZSetup_G1FrameTable
+	950, 957, 964, 971
+end table
+
+private table AIZSetup_G2FrameTable
+	951, 958, 965, 972
+end table
+
+private table AIZSetup_G3FrameTable
+	952, 959, 966, 973
+end table
+
+private table AIZSetup_G4FrameTable
+	953, 960, 967, 974
+end table
+
+private table AIZSetup_G5FrameTable
+	954, 961, 968, 975
+end table
+
+private table AIZSetup_G6FrameTable
+	955, 962, 969, 976
+end table
+
+private table AIZSetup_G7FrameTable
+	956, 963, 970, 977
+end table
+
+private table AIZSetup_G8FrameTable
+	957, 964, 971, 978
+end table
+
+//flowers
+
+private table AIZSetup_flowers1FrameTable
+	766, 768, 770, 772, 774, 774, 772, 770, 768, 766
+end table
+
+private table AIZSetup_flowers2FrameTable
+	767, 769, 771, 773, 775, 775, 773, 771, 769, 767
+end table
+
+//vine 1 act 1
+private table AIZSetup_Vine1FrameTable
+	0, 0, 754, 757, 754, 757, 760, 763, 757, 757, 0
+end table
+
+private table AIZSetup_Vine1AFrameTable
+	749, 752, 755, 758, 755, 758, 761, 764, 758, 758, 752
+end table
+
+private table AIZSetup_Vine1BFrameTable
+	750, 753, 756, 759, 756, 759, 762, 765, 759, 759, 753
+end table
+
+//vine 1 act 2
+private table AIZSetup_Vine12FrameTable
+	0, 0, 0, 987, 0, 987, 990, 993, 987, 987, 978
+end table
+
+private table AIZSetup_Vine1A2FrameTable
+	979, 982, 985, 988, 985, 988, 991, 994, 988, 988, 982
+end table
+
+private table AIZSetup_Vine1B2FrameTable
+	980, 983, 986, 989, 986, 989, 992, 995, 989, 989, 983
+end table
+
+//vine 2 act 1
+private table AIZSetup_Vine2FrameTable
+	0, 0, 754, 757, 760, 763, 760, 757, 754
+end table
+
+private table AIZSetup_Vine2AFrameTable
+	749, 752, 755, 758, 761, 764, 761, 758, 755
+end table
+
+private table AIZSetup_Vine2BFrameTable
+	750, 753, 756, 759, 762, 765, 762, 759, 756
+end table
+
+//vine 2 act 2
+private table AIZSetup_Vine22FrameTable
+	0, 0, 0, 0, 987, 990, 993, 990, 987 
+end table
+
+private table AIZSetup_Vine2A2FrameTable
+	985, 979, 982, 985, 988, 991, 994, 991, 988
+end table
+
+private table AIZSetup_Vine2B2FrameTable
+	986, 980, 983, 986, 989, 992, 995, 992, 989
+end table
 
 public alias AIZSetup_value33 : AIZSetup_flashTimer
 
@@ -134,42 +289,249 @@ end function
 
 
 event ObjectMain
-	if Stage.actNum == 2
-		object.value1++
-		if object.value1 >= 2
-			// FG Deformation
-			tileLayer[0].deformationOffset++
-			// FG Water Deformation
-			tileLayer[0].deformationOffsetW++
-			// FG Deformation
-			tileLayer[1].deformationOffset++
-			// FG Water Deformation
-			tileLayer[1].deformationOffsetW++
-			object.value1 = 0
+// plant
+if Stage.actNum == 1
+	if object.value11 < 1
+			GetTableValue(temp0, object.PlantIndex, AIZSetup_flowers1FrameTable)
+			Copy16x16Tile(707, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.PlantIndex, AIZSetup_flowers2FrameTable)
+			Copy16x16Tile(708, temp0)
+			temp0 += 5
+
+			object.PlantIndex++
+
+			object.PlantIndex %= 9
+			object.value11 = 4
+		else
+			object.value11--
+	end if
+end if
+
+// vine 1
+if Stage.actNum == 1
+	if object.value14 < 1
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable)
+			Copy16x16Tile(704, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1AFrameTable)
+			Copy16x16Tile(705, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1BFrameTable)
+			Copy16x16Tile(706, temp0)
+			temp0 += 5
+
+			object.Vine1Index++
+
+			object.Vine1Index %= 10
+			object.value14 = 6
+			if object.Vine1Index == 8
+				object.value14 = 36
+				if object.Vine1Index >= 9
+					object.value14 = 2
+				endif
+			endif
+		else
+			object.value14--
+	end if
+else
+	if object.value14 < 1
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine12FrameTable)
+			Copy16x16Tile(121, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1A2FrameTable)
+			Copy16x16Tile(122, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1B2FrameTable)
+			Copy16x16Tile(123, temp0)
+			temp0 += 5
+
+			object.Vine1Index++
+
+			object.Vine1Index %= 10
+			object.value14 = 6
+			if object.Vine1Index == 8
+				object.value14 = 36
+				if object.Vine1Index >= 9
+					object.value14 = 2
+				endif
+			endif
+		else
+			object.value14--
+	end if
+end if
+
+// vine 2
+if Stage.actNum == 1
+	if object.value15 < 1
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable)
+			Copy16x16Tile(701, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2AFrameTable)
+			Copy16x16Tile(702, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2BFrameTable)
+			Copy16x16Tile(703, temp0)
+			temp0 += 5
+
+			object.Vine2Index++
+
+			object.Vine2Index %= 9
+			object.value15 = 6
+			if object.Vine2Index == 7
+				object.value15 = 40
+			endif
+		else
+			object.value15--
+	end if
+else
+	if object.value15 < 1
+				GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine22FrameTable)
+				Copy16x16Tile(124, temp0)
+				temp0 += 5
+
+				GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2A2FrameTable)
+				Copy16x16Tile(125, temp0)
+				temp0 += 5
+
+				GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2B2FrameTable)
+				Copy16x16Tile(126, temp0)
+				temp0 += 5
+
+				object.Vine2Index++
+
+				object.Vine2Index %= 9
+				object.value15 = 6
+				if object.Vine2Index == 7
+					object.value15 = 40
+				endif
+			else
+				object.value15--
 		end if
-	end if
+end if
 
-	if Stage.actNum == 1
-		object.value0++
-		if object.value0 > 7
-			object.value0 = 0
-			RotatePalette(0, 171, 173, 0)
-			RotatePalette(1, 171, 173, 0)
-		end if
-	end if
+if stage.actnum == 2
+	if object.value10 < 1
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG1FrameTable)
+			Copy16x16Tile(136, temp0)
+			temp0 += 5
 
-	if Stage.actNum == 2
-		Object.value0++
-		if object.value0 > 7
-			object.value0 = 0
-			RotatePalette(0, 188, 191, 0)
-			RotatePalette(1, 188, 191, 0)
-		end	if
-	end if
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG2FrameTable)
+			Copy16x16Tile(127, temp0)
+			temp0 += 5
 
-	if AIZSetup_flashTimer > 0
-		AIZSetup_flashTimer--
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG3FrameTable)
+			Copy16x16Tile(128, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG4FrameTable)
+			Copy16x16Tile(129, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG5FrameTable)
+			Copy16x16Tile(130, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG6FrameTable)
+			Copy16x16Tile(131, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG7FrameTable)
+			Copy16x16Tile(132, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG8FrameTable)
+			Copy16x16Tile(133, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG9FrameTable)
+			Copy16x16Tile(134, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG10FrameTable)
+			Copy16x16Tile(135, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G1FrameTable)
+			Copy16x16Tile(114, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G2FrameTable)
+			Copy16x16Tile(115, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G3FrameTable)
+			Copy16x16Tile(116, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G4FrameTable)
+			Copy16x16Tile(117, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G5FrameTable)
+			Copy16x16Tile(118, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G6FrameTable)
+			Copy16x16Tile(119, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.FlameIndex, AIZSetup_G7FrameTable)
+			Copy16x16Tile(120, temp0)
+			temp0 += 5
+			object.FlameIndex++
+
+			object.FlameIndex %= 4
+			object.value10 = 5
+		else
+			object.value10--
 	end if
+end if
+
+
+if Stage.actNum == 2
+	object.value1++
+	if object.value1 >= 2
+		// FG Deformation
+		tileLayer[0].deformationOffset++
+		// FG Water Deformation
+		tileLayer[0].deformationOffsetW++
+		// BG Deformation
+		tileLayer[1].deformationOffset++
+		// BG Water Deformation
+		tileLayer[1].deformationOffsetW++
+		object.value1 = 0
+	end if
+end if
+
+if Stage.actNum == 1
+	object.value0++
+	if object.value0 > 7
+		object.value0 = 0
+		RotatePalette(0, 171, 173, 0)
+		RotatePalette(1, 171, 173, 0)
+	end if
+end if
+
+if Stage.actNum == 2
+	Object.value0++
+	if object.value0 > 7
+		object.value0 = 0
+		RotatePalette(0, 188, 191, 0)
+		RotatePalette(1, 188, 191, 0)
+	end	if
+end if
+
+if AIZSetup_flashTimer > 0
+	AIZSetup_flashTimer--
+end if
 	
 end event
 
@@ -208,7 +570,7 @@ event ObjectStartup
 	if Stage.actNum == 1
 		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 191)
 	else
-		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
+		//LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
 		LoadPalette("AIZ2_WaterPal.act", 1, 129, 129, 191)
 	end if
 	animalType1 = TypeName[Flicky]
@@ -224,9 +586,16 @@ event ObjectStartup
 	while temp0 < 256
 		Rand(temp1, 2)
 		SetLayerDeformation(0, 6, temp1, 1, temp0, 16)
-		SetLayerDeformation(2, 6, temp1, 1, temp0, 16)
-		temp0 += 16
+		temp0 += 6
 	loop
+
+	temp2 = 0
+	while temp2 < 256
+		Rand(temp3, 4)
+		SetLayerDeformation(2, 6, temp3, 1, temp2, 64)
+		temp2 += 16
+	loop
+
 end event
 
 event RSDKDraw

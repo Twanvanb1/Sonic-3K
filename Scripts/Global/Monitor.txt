@@ -1,10 +1,3 @@
-// ----------------------------------
-// RSDK Project: Sonic 1/Sonic 2
-// Script Description: Monitor Object
-// Script Author: Christian Whitehead/Simon Thomley
-// Unpacked by Rubberduckycooly's script unpacker
-// ----------------------------------
-
 // Aliases
 private alias 13 : TYPE_MONITOR
 

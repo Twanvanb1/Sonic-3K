@@ -32,7 +32,7 @@ event ObjectStartup
     next
     
 	LoadSpriteSheet("LRZ/Objects.gif")
-	SpriteFrame(-14, -16, 32, 32, 163, 67)
+	SpriteFrame(-16, -16, 32, 32, 163, 67)
 	
 
 end event

@@ -31,12 +31,12 @@ event ObjectStartup
 	    end if
     next
 
-	LoadSpriteSheet("LRZ/Objects.gif")
-	SpriteFrame(-16, -8, 32, 16, 1, 1) 	//0
-	SpriteFrame(-16, -8, 16, 16, 1, 1)	//1
-	SpriteFrame(-16, -8, 16, 8, 51, 1)	//2	
-	SpriteFrame(-16, -8, 8, 8, 51, 10)	//3
-	SpriteFrame(0, -8, 16, 16, 17, 1)	//4
+	LoadSpriteSheet("LRZ/Objects1.gif")
+	SpriteFrame(-16, -8, 32, 16, 419, 85) 	//0
+	SpriteFrame(-16, -8, 16, 16, 419, 85)	//1
+	SpriteFrame(-16, -8, 16, 8, 419, 68)	//2	
+	SpriteFrame(-16, -8, 8, 8, 419, 77)		//3
+	SpriteFrame(0, -8, 16, 16, 17, 1)	//remove	//4
 
 
 	

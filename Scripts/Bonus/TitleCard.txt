@@ -1,0 +1,302 @@
+// ----------------------------------
+// RSDK Project: Sonic 3
+// Script Description: Title Card Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+//-------Aliases-------//
+private alias 25 : TYPE_TITLECARD
+
+
+// Static Values
+public value redribbony = 0;
+public value TitleCard_value23 = 0;
+
+// Tables
+
+event ObjectMain
+	options.touchControls = 0
+	switch object.state
+	case 0
+		object.alpha = 255
+		object.value1 = screen.xcenter
+		object.value1 += 128
+		object.value2 = screen.xcenter
+		object.value2 += 160
+		object.value3 = screen.xcenter
+		object.value3 += 32
+		if credits.screen > 0
+			object.state = 7
+			object.value0 = 272
+			stage.state = STAGE_RUNNING
+			SetScreenFade(0, 0, 0, 255)
+		else
+			object.state++
+		end if
+		break
+	case 1
+		if object.value0 < 30
+			object.value0++
+		else
+			object.value0 = 0
+			PlayMusic(0)
+			object.state++
+		end if
+		break
+	case 2
+		if redribbony > 180
+			redribbony = 180
+		end if
+		if redribbony < 180
+			redribbony += 10
+		end if
+		if object.value1 > -0
+			object.value1 -= 16
+			if object.value1 < 18
+				object.value1 = 18
+			end if
+		end if
+		if object.value2 > 0
+			object.value2 -= 16
+			if object.value2 < 18
+				object.value1 = 18
+			end if
+		end if
+		if object.value2 <= 48
+			if object.value3 > 20
+				object.value3 -= 16
+				if object.value3 < 20
+					object.value3 = 20
+				end if
+			else
+				object.state++
+			end if
+		end if
+		break
+		
+	case 3
+		if object.value0 < 60
+			object.value0++
+		else
+			object.value0 = 0
+			object.alpha = 248
+			stage.state = STAGE_RUNNING
+			currentPlayer = 0
+			object.state++
+		end if
+		break
+	case 4
+		if object.alpha > 0
+			object.alpha -= 8
+		else
+			object.state++
+			currentPlayer = 0
+			while currentPlayer < playerCount
+				object[currentPlayer].controlMode = 0
+				currentPlayer++
+			loop
+		end if
+		break
+	case 5
+		stage.timeEnabled = 1
+		object.state++
+		break
+	case 6
+		redribbony -= 20
+		object.value1 += 32
+		object.value2 += 32
+		object.value3 += 32
+		if object.value0 < 20
+			object.value0++
+		else
+			object.value0 = 0
+			object.type = TypeName[Blank Object]
+		end if
+		break
+	case 7
+		if object.value0 > 0
+			object.value0 -= 16
+			SetScreenFade(0, 0, 0, object.value0)
+		else
+			currentPlayer = 0
+			while currentPlayer < playerCount
+				object[currentPlayer].controlMode = 0
+				currentPlayer++
+			loop
+			ResetObjectEntity(object.entityPos, TypeName[Blank Object], 0, 0, 0)
+		end if
+		break
+	case 8
+		if object.value0 < 300
+			object.value0 += 5
+			if credits.screen == 0
+				music.volume -= 2
+			end if
+		else
+			stage.activeList = PRESENTATION_STAGE
+			if credits.screen > 0
+				stage.listPos = 2
+			else
+				stage.listPos = 0
+				StopMusic()
+			end if
+			LoadStage()
+		end if
+		SetScreenFade(0, 0, 0, object.value0)
+		break
+	end switch
+end event
+
+
+event ObjectDraw
+	if object.state < 7
+	
+		SetActivePalette(0, 0, screen.ysize)
+		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, object.alpha)
+		if screen.ysize > 320
+			DrawRect(70, 0, 67, redribbony, 255, 0, 0, 255)
+		else
+			DrawRect(95, 0, 67, redribbony, 255, 0, 0, 255)
+		end if
+
+		if screen.ysize > 320
+			DrawSpriteScreenXY(29, 84, redribbony)
+		else
+			DrawSpriteScreenXY(29, 109, redribbony)
+		end if
+		
+		if screen.ysize > 320
+			temp0 = screen.xcenter
+			temp0 += 95
+			temp0 += object.value1
+			temp0 += object.propertyValue
+			DrawActName(0, temp0, 100, 0, 0, 16, 0)
+		else
+			temp0 = screen.xcenter
+			temp0 += 100
+			temp0 += object.value1
+			temp0 += object.propertyValue
+			DrawActName(0, temp0, 100, 0, 0, 16, 0)
+		end if
+		
+		if screen.ysize > 320
+			temp0 = screen.xcenter
+			temp0 += 35
+			temp0 += object.value2
+			temp0 += object.propertyValue
+			DrawSpriteScreenXY(26, temp0, 100)
+		else
+			temp0 = screen.xcenter
+			temp0 += 39
+			temp0 += object.value2
+			temp0 += object.propertyValue
+			DrawSpriteScreenXY(26, temp0, 100)
+		end if
+
+		if screen.ysize > 320
+			temp0 = screen.xcenter
+			temp0 -= 20
+			temp0 += object.value3
+			temp0 += object.propertyValue
+			if stage.actNum < 5
+				temp1 = 26
+				temp1 += stage.actNum
+				if temp1 > 30
+					temp1 = 30
+				end if
+				DrawSpriteScreenXY(temp1, temp0, 102)
+			end if
+		else 
+			temp0 = screen.xcenter
+			temp0 -= 26
+			temp0 += object.value3
+			temp0 += object.propertyValue
+			
+			if stage.actNum < 4
+				temp1 = 26
+				temp1 += stage.actNum
+				if temp1 > 30
+					temp1 = 30
+				end if
+				if stage.actnum == 0
+					DrawSpriteScreenXY(30, temp0, 102)
+				else
+				DrawSpriteScreenXY(temp1, temp0, 102)
+				end if
+				
+				
+			end if
+		end if
+	end if
+end event
+
+
+event ObjectStartup
+	redribbony = 0
+	LoadSpriteSheet("Global/TitleCard.gif")
+	SpriteFrame(0, -8, 16, 24, 1, 1)		// A
+	SpriteFrame(0, -8, 16, 24, 18, 1)		// B
+	SpriteFrame(0, -8, 16, 24, 35, 1)		// C
+	SpriteFrame(0, -8, 16, 24, 52, 1)		// D
+	SpriteFrame(0, -8, 16, 24, 69, 1)		// E
+	SpriteFrame(0, -8, 16, 24, 86, 1)		// F
+	SpriteFrame(0, -8, 16, 24, 103, 1)		// G
+	SpriteFrame(0, -8, 16, 24, 120, 1)		// H
+	SpriteFrame(0, -8, 8, 24, 137, 1)		// I
+	SpriteFrame(0, -8, 8, 24, 1, 51)		// J
+	SpriteFrame(0, -8, 16, 24, 146, 1)		// K
+	SpriteFrame(0, -8, 8, 24, 163, 1)		// L
+	SpriteFrame(0, -8, 24, 24, 172, 1)		// M
+	SpriteFrame(0, -8, 16, 24, 197, 1)		// N
+	SpriteFrame(0, -8, 24, 24, 214, 1)		// O
+	SpriteFrame(0, -8, 16, 24, 239, 1)		// P
+	SpriteFrame(0, -8, 24, 24, 10, 51)		// Q
+	SpriteFrame(0, -8, 16, 24, 1, 26)		// R
+	SpriteFrame(0, -8, 16, 24, 18, 26)		// S
+	SpriteFrame(0, -8, 16, 24, 35, 26)		// T
+	SpriteFrame(0, -8, 16, 24, 52, 26)		// U
+	SpriteFrame(0, -8, 16, 24, 69, 26)		// V
+	SpriteFrame(0, -8, 24, 24, 35, 51)		// W
+	SpriteFrame(0, -8, 16, 24, 60, 51)		// X
+	SpriteFrame(0, -8, 16, 24, 86, 26)		// Y
+	SpriteFrame(0, -8, 16, 24, 103, 26)		// Z
+	SpriteFrame(18, 30, 72, 24, 176, 60)	// ZONE
+	SpriteFrame(68, 60, 49, 32, 120, 26)	// ACT 1
+	SpriteFrame(68, 60, 49, 32, 170, 26)	// ACT 2
+	SpriteFrame(-4, -21, 48, 15, 127, 59)	// SONIC 3 TEXT
+	SpriteFrame(0, 0, 0, 0, 0, 0) 	// Nothing
+
+	arrayPos0 = 32
+	while arrayPos0 < 0x420
+		if object[arrayPos0].type == TypeName[Title Card]
+			object[arrayPos0].priority = PRIORITY_ACTIVE_PAUSED
+			object[arrayPos0].alpha = 255
+			object[arrayPos0].drawOrder = 6
+			stage.state = STAGE_PAUSED
+		end if
+		arrayPos0++
+	loop
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event
+//else 
+	//	SetActivePalette(0, 0, screen.ysize)
+	//	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, object.alpha)
+	//	
+	//	
+	//	temp0 = screen.xcenter
+	//	temp0 += 100
+	//	temp0 += object.value1
+	//	temp0 += object.propertyValue
+	//	DrawActName(0, temp0, 100, 0, 0, 16, 0)
+	//	
+
+	//	

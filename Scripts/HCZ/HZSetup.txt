@@ -32,6 +32,7 @@ private alias ZoneSetup_value35 : CPZSetup_AchieveCollected
 private alias ZoneSetup_value36 : CPZSetup_TouchedWater
 
 // Tables
+// marbels
 public table HCZMarbleANI1
 	487, 488, 489, 490, 491, 492, 493, 494, 495, 494, 493, 492, 491, 490, 489, 488
 end table
@@ -48,6 +49,65 @@ public table HCZMarbleANI4
 	505, 504, 503, 502, 501, 500, 499, 498, 497, 498, 499, 500, 501, 502, 503, 504
 end table
 
+
+//conveyor belt
+public table HCZSetup_CB1FrameTable
+	530, 526, 522
+end table
+
+public table HCZSetup_CB2FrameTable
+	531, 527, 523
+end table
+
+public table HCZSetup_CB3FrameTable
+	532, 528, 524
+end table
+
+public table HCZSetup_CB4FrameTable
+	525, 529, 533
+end table
+
+// part 2
+public table HCZSetup_CB5FrameTable
+	542, 538, 534
+end table
+
+public table HCZSetup_CB6FrameTable
+	543, 539, 535
+end table
+
+public table HCZSetup_CB7FrameTable
+	544, 540, 536
+end table
+
+public table HCZSetup_CB8FrameTable
+	545, 541, 537
+end table
+
+// part 3
+public table HCZSetup_CB9FrameTable
+	554, 550, 546
+end table
+
+public table HCZSetup_CB10FrameTable
+	555, 551, 547
+end table
+
+public table HCZSetup_CB11FrameTable
+	556, 552, 548
+end table
+
+public table HCZSetup_CB12FrameTable
+	557, 553, 549
+end table
+
+// part 4
+public table HCZSetup_CB13FrameTable
+	554, 559, 558,
+end table
+
+
+//CPZ???
 public table CPZSetup_table39
 	0xE00000, 0xC00000, 0xA00000, 0x800000, 0x600000, 0x400000, 0x200000, 0x400000, 0x600000, 0x800000, 0xA00000, 0xC00000, 0xE00000, 0xE02000, 0xE04000, 0xE02000
 end table
@@ -411,6 +471,69 @@ event ObjectMain
 	if temp3 >= 1
 	RotatePalette(0, 163, 166, 0)
 		object.value36 = 0
+	end if
+
+	//Conver belt
+	if object.value38 < 1
+			GetTableValue(temp0, object.value47, HCZSetup_CB1FrameTable)
+			Copy16x16Tile(473, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB2FrameTable)
+			Copy16x16Tile(476, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB3FrameTable)
+			Copy16x16Tile(479, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB4FrameTable)
+			Copy16x16Tile(482, temp0)
+			temp0 += 5
+
+			//part 2
+			GetTableValue(temp0, object.value47, HCZSetup_CB5FrameTable)
+			Copy16x16Tile(474, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB6FrameTable)
+			Copy16x16Tile(477, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB7FrameTable)
+			Copy16x16Tile(480, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB8FrameTable)
+			Copy16x16Tile(483, temp0)
+			temp0 += 5
+
+			//part 3
+			GetTableValue(temp0, object.value47, HCZSetup_CB9FrameTable)
+			Copy16x16Tile(475, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB10FrameTable)
+			Copy16x16Tile(478, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB11FrameTable)
+			Copy16x16Tile(481, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB12FrameTable)
+			Copy16x16Tile(484, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.value47, HCZSetup_CB13FrameTable)
+			Copy16x16Tile(485, temp0)
+
+			object.value47++
+
+			object.value47 %= 3
+			object.value38 = 5
+		else
+			object.value38--
 	end if
 
 	// Rotate water jet palette

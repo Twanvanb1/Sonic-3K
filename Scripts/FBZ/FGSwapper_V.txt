@@ -4,6 +4,8 @@
 
 
 event ObjectDraw
+
+if stage.actnum == 1
 	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
 		if Object.PropertyValue==0
 			if object[currentPlayer].ypos >= Object.YPos
@@ -19,6 +21,23 @@ event ObjectDraw
 			end if
 		end if
 	next
+else 
+	foreach (GROUP_PLAYERS, currentPlayer, ACTIVE_ENTITIES)
+		if Object.PropertyValue==0
+			if object[currentPlayer].ypos >= Object.YPos
+				Stage.ActiveLayer[3] = 4
+			else
+				Stage.ActiveLayer[3] = 0
+			end if
+		else
+			if object[currentPlayer].ypos >= Object.yPos
+				Stage.ActiveLayer[3] = 0
+			else
+				Stage.ActiveLayer[3] = 4
+			end if
+		end if
+		next
+end if
 end event
 
 
@@ -27,13 +46,6 @@ event ObjectStartup
 	Temp1 = 0
 	ArrayPos0 = 32
 	foreach (TypeName[FGSwapper], ArrayPos0, ALL_ENTITIES)
-		if Object[ArrayPos0].XPos < Temp0
-				Temp0 = Object[ArrayPos0].XPos
-			end if
-			if Object[ArrayPos0].XPos > Temp1
-				Temp1 = Object[ArrayPos0].XPos
-			end if
-		end if
 		ArrayPos0++
 	next
 end event

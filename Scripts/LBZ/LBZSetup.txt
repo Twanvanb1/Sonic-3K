@@ -15,32 +15,36 @@ public value LBZSETUP_value33 = 0;
 
 // Tables
 
-private table LBZSETUP_CILFrameTable
-	682, 682
+private table LBZSETUP_CILFrameTable1
+	692, 700, 708, 716, 724, 732, 740, 748, 756, 764, 772, 780, 788, 796, 804, 812
 end table
 
 private table LBZSETUP_CILFrameTable2
-	681, 690
+	694, 702, 710, 718, 726, 734, 742, 750, 758, 766, 774, 782, 790, 798, 806, 814
 end table
 
 private table LBZSETUP_CILFrameTable3
-	683, 691
+	695, 703, 711, 719, 727, 735, 743, 751, 759, 767, 775, 783, 791, 799, 807, 815
 end table
 
 private table LBZSETUP_CILFrameTable4
-	684, 692
+	698, 706, 714, 722, 730, 738, 746, 754, 762, 770, 778, 786, 794, 802, 810, 818
 end table
 
 private table LBZSETUP_CILFrameTable5
-	685, 693
+	699, 707, 715, 723, 731, 739, 747, 755, 763, 771, 779, 787, 795, 803, 811, 819
 end table
 
 private table LBZSETUP_CILFrameTable6
-	686, 694
+	696, 704, 712, 720, 728, 736, 744, 752, 760, 768, 776, 784, 792, 800, 808, 816
 end table
 
 private table LBZSETUP_CILFrameTable7
-	687, 695
+	697, 705, 713, 721, 729, 737, 745, 753, 761, 769, 777, 785, 793, 801, 809, 817
+end table
+
+private table LBZSETUP_CILFrameTable8
+	693, 701, 709, 717, 725, 733, 741, 749, 757, 765, 773, 781, 789, 797, 805, 813
 end table
 
 function LBZSETUP_SpeedUpMusic1P
@@ -165,46 +169,90 @@ end function
 event ObjectMain
 
 
-// animated tiles
-//if stage.actnum == 1
-//	if object.animationTimer < 2
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable)
-//			Copy16x16Tile(220, temp0)
-//			temp0 += 6
-//			
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable2)
-//			Copy16x16Tile(237, temp0)
-//			temp0 += 6
+//animated tiles
+if stage.actnum == 1
+	if object.animationTimer < 1
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable1)
+			Copy16x16Tile(220, temp0)
+			temp0 += 6
 			
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable3)
-//			Copy16x16Tile(238, temp0)
-//			temp0 += 6
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable2)
+			Copy16x16Tile(237, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable3)
+			Copy16x16Tile(238, temp0)
+			temp0 += 6
 		
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable4)
-//			Copy16x16Tile(241, temp0)
-//			temp0 += 6
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable4)
+			Copy16x16Tile(241, temp0)
+			temp0 += 6
 			
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable5)
-//			Copy16x16Tile(242, temp0)
-//			temp0 += 6
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable5)
+			Copy16x16Tile(242, temp0)
+			temp0 += 6
 			
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable6)
-//			Copy16x16Tile(239, temp0)
-//			temp0 += 6
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable6)
+			Copy16x16Tile(239, temp0)
+			temp0 += 6
 			
-//			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable7)
-//			Copy16x16Tile(240, temp0)
-//			temp0 += 6
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable7)
+			Copy16x16Tile(240, temp0)
+			temp0 += 6
 			
-//			GetTableValue(object.CilDuration, object.CilIndex, LBZSETUP_CILFrameTable)
-//			object.CilIndex++
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable8)
+			Copy16x16Tile(221, temp0)
+			temp0 += 6
 
-//			object.CilIndex %= 2
-//			object.animationTimer = 6
-//		else
-//			object.animationTimer--
-//	end if
-//end if
+			object.CilIndex++
+
+			object.CilIndex %= 16
+			object.animationTimer = 4
+		else
+			object.animationTimer--
+	end if
+else 
+	if object.animationTimer < 1
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable1)
+			Copy16x16Tile(223, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable2)
+			Copy16x16Tile(240, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable3)
+			Copy16x16Tile(241, temp0)
+			temp0 += 6
+		
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable4)
+			Copy16x16Tile(244, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable5)
+			Copy16x16Tile(245, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable6)
+			Copy16x16Tile(242, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable7)
+			Copy16x16Tile(243, temp0)
+			temp0 += 6
+			
+			GetTableValue(temp0, object.CilIndex, LBZSETUP_CILFrameTable8)
+			Copy16x16Tile(224, temp0)
+			temp0 += 6
+
+			object.CilIndex++
+
+			object.CilIndex %= 16
+			object.animationTimer = 4
+		else
+			object.animationTimer--
+	end if
+end if
 
 
 end event
