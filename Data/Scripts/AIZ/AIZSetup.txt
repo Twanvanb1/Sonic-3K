@@ -2,11 +2,11 @@
 // Aliases
 private alias 40 : TYPE_AIZSETUP
 private alias object.value10 : object.aniTileTimer
-private alias object.value5  : object.FlameDuration
-private alias object.value6  : object.FlameIndex
-private alias object.value7  : object.PlantIndex
-private alias object.value12  : object.Vine1Index
-private alias object.value13  : object.Vine2Index
+private alias object.value5 : object.FlameDuration
+private alias object.value6 : object.FlameIndex
+private alias object.value7 : object.PlantIndex
+private alias object.value12 : object.Vine1Index
+private alias object.value13 : object.Vine2Index
 
 
 
@@ -17,7 +17,8 @@ reserve function AIZSetup_SpeedUpMusic2P
 reserve function AIZSetup_SlowDownMusic2P
 
 // Static Values
-public value AIZSetup_value33 = 0;
+public value Water_flashTimer = 0
+
 
 
 // Tables
@@ -155,7 +156,7 @@ end table
 
 //vine 2 act 2
 private table AIZSetup_Vine22FrameTable
-	0, 0, 0, 0, 987, 990, 993, 990, 987 
+	0, 0, 0, 0, 987, 990, 993, 990, 987
 end table
 
 private table AIZSetup_Vine2A2FrameTable
@@ -166,9 +167,9 @@ private table AIZSetup_Vine2B2FrameTable
 	986, 980, 983, 986, 989, 992, 995, 992, 989
 end table
 
-public alias AIZSetup_value33 : AIZSetup_flashTimer
+public alias AIZSetup_value33 : Water_flashTimer
 
-function AIZSetup_SpeedUpMusic1P
+public function AIZSetup_SpeedUpMusic1P
 	CheckEqual(object[25].type, TypeName[Music Event])
 	temp0 = checkResult
 	CheckEqual(object[25].propertyValue, 2)
@@ -198,7 +199,7 @@ function AIZSetup_SpeedUpMusic1P
 end function
 
 
-function AIZSetup_SlowDownMusic1P
+public function AIZSetup_SlowDownMusic1P
 	CheckEqual(object[25].type, TypeName[Music Event])
 	temp0 = checkResult
 	CheckEqual(object[25].propertyValue, 2)
@@ -228,7 +229,7 @@ function AIZSetup_SlowDownMusic1P
 end function
 
 
-function AIZSetup_SpeedUpMusic2P
+public function AIZSetup_SpeedUpMusic2P
 	CheckEqual(object[25].type, TypeName[Music Event])
 	temp0 = checkResult
 	CheckEqual(object[25].propertyValue, 2)
@@ -258,7 +259,7 @@ function AIZSetup_SpeedUpMusic2P
 end function
 
 
-function AIZSetup_SlowDownMusic2P
+public function AIZSetup_SlowDownMusic2P
 	CheckEqual(object[25].type, TypeName[Music Event])
 	temp0 = checkResult
 	CheckEqual(object[25].propertyValue, 2)
@@ -288,10 +289,10 @@ function AIZSetup_SlowDownMusic2P
 end function
 
 
-event ObjectMain
-// plant
-if Stage.actNum == 1
-	if object.value11 < 1
+event ObjectUpdate
+	// plant
+	if stage.actNum == 1
+		if object.value11 < 1
 			GetTableValue(temp0, object.PlantIndex, AIZSetup_flowers1FrameTable)
 			Copy16x16Tile(707, temp0)
 			temp0 += 5
@@ -306,12 +307,12 @@ if Stage.actNum == 1
 			object.value11 = 4
 		else
 			object.value11--
+		end if
 	end if
-end if
 
-// vine 1
-if Stage.actNum == 1
-	if object.value14 < 1
+	// vine 1
+	if stage.actNum == 1
+		if object.value14 < 1
 			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine1FrameTable)
 			Copy16x16Tile(704, temp0)
 			temp0 += 5
@@ -332,13 +333,13 @@ if Stage.actNum == 1
 				object.value14 = 36
 				if object.Vine1Index >= 9
 					object.value14 = 2
-				endif
-			endif
+				end if
+			end if
 		else
 			object.value14--
-	end if
-else
-	if object.value14 < 1
+		end if
+	else
+		if object.value14 < 1
 			GetTableValue(temp0, object.Vine1Index, AIZSetup_Vine12FrameTable)
 			Copy16x16Tile(121, temp0)
 			temp0 += 5
@@ -359,16 +360,16 @@ else
 				object.value14 = 36
 				if object.Vine1Index >= 9
 					object.value14 = 2
-				endif
-			endif
+				end if
+			end if
 		else
 			object.value14--
+		end if
 	end if
-end if
 
-// vine 2
-if Stage.actNum == 1
-	if object.value15 < 1
+	// vine 2
+	if stage.actNum == 1
+		if object.value15 < 1
 			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2FrameTable)
 			Copy16x16Tile(701, temp0)
 			temp0 += 5
@@ -387,38 +388,38 @@ if Stage.actNum == 1
 			object.value15 = 6
 			if object.Vine2Index == 7
 				object.value15 = 40
-			endif
+			end if
 		else
 			object.value15--
-	end if
-else
-	if object.value15 < 1
-				GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine22FrameTable)
-				Copy16x16Tile(124, temp0)
-				temp0 += 5
-
-				GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2A2FrameTable)
-				Copy16x16Tile(125, temp0)
-				temp0 += 5
-
-				GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2B2FrameTable)
-				Copy16x16Tile(126, temp0)
-				temp0 += 5
-
-				object.Vine2Index++
-
-				object.Vine2Index %= 9
-				object.value15 = 6
-				if object.Vine2Index == 7
-					object.value15 = 40
-				endif
-			else
-				object.value15--
 		end if
-end if
+	else
+		if object.value15 < 1
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine22FrameTable)
+			Copy16x16Tile(124, temp0)
+			temp0 += 5
 
-if stage.actnum == 2
-	if object.value10 < 1
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2A2FrameTable)
+			Copy16x16Tile(125, temp0)
+			temp0 += 5
+
+			GetTableValue(temp0, object.Vine2Index, AIZSetup_Vine2B2FrameTable)
+			Copy16x16Tile(126, temp0)
+			temp0 += 5
+
+			object.Vine2Index++
+
+			object.Vine2Index %= 9
+			object.value15 = 6
+			if object.Vine2Index == 7
+				object.value15 = 40
+			end if
+		else
+			object.value15--
+		end if
+	end if
+
+	if stage.actNum == 2
+		if object.value10 < 1
 			GetTableValue(temp0, object.FlameIndex, AIZSetup_BG1FrameTable)
 			Copy16x16Tile(136, temp0)
 			temp0 += 5
@@ -492,47 +493,47 @@ if stage.actnum == 2
 			object.value10 = 5
 		else
 			object.value10--
+		end if
 	end if
-end if
 
 
-if Stage.actNum == 2
-	object.value1++
-	if object.value1 >= 2
-		// FG Deformation
-		tileLayer[0].deformationOffset++
-		// FG Water Deformation
-		tileLayer[0].deformationOffsetW++
-		// BG Deformation
-		tileLayer[1].deformationOffset++
-		// BG Water Deformation
-		tileLayer[1].deformationOffsetW++
-		object.value1 = 0
+	if stage.actNum == 2
+		object.value1++
+		if object.value1 >= 2
+			// FG Deformation
+			tileLayer[0].deformationOffset++
+			// FG Water Deformation
+			tileLayer[0].deformationOffsetW++
+			// BG Deformation
+			tileLayer[1].deformationOffset++
+			// BG Water Deformation
+			tileLayer[1].deformationOffsetW++
+			object.value1 = 0
+		end if
 	end if
-end if
 
-if Stage.actNum == 1
-	object.value0++
-	if object.value0 > 7
-		object.value0 = 0
-		RotatePalette(0, 171, 173, 0)
-		RotatePalette(1, 171, 173, 0)
+	if stage.actNum == 1
+		object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			RotatePalette(0, 171, 173, 0)
+			RotatePalette(1, 171, 173, 0)
+		end if
 	end if
-end if
 
-if Stage.actNum == 2
-	Object.value0++
-	if object.value0 > 7
-		object.value0 = 0
-		RotatePalette(0, 188, 191, 0)
-		RotatePalette(1, 188, 191, 0)
-	end	if
-end if
+	if stage.actNum == 2
+		object.value0++
+		if object.value0 > 7
+			object.value0 = 0
+			RotatePalette(0, 188, 191, 0)
+			RotatePalette(1, 188, 191, 0)
+		end if
+	end if
 
-if AIZSetup_value33 > 0
-	AIZSetup_value33--
-end if
-	
+	if Water_flashTimer > 0
+		Water_flashTimer--
+	end if
+
 end event
 
 event ObjectDraw
@@ -549,7 +550,7 @@ event ObjectDraw
 	end if
 
 	SetActivePalette(0, 0, temp0)
-	if AIZSetup_value33 > 0
+	if Water_flashTimer > 0
 		SetActivePalette(2, temp0, screen.ysize)
 	else
 		SetActivePalette(1, temp0, screen.ysize)
@@ -557,7 +558,7 @@ event ObjectDraw
 end event
 
 event ObjectStartup
-	if Stage.actNum == 1
+	if stage.actNum == 1
 		SetMusicTrack("AngelIsland.ogg", 0, 1)
 		SpeedUpMusic = AIZSetup_SpeedUpMusic1P
 		SlowDownMusic = AIZSetup_SlowDownMusic1P
@@ -567,7 +568,7 @@ event ObjectStartup
 		SlowDownMusic = AIZSetup_SlowDownMusic2P
 	end if
 
-	if Stage.actNum == 1
+	if stage.actNum == 1
 		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 191)
 	else
 		//LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
@@ -583,14 +584,14 @@ event ObjectStartup
 	SetLayerDeformation(3, 64, 2, 0, 0, 0)
 
 	temp0 = 0
-	while temp0 < 256
+	if temp0 < 256
 		Rand(temp1, 2)
 		SetLayerDeformation(0, 6, temp1, 1, temp0, 16)
 		temp0 += 6
 	loop
 
 	temp2 = 0
-	while temp2 < 256
+	if temp2 < 256
 		Rand(temp3, 4)
 		SetLayerDeformation(2, 6, temp3, 1, temp2, 64)
 		temp2 += 16

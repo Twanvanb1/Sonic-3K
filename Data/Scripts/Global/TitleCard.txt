@@ -11,12 +11,14 @@ private alias 25 : TYPE_TITLECARD
 private alias TitleCard_value23 : TitleCard_showZoneText
 
 // Static Values
-public value redribbony = 0;
-public value TitleCard_value23 = 0;
+public value redribbony = 0
+
+public value TitleCard_showZoneText = 0
+
 
 // Tables
 
-event ObjectMain
+event ObjectUpdate
 	options.touchControls = 0
 	switch object.state
 	case 0
@@ -75,7 +77,7 @@ event ObjectMain
 			end if
 		end if
 		break
-		
+
 	case 3
 		if object.value0 < 60
 			object.value0++
@@ -93,7 +95,7 @@ event ObjectMain
 		else
 			object.state++
 			currentPlayer = 0
-			while currentPlayer < playerCount
+			if currentPlayer < playerCount
 				object[currentPlayer].controlMode = 0
 				currentPlayer++
 			loop
@@ -121,7 +123,7 @@ event ObjectMain
 			SetScreenFade(0, 0, 0, object.value0)
 		else
 			currentPlayer = 0
-			while currentPlayer < playerCount
+			if currentPlayer < playerCount
 				object[currentPlayer].controlMode = 0
 				currentPlayer++
 			loop
@@ -159,7 +161,7 @@ event ObjectDraw
 		temp0 = screen.xcenter
 		temp0 -= 109
 		DrawRect(temp0, 0, 67, redribbony, 255, 0, 0, 255)
-		
+
 
 		// the "Sonic 3 Text"
 		temp0 = screen.xcenter
@@ -175,14 +177,14 @@ event ObjectDraw
 		temp0 += 100
 		temp0 += object.value1
 		DrawActName(0, temp0, 100, 0, 0, 8, 0)
-	
+
 		//Zone Text
 		if screen.xsize < 320
 			temp0 = screen.xcenter
 			temp0 += 28
 			temp0 += object.value2
 			DrawSpriteScreenXY(26, temp0, 100)
-		else 
+		else
 			temp0 = screen.xcenter
 			temp0 += 39
 			temp0 += object.value2
@@ -201,25 +203,25 @@ event ObjectDraw
 				end if
 				DrawSpriteScreenXY(temp1, temp0, 102)
 			end if
-		else 
+		else
 			temp0 = screen.xcenter
 			temp0 -= 26
 			temp0 += object.value3
 			temp0 += object.propertyValue
-			
+
 			if stage.actNum < 4
 				temp1 = 26
 				temp1 += stage.actNum
 				if temp1 > 30
 					temp1 = 30
 				end if
-				if stage.actnum == 0
+				if stage.actNum == 0
 					DrawSpriteScreenXY(30, temp0, 102)
 				else
-				DrawSpriteScreenXY(temp1, temp0, 102)
+					DrawSpriteScreenXY(temp1, temp0, 102)
 				end if
-				
-				
+
+
 			end if
 		end if
 	end if
@@ -229,48 +231,51 @@ end event
 event ObjectStartup
 	redribbony = 0
 	LoadSpriteSheet("Global/TitleCard.gif")
-	SpriteFrame(0, -8, 16, 24, 1, 1)		// A
-	SpriteFrame(0, -8, 16, 24, 18, 1)		// B
-	SpriteFrame(0, -8, 16, 24, 35, 1)		// C
-	SpriteFrame(0, -8, 16, 24, 52, 1)		// D
-	SpriteFrame(0, -8, 16, 24, 69, 1)		// E
-	SpriteFrame(0, -8, 16, 24, 86, 1)		// F
-	SpriteFrame(0, -8, 16, 24, 103, 1)		// G
-	SpriteFrame(0, -8, 16, 24, 120, 1)		// H
-	SpriteFrame(0, -8, 8, 24, 137, 1)		// I
-	SpriteFrame(0, -8, 8, 24, 1, 51)		// J
-	SpriteFrame(0, -8, 16, 24, 146, 1)		// K
-	SpriteFrame(0, -8, 8, 24, 163, 1)		// L
-	SpriteFrame(0, -8, 24, 24, 172, 1)		// M
-	SpriteFrame(0, -8, 16, 24, 197, 1)		// N
-	SpriteFrame(0, -8, 24, 24, 214, 1)		// O
-	SpriteFrame(0, -8, 16, 24, 239, 1)		// P
-	SpriteFrame(0, -8, 24, 24, 10, 51)		// Q
-	SpriteFrame(0, -8, 16, 24, 1, 26)		// R
-	SpriteFrame(0, -8, 16, 24, 18, 26)		// S
-	SpriteFrame(0, -8, 16, 24, 35, 26)		// T
-	SpriteFrame(0, -8, 16, 24, 52, 26)		// U
-	SpriteFrame(0, -8, 16, 24, 69, 26)		// V
-	SpriteFrame(0, -8, 24, 24, 35, 51)		// W
-	SpriteFrame(0, -8, 16, 24, 60, 51)		// X
-	SpriteFrame(0, -8, 16, 24, 86, 26)		// Y
-	SpriteFrame(0, -8, 16, 24, 103, 26)		// Z
-	SpriteFrame(18, 30, 72, 24, 176, 60)	// ZONE
-	SpriteFrame(68, 60, 49, 32, 120, 26)	// ACT 1
-	SpriteFrame(68, 60, 49, 32, 170, 26)	// ACT 2
-	SpriteFrame(-4, -21, 48, 16, 127, 59)	// SONIC 3 TEXT
-	SpriteFrame(0, 0, 0, 0, 0, 0) 	// Nothing
-	SpriteFrame(-4, -21, 48, 16, 127, 76)	// SONIC & KNUCKLES TEXT
-	SpriteFrame(-4, -21, 48, 16, 127, 59)	// SONIC 3 & KNUCKLES TEXT
+	SpriteFrame(0, -8, 16, 24, 1, 1) // A
+	SpriteFrame(0, -8, 16, 24, 18, 1) // B
+	SpriteFrame(0, -8, 16, 24, 35, 1) // C
+	SpriteFrame(0, -8, 16, 24, 52, 1) // D
+	SpriteFrame(0, -8, 16, 24, 69, 1) // E
+	SpriteFrame(0, -8, 16, 24, 86, 1) // F
+	SpriteFrame(0, -8, 16, 24, 103, 1) // G
+	SpriteFrame(0, -8, 16, 24, 120, 1) // H
+	SpriteFrame(0, -8, 8, 24, 137, 1) // I
+	SpriteFrame(0, -8, 8, 24, 1, 51) // J
+	SpriteFrame(0, -8, 16, 24, 146, 1) // K
+	SpriteFrame(0, -8, 8, 24, 163, 1) // L
+	SpriteFrame(0, -8, 24, 24, 172, 1) // M
+	SpriteFrame(0, -8, 16, 24, 197, 1) // N
+	SpriteFrame(0, -8, 24, 24, 214, 1) // O
+	SpriteFrame(0, -8, 16, 24, 239, 1) // P
+	SpriteFrame(0, -8, 24, 24, 10, 51) // Q
+	SpriteFrame(0, -8, 16, 24, 1, 26) // R
+	SpriteFrame(0, -8, 16, 24, 18, 26) // S
+	SpriteFrame(0, -8, 16, 24, 35, 26) // T
+	SpriteFrame(0, -8, 16, 24, 52, 26) // U
+	SpriteFrame(0, -8, 16, 24, 69, 26) // V
+	SpriteFrame(0, -8, 24, 24, 35, 51) // W
+	SpriteFrame(0, -8, 16, 24, 60, 51) // X
+	SpriteFrame(0, -8, 16, 24, 86, 26) // Y
+	SpriteFrame(0, -8, 16, 24, 103, 26) // Z
+	SpriteFrame(18, 30, 72, 24, 176, 60) // ZONE
+	SpriteFrame(68, 60, 49, 32, 120, 26) // ACT 1
+	SpriteFrame(68, 60, 49, 32, 170, 26) // ACT 2
+	SpriteFrame(-4, -21, 48, 16, 127, 59) // SONIC 3 TEXT
+	SpriteFrame(0, 0, 0, 0, 0, 0) // Nothing
+	SpriteFrame(-4, -21, 48, 16, 127, 76) // SONIC & KNUCKLES TEXT
+	SpriteFrame(-4, -21, 48, 16, 127, 59) // SONIC 3 & KNUCKLES TEXT
 
+	// Cycle through all objects and filter out title cards
+	// (Pretend this is a foreach)
 	arrayPos0 = 32
 	while arrayPos0 < 0x420
 		if object[arrayPos0].type == TypeName[Title Card]
-			object[arrayPos0].priority = PRIORITY_ACTIVE_PAUSED
-			object[arrayPos0].alpha = 255
+			object[arrayPos0].priority = PRIORITY_ALWAYS
+			object[arrayPos0].alpha = 0xff
 			object[arrayPos0].drawOrder = 6
 			stage.state = STAGE_PAUSED
 		end if
+		
 		arrayPos0++
 	loop
 end event

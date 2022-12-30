@@ -1,0 +1,747 @@
+// ----------------------------------
+// RSDK Project: Sonic 1/Sonic 2
+// Script Description: Menu Control Object
+// Script Author: Christian Whitehead/Simon Thomley
+// Unpacked by Rubberduckycooly's script unpacker
+// ----------------------------------
+
+// Aliases
+private alias 2 : TYPE_MENUCONTROL
+
+private alias object.value0 : menuControl.fadeValue
+private alias object.value1 : menuControl.scrollDelayUp
+private alias object.value2 : menuControl.scrollDelayDown
+private alias object.value3 : menuControl.currentSelection
+private alias object.value4 : menuControl.soundTestCooldown
+
+private alias object.value0 : hexNo.number
+private alias object.value1 : hexNo.highlighted
+
+private alias 0 : STATE_INIT
+private alias 1 : STATE_FADEIN
+private alias 2 : STATE_MAIN
+private alias 3 : STATE_LOADLEVEL
+private alias 4 : STATE_LOADSPECIAL
+
+// Function declarations
+reserve function MenuControl_HandleSecrets
+reserve function MenuControl_SoundTestPlayer
+
+// Static Values
+public value MenuControl_value1 = 0;
+public value MenuControl_value2 = 0;
+public value MenuControl_value3 = 0;
+public value MenuControl_value4 = 0;
+public value MenuControl_value5 = 0;
+public value MenuControl_value6 = 0;
+
+private alias BGAnimation_value0 : BGAnimation_currentPreview
+
+// Tables
+
+// Code to open the options menu
+public table MenuControl_OptionsMenu
+	0, 0, 0
+end table
+
+// Code to enable debug mode
+public table MenuControl_SecretDebugMode
+	1, 9, 9, 2, 1, 1, 2, 4
+end table
+
+// Code to give all emeralds
+public table MenuControl_SecretEmeralds
+	4, 1, 2, 6
+end table
+
+// Code to give 14 continues
+public table MenuControl_SecretContinues
+	1, 1, 2, 4
+end table
+
+// Code to replace Hidden Palace Zone with Proto Palace Zone
+public table MenuControl_SecretPPZ
+	3, 3, 3, 11, 16, 16, 16, 4
+end table
+
+
+// This table holds data for every stage with six values for every stage, 
+// -> First entry is menu table the stage option is on
+// -> Second is what number this one is on the list, from top to bottom
+// -> Third is the active stage list the stage is on
+// -> Fourth is the stage's position in the stage list
+// -> Fifth is the menu entry of what is on the opposite side of this selection, like how MTZ is to the right of EHZ and vice versa
+// -> Sixth is the icon the entry uses
+
+public table MenuControl_EntryTable
+	MENU_1, 0,  REGULAR_STAGE, 0, 20, 1		// Angel Island 1
+	MENU_1, 1,  REGULAR_STAGE, 1, 20, 1		// Angel Island 2
+	MENU_1, 3,  REGULAR_STAGE, 2, 21, 2		// Hydrocity 1
+	MENU_1, 4,  REGULAR_STAGE, 3, 22, 2		// Hydrocity 2
+	MENU_1, 6,  REGULAR_STAGE, 4, 18, 3		// Marble Garden 1
+	MENU_1, 7,  REGULAR_STAGE, 5, 18, 3		// Marble Garden 2
+	MENU_1, 9,  REGULAR_STAGE, 6, 19, 4		// Carnival Night 1
+	MENU_1, 10, REGULAR_STAGE, 7, 19, 4		// Carnival Night 2
+	MENU_1, 12, REGULAR_STAGE, 8, 20, 5		// Ice Cap 1
+	MENU_1, 13, REGULAR_STAGE, 9, 20, 5		// Ice Cap 2
+	MENU_1, 15, REGULAR_STAGE, 10, 21, 6	// launch Base 1
+	MENU_1, 16, REGULAR_STAGE, 11, 21, 6	// launch Base 2
+	MENU_1, 18, REGULAR_STAGE, 12, 22, 8	// Mushroom Hill 1
+	MENU_1, 19, REGULAR_STAGE, 13, 22, 8	// Mushroom Hill 2
+	MENU_1, 21, REGULAR_STAGE, 14, 0, 9		// Flying battery 1
+	MENU_1, 22, REGULAR_STAGE, 15, 1, 9		// Flying battery 2
+	MENU_1, 24, REGULAR_STAGE, 16, 0, 10	// Sandopolis 1
+	MENU_1, 25, REGULAR_STAGE, 17, 1, 10	// Sandopolis 2
+	MENU_1, 27,  REGULAR_STAGE, 18, 0, 11	// Lava reef 1
+	MENU_1, 28,  REGULAR_STAGE, 19, 0, 11	// Lava reef 2
+
+	MENU_2, 0,  REGULAR_STAGE, 20, 0, 12	// Hidden Palace
+	MENU_2, 3,  REGULAR_STAGE, 21, 2, 12	// Sky Sanctuary S
+	MENU_2, 4,  REGULAR_STAGE, _, 3, 12		// Sky Sanctuary K
+	MENU_2, 6,  REGULAR_STAGE, 22, 2, 12	// Death Egg 1
+	MENU_2, 7, 	REGULAR_STAGE, 23, 4, 12	// Death Egg 2
+	MENU_2, 9, 	REGULAR_STAGE, 17, 2, 12	// The Doomsday 
+	MENU_2, 11, REGULAR_STAGE, _, 4, 12		// Bonus G
+	MENU_2, 12, SPECIAL_STAGE, _, 10, 13	// 		 R
+	MENU_2, 13, SPECIAL_STAGE, _, 10, 13	// 		 S
+	MENU_2, 15, SPECIAL_STAGE, 0, 10, 13	// Special Stage
+	MENU_2, 17, BONUS_STAGE, 1, 10, 13		// Azure Lake
+	MENU_2, 19, BONUS_STAGE, 2, 10, 13		// Baloon Park
+	MENU_2, 21, BONUS_STAGE, 3, 10, 13		// Chrome Gadget
+	MENU_2, 23, BONUS_STAGE, 4, 10, 13		// Desert Palace
+	MENU_2, 25, BONUS_STAGE, 5, 10, 13		// Endless mine
+	MENU_2, 27, 0, 0, 67, 0 				// Sound test
+end table
+
+
+function MenuControl_HandleSecrets
+
+	if hexNo[+1].number < 8
+		SetTableValue(hexNo[+1].number, 129, MenuControl_EntryTable)
+	end if
+
+	// Handle the options menu check
+	GetTableValue(temp0, MenuControl_value1, MenuControl_OptionsMenu)
+
+	if temp0 == hexNo[+1].number
+		MenuControl_value1++
+		if MenuControl_value1 == 3
+	
+			MenuControl_value1 = 0
+	
+			CreateTempObject(TypeName[Config Screen], 0, 0, 0)
+			MenuControl_value2 = true
+	
+			PlaySfx(SfxName[Resume], 0)
+	
+		end if
+	else
+		MenuControl_value1 = 0
+	end if
+	
+	// Handle the debug mode code
+	GetTableValue(temp0, MenuControl_value3, MenuControl_SecretDebugMode)
+
+	if temp0 == hexNo[+1].number
+		MenuControl_value3++
+		if MenuControl_value3 == 8
+
+			MenuControl_value3 = 0
+
+			stage.debugMode = true
+
+			PlaySfx(SfxName[Ring L], 0)
+
+		end if
+	else
+		MenuControl_value3 = 0
+	end if
+
+	// Handles the code for all emeralds
+	GetTableValue(temp0, MenuControl_value4, MenuControl_SecretEmeralds)
+
+	if temp0 == hexNo[+1].number
+		MenuControl_value4++
+		if MenuControl_value4 == 4
+			MenuControl_value4 = 0
+
+			// Note that this isn't 127 emeralds, it's 01111111, or seven ones, in binary
+			specialStage.emeralds = 127
+
+			PlaySfx(SfxName[Emerald], 0)
+			StopMusic()
+
+		end if
+	else
+		MenuControl_value4 = 0
+	end if
+
+	if MenuControl_value3 < 2
+		GetTableValue(temp0, MenuControl_value5, MenuControl_SecretContinues)
+		if temp0 == hexNo[+1].number
+			MenuControl_value5++
+			if MenuControl_value5 == 4
+
+				MenuControl_value5 = 0
+				player.continues = 14
+
+				PlaySfx(SfxName[Continue], 0)
+
+			end if
+		else
+			MenuControl_value5 = 0
+		end if
+	else
+		MenuControl_value5 = 0
+	end if
+
+	if stage.debugMode == true
+		GetTableValue(temp0, MenuControl_value6, MenuControl_SecretPPZ)
+		if temp0 == hexNo[+1].number
+			MenuControl_value6++
+			if MenuControl_value6 == 8
+
+				MenuControl_value6 = 0
+
+				SetTableValue(2, 122, MenuControl_EntryTable)
+				SetTableValue(11, 123, MenuControl_EntryTable)
+
+				PlaySfx(SfxName[Ring L], 0)
+
+				// Set the Hidden Palace unlock flag to true
+				saveRAM[46] = true
+
+			end if
+		else
+			MenuControl_value6 = 0
+		end if
+	end if
+
+end function
+
+
+function MenuControl_SoundTestPlayer
+
+	if menuControl.soundTestCooldown == 0
+		menuControl.soundTestCooldown = 30
+
+		switch hexNo[+1].number
+		case 0
+			break
+
+		case 1
+			SetMusicTrack("Results.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 2
+			SetMusicTrack("EmeraldHill.ogg", 0, 0x254AE)
+			PlayMusic(0)
+			break
+
+		case 3
+			SetMusicTrack("MysticCave2.ogg", 0, 0x48EF)
+			PlayMusic(0)
+			break
+
+		case 4
+			SetMusicTrack("OilOcean.ogg", 0, 0x47AC4)
+			PlayMusic(0)
+			break
+
+		case 5
+			SetMusicTrack("Metropolis.ogg", 0, 0x4B882)
+			PlayMusic(0)
+			break
+
+		case 6
+			SetMusicTrack("HillTop.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 7
+			SetMusicTrack("AquaticRuin.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 8
+			SetMusicTrack("CasinoNight2.ogg", 0, 0x1767C)
+			PlayMusic(0)
+			break
+
+		case 9
+			SetMusicTrack("CasinoNight.ogg", 0, 0xF564)
+			PlayMusic(0)
+			break
+
+		case 10
+			SetMusicTrack("DeathEgg.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 11
+			SetMusicTrack("MysticCave.ogg", 0, 0x1841C)
+			PlayMusic(0)
+			break
+
+		case 12
+			SetMusicTrack("EmeraldHill2.ogg", 0, 0x184F4)
+			PlayMusic(0)
+			break
+
+		case 13
+			SetMusicTrack("SkyChase.ogg", 0, 0x3066D)
+			PlayMusic(0)
+			break
+
+		case 14
+			SetMusicTrack("ChemicalPlant.ogg", 0, 0xA7224)
+			PlayMusic(0)
+			break
+
+		case 15
+			SetMusicTrack("WingFortress.ogg", 0, 0x18622)
+			PlayMusic(0)
+			break
+
+		case 16
+			SetMusicTrack("Extra.ogg", 0, 0xE9CC)
+			PlayMusic(0)
+			break
+
+		case 17
+			SetMusicTrack("Options.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 18
+			SetMusicTrack("SpecialStage.ogg", 0, 0x79404)
+			PlayMusic(0)
+			break
+
+		case 19
+			SetMusicTrack("Boss.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 20
+			SetMusicTrack("FinalBoss.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 21
+			SetMusicTrack("Ending.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		case 22
+			SetMusicTrack("Super.ogg", 0, 1)
+			PlayMusic(0)
+			break
+
+		case 23
+			SetMusicTrack("Invincibility.ogg", 0, 0x9717)
+			PlayMusic(0)
+			break
+
+		case 24
+			PlaySfx(SfxName[Life], 0)
+			PauseMusic()
+			ResetObjectEntity(25, TypeName[Music Event], 2, 0, 0)
+			object[25].priority = PRIORITY_ACTIVE
+			break
+
+		case 25
+			SetMusicTrack("TitleScreen.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		case 26
+			SetMusicTrack("ActComplete.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		case 27
+			SetMusicTrack("GameOver.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		case 28
+			SetMusicTrack("Continue.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		case 29
+			StopMusic()
+			PlaySfx(SfxName[Emerald], 0)
+			break
+
+		case 30
+			SetMusicTrack("Credits.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		case 31
+			SetMusicTrack("Drowning.ogg", 0, 0)
+			PlayMusic(0)
+			break
+
+		end switch
+
+	end if
+
+end function
+
+
+event ObjectMain
+
+	// Setup the HexNo object
+	object[+1].xpos = screen.xcenter
+	object[+1].xpos += 118
+
+	switch object.state
+	case STATE_INIT
+		menuControl.fadeValue = 320
+		SetScreenFade(0, 0, 0, menuControl.fadeValue)
+		object[+1].ypos = 218
+		object[+1].priority = PRIORITY_ACTIVE
+		object.state++
+		break
+
+	case STATE_FADEIN
+		if menuControl.fadeValue > 0
+			menuControl.fadeValue -= 16
+		else
+			PlayMusic(0)
+			object.state++
+		end if
+		SetScreenFade(0, 0, 0, menuControl.fadeValue)
+		break
+
+	case STATE_MAIN
+		// Don't do any of this if the options menu is open
+		if MenuControl_value2 == 0
+
+			if inputDown.down == true
+
+				menuControl.scrollDelayUp = 0
+				menuControl.scrollDelayDown++
+				if menuControl.scrollDelayDown == 1
+					menuControl.currentSelection++
+				end if
+				menuControl.scrollDelayDown %= 12
+
+			else
+
+				if inputDown.up == true
+					menuControl.scrollDelayDown = 0
+					menuControl.scrollDelayUp++
+					if menuControl.scrollDelayUp == 1
+						menuControl.currentSelection--
+					end if
+					menuControl.scrollDelayUp %= 12
+				else
+					menuControl.scrollDelayUp = 0
+					menuControl.scrollDelayDown = 0
+				end if
+
+			end if
+
+			if menuControl.currentSelection > 35
+				menuControl.currentSelection = 0
+			end if
+
+			if menuControl.currentSelection < 0
+				menuControl.currentSelection = 35
+			end if
+
+			temp0 = menuControl.currentSelection
+			temp0 *= 6
+			temp0++
+			GetTableValue(temp2, temp0, MenuControl_EntryTable)
+			temp0 += 3
+			GetTableValue(temp1, temp0, MenuControl_EntryTable)
+
+			switch temp1
+			default
+				checkResult = inputPress.left
+				checkResult |= inputPress.right
+
+				if checkResult == true
+					menuControl.currentSelection = temp1
+				end if
+
+				hexNo[+1].highlighted = 0
+
+				if inputPress.buttonA == true
+					inputPress.start = true
+				end if
+
+				break
+
+			case 67 // Sound test
+				if menuControl.soundTestCooldown > 0
+					menuControl.soundTestCooldown--
+				end if
+
+				hexNo[+1].highlighted = 16
+
+				if inputPress.buttonA == true
+					hexNo[+1].number += 16
+				end if
+				if inputPress.left == true
+					hexNo[+1].number--
+				end if
+				if inputPress.right == true
+					hexNo[+1].number++
+				end if
+
+				// Limit the number's maximum count
+				hexNo[+1].number &= 31
+
+				if inputPress.buttonB == true
+					CallFunction(MenuControl_SoundTestPlayer)
+					CallFunction(MenuControl_HandleSecrets)
+				end if
+				if inputPress.buttonC == true
+					CallFunction(MenuControl_SoundTestPlayer)
+					CallFunction(MenuControl_HandleSecrets)
+				end if
+
+				break
+
+			end switch
+
+			temp0 = menuControl.currentSelection
+			temp0 *= 6
+			GetTableValue(temp1, temp0, MenuControl_EntryTable)
+			temp0++
+
+			if temp1 == MENU_1
+				menu2.selection = -1
+				GetTableValue(menu1.selection, temp0, MenuControl_EntryTable)
+			else // MENU_2
+				menu1.selection = -1
+				GetTableValue(menu2.selection, temp0, MenuControl_EntryTable)
+			end if
+
+
+			// Player selected the option?
+			if inputPress.start == true
+				// Special Stage
+				if menuControl.currentSelection >= 30
+					if menuControl.currentSelection == 32
+						object.state = STATE_LOADLEVEL
+					end if
+					PlaySfx(SfxName[Warp], 0)
+					object.state = STATE_LOADSPECIAL
+					fadeColor = 208
+					fadeColor <<= 16
+					temp0 = 255
+					temp0 <<= 8
+					fadeColor += temp0
+					fadeColor += 224
+					if menuControl.currentSelection == 32
+						object.state = STATE_LOADLEVEL
+					end if
+				end if
+				if menuControl.currentSelection >= 30
+					PlaySfx(SfxName[Warp], 0)
+					object.state = STATE_LOADSPECIAL
+					fadeColor = 208
+					fadeColor <<= 16
+					temp0 = 255
+					temp0 <<= 8
+					fadeColor += temp0
+					fadeColor += 224
+					if menuControl.currentSelection == 32
+						object.state = STATE_LOADLEVEL
+					end if
+				else
+					// Hidden Palace?
+					if menuControl.currentSelection == 20
+
+						// See if the player has it unlocked
+						if saveRAM[46] == true
+							// Proceed and load the level like normal
+							object.state = STATE_LOADLEVEL
+						else
+							// Haven't played it legitimately yet, sorry...
+							PlaySfx(SfxName[Fail], 0)
+						end if
+
+					else
+
+						// Normal stage - let the player proceed
+						object.state = STATE_LOADLEVEL
+
+					end if
+
+				end if
+
+			end if
+
+		end if
+		break
+
+	case STATE_LOADLEVEL
+		if menuControl.fadeValue < 256
+			music.volume -= 10
+			menuControl.fadeValue += 16
+			SetScreenFade(0, 0, 0, menuControl.fadeValue)
+		else
+			StopMusic()
+			temp0 = menuControl.currentSelection
+			temp0 *= 6
+			temp0 += 2
+			GetTableValue(temp1, temp0, MenuControl_EntryTable)
+			temp0++
+			GetTableValue(temp2, temp0, MenuControl_EntryTable)
+			stage.activeList = temp1
+			stage.listPos = temp2
+			LoadStage()
+			SetScreenFade(0, 0, 0, 255)
+		end if
+		break
+
+	case STATE_LOADSPECIAL
+		if menuControl.fadeValue < 768
+			music.volume -= 10
+			menuControl.fadeValue += 8
+			SetScreenFade(208, 255, 224, menuControl.fadeValue)
+		else
+			StopMusic()
+			temp0 = menuControl.currentSelection
+			temp0 *= 6
+			temp0 += 2
+			GetTableValue(temp1, temp0, MenuControl_EntryTable)
+			temp0++
+			GetTableValue(temp2, temp0, MenuControl_EntryTable)
+			stage.activeList = temp1
+			stage.listPos = temp2
+			LoadStage()
+			SetScreenFade(208, 255, 224, 255)
+		end if
+		break
+
+	end switch
+
+end event
+
+
+event ObjectDraw
+
+	temp0 = screen.Xcenter
+	temp0 -= 10
+	DrawMenu(MENU_1, temp0, 2)
+
+	temp0 = screen.xcenter
+	temp0 += 142
+	DrawMenu(MENU_2, temp0, 2)
+
+end event
+
+
+event ObjectStartup
+
+	// Load the sprite sheet
+	// No need to setup sprite frames since the menu will handle them automatically
+	LoadSpriteSheet("LevelSelect/Text.gif")
+
+	// All Menu Control objects should be active
+	// -> Note that there should only ever be one of them in a scene, though
+	foreach (TypeName[Menu Control], arrayPos0, ALL_ENTITIES)
+		object[arrayPos0].priority = PRIORITY_ACTIVE
+	next
+
+	if stage.actNum < 3
+		options.stageSelectFlag = true
+	end if
+
+	options.touchControls = 0
+
+	SetMusicTrack("Options.ogg", 0, 1)
+
+	// Setup menu 1 (left column)
+	SetupMenu(MENU_1, 0, 3, 1)
+
+	// Add the entries
+	AddMenuEntry(MENU_1, "ANGEL ISLAND@@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "HYDROCITY@@@@@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "MARBLE GARDEN@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "CARNIVAL NIGHT 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "ICE CAP@@@@@@@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(Menu_1, "Launch Base @@ 1", 1)
+	AddMenuEntry(Menu_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "MUSHROOM HILL@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "FLYING BATTERY 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)
+	AddMenuEntry(MENU_1, "SANDOPOLIS@@@@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	AddMenuEntry(MENU_1, " ", 0)	
+	AddMenuEntry(MENU_1, "LAVA REEF@@@@@ 1", 1)
+	AddMenuEntry(MENU_1, "2", 0)
+	
+	
+
+	// Setup menu 2 (right column)
+	SetupMenu(MENU_2, 0, 3, 1)
+
+	// Add its entries
+
+	AddMenuEntry(MENU_2, "HIDDEN PALACE@@@", 1)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "SKY SANCTUARY@ S", 1)
+	AddMenuEntry(MENU_2, "K", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "DEATH EGG@@@@@ 1", 1)
+	AddMenuEntry(MENU_2, "2", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "THE DOOMSDAY@@@@", 1)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "BONUS@@@@@@@@@ G", 1)
+	AddMenuEntry(MENU_2, "R", 0)
+	AddMenuEntry(MENU_2, "S", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "SPECIAL STAGE@@@", 1)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "AZURE LAKE@@@@@@", 1)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "BALOON PARK@@@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "CHROME GADGET@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "DESERT PALACE@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "ENDLESS MINE@@@@", 0)
+	AddMenuEntry(MENU_2, " ", 0)
+	AddMenuEntry(MENU_2, "SOUND TEST@ *@@*", 1)
+
+	menu1.selection = 0
+	menu2.selection = -1
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

@@ -1,6 +1,7 @@
 # **Sonic-3K**
-+ A Very WIP port of S3k to RSDKv4.
-+ Only made to test stuff in RSDKv4.
+
+## This is more WIP than the main branch Since this is NewSyntax
++ A Very WIP port of S3k to RSDKv4. only made to test stuff in RSDKv4.
 
 
 # **Please support the original sonic 3 and knuckles remake in sonic origins**
