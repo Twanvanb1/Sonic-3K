@@ -1,5 +1,5 @@
 // Aliases
-private alias 40 : TYPE_ICZSETUP
+private alias 40 : TYPE_ICZSetup
 private alias object.value0  : object.aniTileTimer
 private alias object.value5  : object.IceDuration
 private alias object.value6  : object.IceIndex

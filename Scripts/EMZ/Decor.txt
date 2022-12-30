@@ -1,0 +1,29 @@
+// Aliases
+private alias 57 : TYPE_EMZHIGHLOWLAYER
+
+event ObjectDraw
+	DrawSprite(0)
+end event
+
+event ObjectStartup
+
+	LoadSpriteSheet("EMZ/Objects.gif")
+
+	// FG Frame
+	SpriteFrame(-48, -56, 96, 128, 1, 50)
+
+	// Set it to draw order 5 in order to be drawn above everything
+	foreach (TypeName[EMZ HighLow Layer], arrayPos0, ALL_ENTITIES)
+		object[arrayPos0].drawOrder = 3
+	next
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

@@ -350,8 +350,8 @@ event ObjectMain
 			currentPlayer++
 		loop
 
-		if camera[0].ypos >= 0x800
-			camera[0].ypos -= 0x800
+		if screen.cameraY >= 0x800
+			screen.cameraY -= 0x800
 			screen.yoffset -= 0x800
 		end if
 	end if
@@ -368,14 +368,14 @@ event ObjectMain
 			end if
 			currentPlayer++
 		loop
-		if camera[0].ypos <= 384
-			camera[0].ypos += 0x800
+		if screen.cameraY <= 384
+			screen.cameraY += 0x800
 			screen.yoffset += 0x800
 		end if
 	end if
 
 	// Stage Wrap (Bottom)
-	if camera[0].ypos >= 1552
+	if screen.cameraY >= 1552
 		if SPZSetup_prevStageWrap == 0
 			SPZSetup_prevStageWrap = 1
 			arrayPos0 = 0x20
@@ -390,7 +390,7 @@ event ObjectMain
 	end if
 
 	// Stage Wrap (Top)
-	if camera[0].ypos <= 640
+	if screen.cameraY <= 640
 		if SPZSetup_prevStageWrap == 1
 			SPZSetup_prevStageWrap = 0
 			arrayPos0 = 32

@@ -156,8 +156,8 @@ if stage.actNum == 1
 			currentPlayer++
 		loop
 
-		if camera[0].ypos >= 384
-			camera[0].ypos -= 0x1028
+		if screen.cameraY >= 384
+			screen.cameraY -= 0x1028
 			screen.yoffset -= 0x1028
 		end if
 	end if
@@ -174,14 +174,14 @@ if stage.actNum == 1
 			end if
 			currentPlayer++
 		loop
-		if camera[0].ypos <= 384
-			camera[0].ypos += 0x1028
+		if screen.cameraY <= 384
+			screen.cameraY += 0x1028
 			screen.yoffset += 0x1028
 		end if
 	end if
 
 	// Stage Wrap (Bottom)
-	if camera[0].ypos >= 1552
+	if screen.cameraY >= 1552
 		if MGZSetup_prevStageWrap == 0
 			MGZSetup_prevStageWrap = 1
 			arrayPos0 = 0x20
@@ -196,7 +196,7 @@ if stage.actNum == 1
 	end if
 
 	// Stage Wrap (Top)
-	if camera[0].ypos <= 640
+	if screen.cameraY <= 640
 		if MGZSetup_prevStageWrap == 1
 			MGZSetup_prevStageWrap = 0
 			arrayPos0 = 32

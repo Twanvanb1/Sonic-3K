@@ -8,6 +8,7 @@
 //-------Aliases-------//
 private alias 25 : TYPE_TITLECARD
 
+private alias TitleCard_value23 : TitleCard_showZoneText
 
 // Static Values
 public value redribbony = 0;
@@ -151,46 +152,40 @@ end event
 
 event ObjectDraw
 	if object.state < 7
-	
 		SetActivePalette(0, 0, screen.ysize)
-		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, object.alpha)
-		if screen.ysize > 320
-			DrawRect(70, 0, 67, redribbony, 255, 0, 0, 255)
+		DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, object.alpha) //Black that fades out
+		// The red ribbon
+
+		temp0 = screen.xcenter
+		temp0 -= 109
+		DrawRect(temp0, 0, 67, redribbony, 255, 0, 0, 255)
+		
+
+		// the "Sonic 3 Text"
+		temp0 = screen.xcenter
+		temp0 -= 95
+		if stage.listPos > 11
+			DrawSpriteScreenXY(31, temp0, redribbony)
 		else
-			DrawRect(95, 0, 67, redribbony, 255, 0, 0, 255)
+			DrawSpriteScreenXY(29, temp0, redribbony)
 		end if
 
-		if screen.ysize > 320
-			DrawSpriteScreenXY(29, 84, redribbony)
-		else
-			DrawSpriteScreenXY(29, 109, redribbony)
-		end if
-		
-		if screen.ysize > 320
+		// Act name
+		temp0 = screen.xcenter
+		temp0 += 100
+		temp0 += object.value1
+		DrawActName(0, temp0, 100, 0, 0, 8, 0)
+	
+		//Zone Text
+		if screen.xsize < 320
 			temp0 = screen.xcenter
-			temp0 += 95
-			temp0 += object.value1
-			temp0 += object.propertyValue
-			DrawActName(0, temp0, 100, 0, 0, 16, 0)
-		else
-			temp0 = screen.xcenter
-			temp0 += 100
-			temp0 += object.value1
-			temp0 += object.propertyValue
-			DrawActName(0, temp0, 100, 0, 0, 16, 0)
-		end if
-		
-		if screen.ysize > 320
-			temp0 = screen.xcenter
-			temp0 += 35
+			temp0 += 28
 			temp0 += object.value2
-			temp0 += object.propertyValue
 			DrawSpriteScreenXY(26, temp0, 100)
-		else
+		else 
 			temp0 = screen.xcenter
 			temp0 += 39
 			temp0 += object.value2
-			temp0 += object.propertyValue
 			DrawSpriteScreenXY(26, temp0, 100)
 		end if
 
@@ -198,7 +193,6 @@ event ObjectDraw
 			temp0 = screen.xcenter
 			temp0 -= 20
 			temp0 += object.value3
-			temp0 += object.propertyValue
 			if stage.actNum < 5
 				temp1 = 26
 				temp1 += stage.actNum
@@ -264,8 +258,10 @@ event ObjectStartup
 	SpriteFrame(18, 30, 72, 24, 176, 60)	// ZONE
 	SpriteFrame(68, 60, 49, 32, 120, 26)	// ACT 1
 	SpriteFrame(68, 60, 49, 32, 170, 26)	// ACT 2
-	SpriteFrame(-4, -21, 48, 15, 127, 59)	// SONIC 3 TEXT
+	SpriteFrame(-4, -21, 48, 16, 127, 59)	// SONIC 3 TEXT
 	SpriteFrame(0, 0, 0, 0, 0, 0) 	// Nothing
+	SpriteFrame(-4, -21, 48, 16, 127, 76)	// SONIC & KNUCKLES TEXT
+	SpriteFrame(-4, -21, 48, 16, 127, 59)	// SONIC 3 & KNUCKLES TEXT
 
 	arrayPos0 = 32
 	while arrayPos0 < 0x420
@@ -287,16 +283,3 @@ event RSDKLoad
 	LoadSpriteSheet("Global/Display.gif")
 	SpriteFrame(-16, -16, 32, 32, 1, 143)
 end event
-//else 
-	//	SetActivePalette(0, 0, screen.ysize)
-	//	DrawRect(0, 0, screen.xsize, screen.ysize, 0, 0, 0, object.alpha)
-	//	
-	//	
-	//	temp0 = screen.xcenter
-	//	temp0 += 100
-	//	temp0 += object.value1
-	//	temp0 += object.propertyValue
-	//	DrawActName(0, temp0, 100, 0, 0, 16, 0)
-	//	
-
-	//	

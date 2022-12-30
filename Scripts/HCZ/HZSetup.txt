@@ -27,9 +27,6 @@ public value HCZPoolFix = 0;
 public value WaterScreenSpace = 0;
 public value WaterPalette = 0;
 
-private alias ZoneSetup_value34 : CPZSetup_FlashTimer
-private alias ZoneSetup_value35 : CPZSetup_AchieveCollected
-private alias ZoneSetup_value36 : CPZSetup_TouchedWater
 
 // Tables
 // marbels
@@ -605,16 +602,16 @@ event ObjectMain
 	temp0 += 768
 	Copy16x16Tile(459, temp0)
 
-	if CPZSetup_FlashTimer > 0
-		CPZSetup_FlashTimer--
+	if ZoneSetup_value34 > 0
+		ZoneSetup_value34--
 	end if
 
-	if CPZSetup_AchieveCollected == false
+	if ZoneSetup_value35 == false
 		if stage.debugMode == false
 			if stage.actNum == 2
 				if object[30].type == TypeName[Act Finish]
-					CPZSetup_AchieveCollected = true
-					if CPZSetup_TouchedWater == false
+					ZoneSetup_value35 = true
+					if ZoneSetup_value36 == false
 						CallNativeFunction2(SetAchievement, 1, 100)
 					end if
 				end if
@@ -700,7 +697,7 @@ event ObjectStartup
 	// Load the eletric flash palette in case the player tries to swim with a lightning shield
 	LoadPalette("ElectricFlash.act", 2, 0, 0, 256)
 
-	CPZSetup_FlashTimer = 0
+	ZoneSetup_value34 = 0
 
 	arrayPos0 = 0
 	while arrayPos0 < 576

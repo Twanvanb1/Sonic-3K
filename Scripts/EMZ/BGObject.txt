@@ -1,0 +1,208 @@
+
+//-------Aliases-------//
+private alias 59 : TYPE_Rock
+
+// Function declarations
+
+
+// Static Values
+
+// Tables
+
+event ObjectMain
+	object.priority = PRIORITY_ACTIVE
+end event
+
+
+event ObjectDraw
+	switch Object.propertyValue
+	case 0
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 6
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 0
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(0, temp0, temp1)
+		end if
+		break
+	case 1
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 7
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 0
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(1, temp0, temp1)
+		end if
+		break
+	case 2
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 5
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(2, temp0, temp1)
+		end if
+		break
+	case 3
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 4
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(3, temp0, temp1)
+		end if
+		break
+	case 4
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 3
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(4, temp0, temp1)
+			DrawSpriteScreenXY(9, temp0, temp1)
+		end if
+		break
+	case 5
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 2
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(5, temp0, temp1)
+		end if
+		break
+	case 6
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 1
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(6, temp0, temp1)
+		end if
+		break
+	case 7
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 1
+			temp0 >>= 4
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(7, temp0, temp1)
+		end if
+		break
+	case 8
+		if object.value12 == 0
+			temp0 = screen.xoffset
+			temp0 *= 1
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(8, temp0, temp1)
+		end if
+		break
+	case 9
+		if object.value13 == 0
+			temp0 = screen.xoffset
+			temp0 *= 1
+			temp0 >>= 3
+			temp0 &= 511
+			FlipSign(temp0)
+			temp0 += object.value2
+			temp1 = screen.yoffset
+			temp1 >>= 1
+			temp1 &= 0
+			FlipSign(temp1)
+			DrawSpriteScreenXY(9, temp0, temp1)
+		end if
+		break
+	end switch
+end event
+
+
+event ObjectStartup
+    
+    foreach (TypeName[BG Object], arrayPos0, ALL_ENTITIES)  
+		object[arrayPos0].drawOrder = 1
+        temp0 = object[arrayPos0].propertyValue
+		temp0 &= 127
+		if temp0 > 8
+			object[arrayPos0].propertyValue -= 8
+			object[arrayPos0].value7 = 1
+	    end if
+    next
+	object.value2 = 496
+
+	LoadSpriteSheet("EMZ/BG.gif")
+	SpriteFrame(0, 0, 1024, 16, 0, 0) 		//0
+	SpriteFrame(0, 16, 1024, 16, 0, 16) 	//1
+	SpriteFrame(0, 32, 1024, 16, 0, 32) 	//2
+	SpriteFrame(0, 48, 1024, 16, 0, 48) 	//3
+	SpriteFrame(0, 64, 1024, 8, 0, 64) 		//4
+	SpriteFrame(0, 72, 1024, 12, 0, 72) 	//5
+	SpriteFrame(0, 84, 1024, 36, 0, 84) 	//6
+	SpriteFrame(0, 120, 1024, 56, 0, 120) 	//7
+	SpriteFrame(0, 176, 1024, 32, 0, 176) 	//8
+	SpriteFrame(0, 208, 1024, 32, 0, 208) 	//9
+	
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event

@@ -11,7 +11,7 @@ reserve function CNZSetup_SlowDownMusic2P
 // Static Values
 public value CNZSetup_value33 = 0;
 
-public alias CNZSetup_value33 : CNZSetup_flashTimer
+
 
 // main green pallate sycle
 public table MPZSetup_table38
@@ -223,8 +223,8 @@ event ObjectMain
 
 
 
-	if CNZSetup_flashTimer > 0
-		CNZSetup_flashTimer--
+	if CNZSetup_value33 > 0
+		CNZSetup_value33--
 	end if
 
 

@@ -529,8 +529,8 @@ if Stage.actNum == 2
 	end	if
 end if
 
-if AIZSetup_flashTimer > 0
-	AIZSetup_flashTimer--
+if AIZSetup_value33 > 0
+	AIZSetup_value33--
 end if
 	
 end event
@@ -549,7 +549,7 @@ event ObjectDraw
 	end if
 
 	SetActivePalette(0, 0, temp0)
-	if AIZSetup_flashTimer > 0
+	if AIZSetup_value33 > 0
 		SetActivePalette(2, temp0, screen.ysize)
 	else
 		SetActivePalette(1, temp0, screen.ysize)
