@@ -1,6 +1,5 @@
 # **Sonic-3K**
 + A Very WIP port of S3k to RSDKv4.
-+ I think i want to make this an addon for S3RSDK to finish the game.
 
 # **Please support the official sonic 3 and knuckles remake in sonic origins**
 + You can get the official release of Sonic Origins from:
@@ -11,7 +10,7 @@
 A: It's still a WIP so bugs are to be expected, submit them under the `issues`tab and i _will_ fix them.
 
 ### Q: I have a feature request will you add it? 
-A: Mostlikely not, this will be a straight port of the Megadrive/Genisis release with some enhancements form Origins (like player sprites)
+A: Mostlikely not, this will be a straight port of the Megadrive/Genisis release with some enhancements from Origins (like player sprites)
 
 
 # Special Thanks
