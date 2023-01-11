@@ -451,11 +451,11 @@ end event
 
 event ObjectStartup
 	if Stage.actNum == 1
-		SetMusicTrack("LavaReef.ogg", 0, 1)
+		SetMusicTrack("11.ogg", 0, 423226)
 		SpeedUpMusic = SPZSetup_SpeedUpMusic1P
 		SlowDownMusic = SPZSetup_SlowDownMusic1P
 	else
-		SetMusicTrack("Sanopollis2.ogg", 0, 1)
+		SetMusicTrack("12.ogg", 0, 438406)
 		SpeedUpMusic = SPZSetup_SpeedUpMusic2P
 		SlowDownMusic = SPZSetup_SlowDownMusic2P
 	end if

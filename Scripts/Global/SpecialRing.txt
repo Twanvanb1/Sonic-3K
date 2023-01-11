@@ -14,7 +14,7 @@ private alias 22 : TYPE_SPECIALRING
 // Tables
 
 event ObjectMain
-	if object.state == 0
+	if object.state == 1
 		if object[0].value0 > -1
 			BoxCollisionTest(C_TOUCH, object.entityPos, -16, -16, 16, 16, 0, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO, HITBOX_AUTO)
 			if checkResult == 1
@@ -25,8 +25,8 @@ event ObjectMain
 				object[0].controlMode = -1
 				object[0].direction = FLIP_NONE
 				ResetObjectEntity(4, TypeName[Blank Object], 0, 0, 0)
-				object.state = 1
-				object.priority = PRIORITY_ACTIVE_PAUSED
+				object.state = 2
+				
 				object[0].controlMode = -1
 				fadeColor = 208
 				fadeColor <<= 16
@@ -43,73 +43,94 @@ event ObjectMain
 		object.value9 += 8
 		if object.value40 >= 40
 			specialStage.nextZone = stage.listPos
-			stage.activeList = SPECIAL_STAGE
+			stage.activeList = BONUS_STAGE
 			stage.listPos = specialStage.listPos
-			SetScreenFade(208, 255, 224, object.value9)
+			SetScreenFade(255, 255, 255, object.value9)
 			LoadStage()
 		end if
 	end if
 	if PlayerObject_SuperState == 1
 		ResetObjectEntity(object.entityPos, TypeName[Blank Object], 0, 0, 0)
 	end if
+	
 end event
 
 
 event ObjectDraw
-	if object.value41 == 0
-		temp1 = object.value38
-		temp1 >>= 3
-		DrawSprite(temp1, object.xpos, object.ypos)
-		object.value38++
-		if object.value38 > 31
-			object.value38 = 0
-		end if
-	end if
 	switch object.state
 	case 0
+		object.animationTimer++
+		if object.animationTimer >= 3
+			object.animationTimer = 0
+			object.frame++
+			if object.frame == 10
+				object.state = 1
+			end if
+		end if	
+		//DrawSprite(object.frame, object.xpos, object.ypos)
+		
 		break
 	case 1
-		if object.value31 == 0
-			object.frame = 32
-			object.value31 = 1
-		end if
-		temp0 = object.frame
-		temp0 >>= 3
-		if temp0 > 7
-			object.value41 = 1
-			object.direction = FLIP_X
-		else
-			object.direction = FLIP_NONE
-		end if
-		DrawSpriteFX(temp0, FX_FLIP, object.xpos, object.ypos)
-		if temp0 > 10
-			object.frame = 88
-		end if
-		object.frame += 6
+		object.animationTimer++
+		if object.animationTimer >= 3
+			object.animationTimer = 0
+			object.frame++
+			if object.frame >= 10
+				object.frame = 0
+			end if
+		end if		
+		DrawSprite(object.frame, object.xpos, object.ypos)
+		break
+	case 2
+		object.animationTimer++
+		if object.animationTimer >= 2
+			object.animationTimer = 0
+			object.frame++
+			if object.frame >= 10
+				object.frame = 0
+			end if
+		end if		
+		DrawSprite(object.frame, object.xpos, object.ypos)
 		break
 	end switch
 end event
 
 
 event ObjectStartup
-	object.value39 = 0
-	object.value31 = 0
 	LoadSpriteSheet("Global/Items5.gif")
-	SpriteFrame(-12, -32, 24, 64, 79, 1)
-	SpriteFrame(-28, -32, 56, 64, 104, 1)
-	SpriteFrame(-32, -32, 64, 64, 79, 66)
-	SpriteFrame(-27, -32, 55, 64, 1, 106)
-	SpriteFrame(-0, -32, 32, 64, 161, 1)
-	SpriteFrame(-8, -32, 40, 64, 194, 1)
-	SpriteFrame(-16, -32, 48, 64, 144, 66)
-	// CENTER
-	SpriteFrame(-32, -32, 64, 64, 57, 131)
-	// CENTER
-	SpriteFrame(-16, -32, 48, 64, 144, 66)
-	SpriteFrame(-8, -32, 40, 64, 194, 1)
-	SpriteFrame(-0, -32, 32, 64, 161, 1)
-	// Transparent Frame
-	SpriteFrame(-0, -32, 1, 1, 1, 1)
+	// grow
+
+	//S P I N
+	SpriteFrame(-11, -33, 22, 64, 307, 1) 
+	SpriteFrame(-16, -33, 33, 64, 330, 1)
+	SpriteFrame(-24, -33, 48, 64, 364, 1)
+	SpriteFrame(-30, -33, 59, 64, 413, 1)
+
+	SpriteFrame(-32, -33, 63, 63, 1, 24)
+	SpriteFrame(-32, -33, 64, 64, 65, 41)
+	SpriteFrame(-32, -33, 63, 64, 130, 41)
+
+	SpriteFrame(-30, -33, 59, 64, 194, 46)
+	SpriteFrame(-24, -33, 47, 64, 254, 61)
+	SpriteFrame(-17, -33, 33, 64, 302, 66)
+
+	// Flash
+	SpriteFrame(0, -32, 32, 64, 359, 66)
+	SpriteFrame(-8, -33, 40, 64, 392, 66)
+	SpriteFrame(-16, -32, 48, 64, 433, 66)
+
+	SpriteFrame(-32, -32, 64, 64, 1, 106)
+	SpriteFrame(-32, -32, 48, 64, 66, 106)
+
+	SpriteFrame(-32, -32, 40, 64, 115, 106)
+	SpriteFrame(-32, -32, 32, 64, 156, 106)
+
+	SpriteFrame(0, 0, 0, 0, 0, 0)
+	SpriteFrame(0, 0, 0, 0, 0, 0)
+	foreach (TypeName[Special Ring], arrayPos0, ALL_ENTITIES)
+		object.priority = PRIORITY_INACTIVE
+	next
+
 	if specialStage.emeralds >= temp0
 		foreach (TypeName[Special Ring], arrayPos0, ALL_ENTITIES)
 			ResetObjectEntity(arrayPos0, TypeName[Blank Object], 0, 0, 0)
@@ -120,6 +141,8 @@ event ObjectStartup
 			ResetObjectEntity(arrayPos0, TypeName[Blank Object], 0, 0, 0)
 		next
 	end if
+
+
 end event
 
 event RSDKDraw

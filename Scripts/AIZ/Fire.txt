@@ -41,12 +41,12 @@ object.animationTimer++
 end event 
 
 event ObjectStartup
-	LoadSpriteSheet("AIZ2/Objects.gif")
-	SpriteFrame(-16, -16, 16, 24, 1, 1)
-	SpriteFrame(-16, -16, 16, 24, 18, 1)
-	SpriteFrame(-16, -16, 16, 24, 35, 1)
-	SpriteFrame(-16, -16, 16, 24, 52, 1)
-	SpriteFrame(-16, -16, 16, 24, 69, 1)
+	LoadSpriteSheet("AIZ/Objects.gif")
+	SpriteFrame(-8, -12, 14, 24, 337, 68)
+	SpriteFrame(-8, -12, 16, 24, 337, 93)
+	SpriteFrame(-8, -12, 16, 24, 337, 118)
+	SpriteFrame(-8, -12, 16, 24, 337, 143)
+	SpriteFrame(-8, -12, 15, 24, 337, 168)
 	foreach (TypeName[Fire], arrayPos0, ALL_ENTITIES)
 		object[arrayPos0].drawOrder = 5
 	next

@@ -2,11 +2,20 @@
 // Aliases
 private alias 40 : TYPE_CNZSETUP
 
+
+private alias object.value11	: object.aniTileTimer
+private alias object.value14  	: object.AGPIndex
+private alias object.value15  	: object.CPIndex
+private alias object.value16  	: object.BIndex
+
+
+
 // Function declarations
 reserve function CNZSetup_SpeedUpMusic1P
 reserve function CNZSetup_SlowDownMusic1P
 reserve function CNZSetup_SpeedUpMusic2P
 reserve function CNZSetup_SlowDownMusic2P
+
 
 // Static Values
 public value CNZSetup_value33 = 0;
@@ -14,41 +23,145 @@ public value CNZSetup_value33 = 0;
 
 
 // main green pallate sycle
-public table MPZSetup_table38
+public table CNZSetup_table38
 	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00
 end table
 
-public table MPZSetup_table39
+public table CNZSetup_table39
 	0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000 ,0x242400, 0x484800, 0x6C6C00, 0x909000
 end table
 
-public table MPZSetup_table40
+public table CNZSetup_table40
 	0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000
 end table
 
 //smaller one
 
-public table MPZSetup_table41
-	0x00FC00, 0x00FC24, 0x48FC6C, 0x6CFC90, 0x90FCB4, 0xB4FCD8, 0xD8FCFC, 0xFCFCFC, 0xD8FCFC, 0x484800, 0xB4FCD8, 0x90FCB4, 0x6CFC90, 0x48FC6C, 0x00FC24, 0x00FC00
+public table CNZSetup_table41
+	0x00FC00, 0x00FC24, 0x48FC6C, 0x6CFC90, 0x90FCB4, 0xB4FCD8, 0xD8FCFC, 0xFCFCFC, 0xD8FCFC, 0x484800, 0xB4FCD8, 0x90FCB4, 0x6CFC90, 0x48FC6C, 0x00FC24
 end table
 
-public table MPZSetup_table42
+public table CNZSetup_table42
 	0xFCFCFC, 0xFCD8FC, 0xD8B4FC, 0xB490FC, 0x906CFC, 0x6C48FC, 0x4824FC, 0x2400FC, 0x0000FC, 0x2400FC, 0x4824FC, 0x6C48FC, 0x906CFC, 0xB490FC, 0xD8B4FC, 0xFCD8FC 
 end table
 
 // other large one
-public table MPZSetup_table43
+public table CNZSetup_table43
 	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00
 end table
 
-public table MPZSetup_table44
+public table CNSetup_table44
 	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00
 end table
 
-public table MPZSetup_table45
+public table CNZSetup_table45
 	0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00, 0xFCFC00, 0xD8D800, 0xB4B400, 0x909000, 0x6C6C00, 0x484800, 0x242400, 0x000000, 0x000000, 0x242400, 0x484800, 0x6C6C00, 0x909000, 0xB4B400, 0xD8D800, 0xFCFC00
 end table
 
+//animated tiles
+
+// Anti-Gravity Platform
+public table CNZSetup_AGPL
+	289, 291, 293
+end table
+
+public table CNZSetup_AGPR
+	290, 292, 294
+end table
+
+// Anti-Gravity Platform
+public table CNZSetup_CPT1
+	737, 743, 749, 755
+end table
+
+public table CNZSetup_CPT2
+	738, 744, 750, 756
+end table
+
+public table CNZSetup_CPT3
+	739, 745, 751, 757
+end table
+
+public table CNZSetup_CPT4
+	740, 746, 752, 758
+end table
+
+public table CNZSetup_CPM1
+	741, 747, 753, 759
+end table
+
+public table CNZSetup_CPM2
+	742, 748, 754, 760
+end table
+
+// boosters
+// booster Right
+public table CNZSetup_BR1
+	793, 797, 801, 805, 809, 813, 817, 821
+end table
+
+public table CNZSetup_BR2
+	794, 798, 802, 806, 810, 814, 818, 822
+end table
+
+public table CNZSetup_BR3
+	795, 799, 803, 807, 811, 815, 819, 823
+end table
+
+public table CNZSetup_BR4
+	796, 800, 804, 808, 812, 816, 820, 824
+end table
+
+//booster Left
+public table CNZSetup_BL1
+	742, 748, 754, 760
+end table
+
+public table CNZSetup_BL2
+	742, 748, 754, 760
+end table
+
+public table CNZSetup_BL3
+	742, 748, 754, 760
+end table
+
+public table CNZSetup_BL4
+	742, 748, 754, 760
+end table
+
+//booster UP
+public table CNZSetup_BU1
+	761, 762, 763, 764, 765, 766, 767, 768
+end table
+
+public table CNZSetup_BU2
+	769, 770, 771, 772, 773, 774, 775, 776
+end table
+
+public table CNZSetup_BU3
+	777, 778, 779, 780, 781, 782, 783, 784
+end table
+
+public table CNZSetup_BU4
+	785, 786, 787, 788, 789, 790, 791, 792
+end table
+
+//booster Down
+public table CNZSetup_BD1
+	825, 826, 827, 828, 829, 830, 831, 832
+end table
+
+public table CNZSetup_BD2
+	833, 834, 835, 836, 837, 838, 839, 840
+end table
+
+public table CNZSetup_BD3
+	841, 842, 843, 844, 845, 846, 847, 848
+end table
+
+public table CNZSetup_BD4
+	849, 850, 851, 852, 853, 854, 855, 856
+end table
 
 
 function CNZSetup_SpeedUpMusic1P
@@ -174,60 +287,170 @@ end function
 event ObjectMain
 
 
+//Animated Tiles
+	if object.aniTileTimer < 3
+			GetTableValue(temp0, object.AGPIndex, CNZSetup_AGPL)
+			Copy16x16Tile(357, temp0)
+			temp0 += 2
 
-	//	RotatePalette(0, 167, 171, 1)
+			GetTableValue(temp0, object.AGPIndex, CNZSetup_AGPL)
+			Copy16x16Tile(358, temp0)
+			temp0 += 2
 
 
-	// Pulsing palette
-	object.value1++
-	if object.value1 > 7
+			object.AGPIndex++
+
+			object.AGPIndex %= 3
+			object.aniTileTimer = 4
+		else
+			object.aniTileTimer--
+	end if
+
+	//circle Platform
+	if object.value0 < 1
+			GetTableValue(temp0, object.CPIndex, CNZSetup_CPT1)
+			Copy16x16Tile(343, temp0)
+			temp0 += 3
+			
+			GetTableValue(temp0, object.CPIndex, CNZSetup_CPT2)
+			Copy16x16Tile(344, temp0)
+			temp0 += 3
+
+			GetTableValue(temp0, object.CPIndex, CNZSetup_CPT3)
+			Copy16x16Tile(345, temp0)
+			temp0 += 3
+
+			GetTableValue(temp0, object.CPIndex, CNZSetup_CPT4)
+			Copy16x16Tile(346, temp0)
+			temp0 += 3
+
+			GetTableValue(temp0, object.CPIndex, CNZSetup_CPM1)
+			Copy16x16Tile(347, temp0)
+			temp0 += 3
+
+			GetTableValue(temp0, object.CPIndex, CNZSetup_CPM2)
+			Copy16x16Tile(348, temp0)
+			temp0 += 3
+
+			object.CPIndex++
+
+			object.CPIndex %= 4
+			object.value0 = 4
+		else
+			object.value0--
+	end if
+	
+	// Boosters
+	if object.value17 < 3
+
+		
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BU1)
+		Copy16x16Tile(367, temp0)
+		temp0 += 7
+		
+		GetTableValue(temp0, object.BIndex, CNZSetup_BU2)
+		Copy16x16Tile(368, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BU3)
+		Copy16x16Tile(369, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BU4)
+		Copy16x16Tile(370, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BR1)
+		Copy16x16Tile(371, temp0)
+		temp0 += 7
+		
+		GetTableValue(temp0, object.BIndex, CNZSetup_BR2)
+		Copy16x16Tile(372, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BR3)
+		Copy16x16Tile(373, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BR4)
+		Copy16x16Tile(374, temp0)
+		temp0 += 7
+		
+		
+		GetTableValue(temp0, object.BIndex, CNZSetup_BD1)
+		Copy16x16Tile(359, temp0)
+		temp0 += 7
+		
+		GetTableValue(temp0, object.BIndex, CNZSetup_BD2)
+		Copy16x16Tile(360, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BD3)
+		Copy16x16Tile(361, temp0)
+		temp0 += 7
+
+		GetTableValue(temp0, object.BIndex, CNZSetup_BD4)
+		Copy16x16Tile(362, temp0)
+		temp0 += 7
+		
+		
+
+		object.BIndex++
+		object.BIndex %= 4
+		object.value17 = 4
+	else
+		object.value17--
+end if
+
+
+object.value1++
+	if object.value1 > 4
 		//main green pallete
 		object.value1 = 0
-		object.value3 += 4
+		object.value3 += 15
 		object.value3 &= 15
-		GetTableValue(temp0, object.value3, MPZSetup_table38)
-		SetPaletteEntry(0, 185, temp0)
-		object.value4 += 4
+		GetTableValue(temp0, object.value3, CNZSetup_table38)
+		SetPaletteEntry(0, 187, temp0)
+
+		object.value4 += 15
 		object.value4 &= 15
-		GetTableValue(temp1, object.value4, MPZSetup_table39)
+		GetTableValue(temp1, object.value4, CNZSetup_table39)
 		SetPaletteEntry(0, 186, temp1)
-		object.value5 += 4
+		
+		object.value5 += 15
 		object.value5 &= 15
-		GetTableValue(temp2, object.value5, MPZSetup_table40)
-		SetPaletteEntry(0, 187, temp2)
+		GetTableValue(temp2, object.value5, CNZSetup_table40)
+		SetPaletteEntry(0, 185, temp2)
 
 		//small one
-		object.value6 += 4			
+		object.value6 += 14			
 		object.value6 &= 15
-		GetTableValue(temp1, object.value6, MPZSetup_table41)
+		GetTableValue(temp1, object.value6, CNZSetup_table41)
 		SetPaletteEntry(0, 167, temp1)
-		object.value7 += 4
+		object.value7 += 15
 		object.value7 &= 15
-		GetTableValue(temp2, object.value7, MPZSetup_table42)
+		GetTableValue(temp2, object.value7, CNZSetup_table42)
 		SetPaletteEntry(0, 168, temp2)
 
 		// other large one
-		//object.value8 += 4			
+		//object.value8 += 29			
 		//object.value8 &= 29
-		//GetTableValue(temp1, object.value8, MPZSetup_table43)
+		//GetTableValue(temp1, object.value8, CNZSetup_table43)
 		//SetPaletteEntry(0, 169, temp1)
-		//object.value9 += 4
+		//object.value9 += 29
 		//object.value9 &= 29
 		//GetTableValue(temp2, object.value9, MPZSetup_table44)
 		//SetPaletteEntry(0, 170, temp2)
-		//object.value10 += 4			
+		//object.value10 += 29			
 		//object.value10 &= 29
 		//GetTableValue(temp1, object.value10, MPZSetup_table45)
 		//SetPaletteEntry(0, 171, temp1)
 	end if
 
-
-
 	if CNZSetup_value33 > 0
 		CNZSetup_value33--
 	end if
-
-
 end event
 
 event ObjectDraw
@@ -237,11 +460,11 @@ end event
 event ObjectStartup
 	SetPaletteEntry(0, 192, 0x000000)
 	if Stage.actNum == 1
-		SetMusicTrack("CarnavalNight.ogg", 0, 1)
+		SetMusicTrack("07.ogg", 0, 1)
 		SpeedUpMusic = CNZSetup_SpeedUpMusic1P
 		SlowDownMusic = CNZSetup_SlowDownMusic1P
 	else
-		SetMusicTrack("CarnavalNight2.ogg", 0, 1)
+		SetMusicTrack("08.ogg", 0, 1)
 		SpeedUpMusic = CNZSetup_SpeedUpMusic2P
 		SlowDownMusic = CNZSetup_SlowDownMusic2P
 	end if
@@ -249,10 +472,14 @@ event ObjectStartup
 	if Stage.actNum == 2
 		LoadPalette("CNZ_WaterPal.act", 1, 0, 0, 256)
 	end if
+
 	animalType1 = TypeName[Flicky]
 	animalType2 = TypeName[Cucky]
+
 	object[10].type = TypeName[CNZ Setup]
 	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+	
 end event
 
 event RSDKDraw

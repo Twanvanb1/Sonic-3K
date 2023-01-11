@@ -20,7 +20,7 @@ event ObjectMain
 end event
 
 event ObjectStartup
-	SetMusicTrack("LavaReef.ogg", 0, 1)
+	SetMusicTrack("20.ogg", 0, 120000)
 
 
 	SetLayerDeformation(1, 64, 2, 0, 0, 0)

@@ -15,6 +15,7 @@ reserve function AIZSetup_SpeedUpMusic1P
 reserve function AIZSetup_SlowDownMusic1P
 reserve function AIZSetup_SpeedUpMusic2P
 reserve function AIZSetup_SlowDownMusic2P
+reserve function AIZSetup_InitSuperSonicPal
 
 // Static Values
 public value AIZSetup_value33 = 0;
@@ -168,6 +169,50 @@ end table
 
 public alias AIZSetup_value33 : AIZSetup_flashTimer
 
+function AIZSetup_InitSuperSonicPal
+	temp0 = 0
+	GetPaletteEntry(1, 2, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	GetPaletteEntry(1, 3, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	GetPaletteEntry(1, 4, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	GetPaletteEntry(1, 4, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	CopyPalette(1, 0, 4, 2, 4)
+	while temp0 < 64
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 0, temp1)
+		temp0++
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 1, temp1)
+		temp0++
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 2, temp1)
+		temp0++
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 3, temp1)
+		temp0 -= 3
+		SetPaletteFade(5, 3, 4, 48, 0, 4)
+		GetPaletteEntry(5, 0, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+		GetPaletteEntry(5, 1, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+		GetPaletteEntry(5, 2, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+		GetPaletteEntry(5, 3, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+	loop
+end function
+
 function AIZSetup_SpeedUpMusic1P
 	CheckEqual(object[25].type, TypeName[Music Event])
 	temp0 = checkResult
@@ -178,18 +223,18 @@ function AIZSetup_SpeedUpMusic1P
 	if temp0 == false
 		switch music.currentTrack
 		case 0
-			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
-			SwapMusicTrack("AngelIsland_F.ogg", 0, 1, 0x1F40)
+			SetMusicTrack("2C_fast.ogg", 2, 61766)
+			SwapMusicTrack("01_fast.ogg", 0, 1, 0x1F40)
 			break
 		case 2
-			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
-			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			SetMusicTrack("01_fast.ogg", 0, 1)
+			SwapMusicTrack("2C_fast.ogg", 2, 61766, 0x1F40)
 			break
 		case 4
 		case 6
 		case 7
-			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
-			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SetMusicTrack("01_fast.ogg", 0, 1)
+			SetMusicTrack("2C_fast.ogg", 2, 61766)
 			break
 		end switch
 	else
@@ -208,18 +253,18 @@ function AIZSetup_SlowDownMusic1P
 	if temp0 == false
 		switch music.currentTrack
 		case 0
-			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SetMusicTrack("2C.ogg", 2, 77207)
 			SwapMusicTrack("AngelIsland.ogg", 0, 1, 0x30D4)
 			break
 		case 2
 			SetMusicTrack("AngelIsland.ogg", 0, 1)
-			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			SwapMusicTrack("2C.ogg", 2, 77207, 0x30D4)
 			break
 		case 4
 		case 6
 		case 7
 			SetMusicTrack("AngelIsland.ogg", 0, 1)
-			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SetMusicTrack("2C.ogg", 2, 77207)
 			break
 		end switch
 	else
@@ -238,18 +283,18 @@ function AIZSetup_SpeedUpMusic2P
 	if temp0 == false
 		switch music.currentTrack
 		case 0
-			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SetMusicTrack("2C_fast.ogg", 2, 61766)
 			SwapMusicTrack("AngelIsland2_F.ogg", 0, 1, 0x1F40)
 			break
 		case 2
 			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
-			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			SwapMusicTrack("2C_fast.ogg", 2, 61766, 0x1F40)
 			break
 		case 4
 		case 6
 		case 7
 			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
-			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SetMusicTrack("2C_fast.ogg", 2, 61766)
 			break
 		end switch
 	else
@@ -558,26 +603,30 @@ end event
 
 event ObjectStartup
 	if Stage.actNum == 1
-		SetMusicTrack("AngelIsland.ogg", 0, 1)
+		SetMusicTrack("01.ogg", 0, 43190)
 		SpeedUpMusic = AIZSetup_SpeedUpMusic1P
 		SlowDownMusic = AIZSetup_SlowDownMusic1P
 	else
-		SetMusicTrack("AngelIsland2.ogg", 0, 1)
+		SetMusicTrack("02.ogg", 0, 21111)
 		SpeedUpMusic = AIZSetup_SpeedUpMusic2P
 		SlowDownMusic = AIZSetup_SlowDownMusic2P
 	end if
 
 	if Stage.actNum == 1
 		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 191)
-	else
-		//LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
+		//SetPaletteFade(0, 0, 0, 20, 128, 239)
+	else	
+		LoadPalette("AIZ_WaterPal.act", 1, 0, 0, 128)
 		LoadPalette("AIZ2_WaterPal.act", 1, 129, 129, 191)
+		//SetPaletteFade(0, 1, 1, 128, 128, 239)
 	end if
+
 	animalType1 = TypeName[Flicky]
 	animalType2 = TypeName[Cucky]
 	object[10].type = TypeName[AIZ Setup]
 	object[10].priority = PRIORITY_ACTIVE
 	object[10].drawOrder = 0
+	//CallFunction(AIZSetup_InitSuperSonicPal)
 
 	SetLayerDeformation(1, 32, 1, 0, 0, 0)
 	SetLayerDeformation(3, 64, 2, 0, 0, 0)

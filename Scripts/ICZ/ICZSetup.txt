@@ -254,12 +254,12 @@ end event
 event ObjectStartup
 
 	if stage.actNum == 1
-		SetMusicTrack("IceCap.ogg", 0, 1)
+		SetMusicTrack("0B.ogg", 0, 40667)
 		SpeedUpMusic = ICZSetup_SpeedUpMusic1P
 		SlowDownMusic = ICZSetup_SlowDownMusic1P
 	end if
 	if stage.actNum == 2
-		SetMusicTrack("IceCap2.ogg", 0, 1)
+		SetMusicTrack("0C.ogg", 0, 74807)
 		SpeedUpMusic = ICZSetup_SpeedUpMusic2P
 		SlowDownMusic = ICZSetup_SlowDownMusic2P
 	end if

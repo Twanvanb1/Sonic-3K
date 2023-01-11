@@ -183,13 +183,13 @@ end event
 
 event ObjectStartup
 	if Stage.actNum == 1
-		SetMusicTrack("LavaReef.ogg", 0, 1)
+		SetMusicTrack("13.ogg", 0, 89619)
 		SpeedUpMusic = LRZSetup_SpeedUpMusic1P
 		SlowDownMusic = LRZSetup_SlowDownMusic1P
 	end if
 	
 	if stage.actNum == 2
-		SetMusicTrack("LavaReef2.ogg", 0, 467387)
+		SetMusicTrack("14.ogg", 0, 371206)
 		SpeedUpMusic = LRZSetup_SpeedUpMusic2P
 		SlowDownMusic = LRZSetup_SlowDownMusic2P
 	end if

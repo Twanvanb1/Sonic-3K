@@ -654,13 +654,13 @@ event ObjectStartup
 	object.value27 = 763
 	// Set the Chemical Plant music, and make it loop from sample 0xA7224
 	if stage.actNum == 1
-		SetMusicTrack("Hydrocity.ogg", 0, 1)
+		SetMusicTrack("03.ogg", 0, 39507)
 		SpeedUpMusic = HZSetup_SpeedUpMusic1P
 		SlowDownMusic = HZSetup_SlowDownMusic1P
 	end if
 
 	if stage.actNum == 2
-		SetMusicTrack("Hydrocity2.ogg", 0, 2492629)
+		SetMusicTrack("04.ogg", 0, 45049)
 		SpeedUpMusic = HZSetup_SpeedUpMusic2P
 		SlowDownMusic = HZSetup_SlowDownMusic2P
 	end if

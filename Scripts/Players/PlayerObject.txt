@@ -182,7 +182,7 @@ private value value19 = 0;
 
 // Tables
 public table PlayerObject_SonicSuperPal
-	0x2020A0, 0x2040C0, 0x4040E0, 0x6060E0
+	0x202080, 0x2040c0, 0x6060e0, 0xA0A0E0
 	0x404080, 0x4060A0, 0x6060E0, 0x8080E0
 	0x606060, 0x6080A0, 0x8080E0, 0xA0A0E0
 	0x808040, 0x80A0A0, 0xA0A0E0, 0xC0C0E0
@@ -201,7 +201,26 @@ public table PlayerObject_SonicSuperPal
 end table
 
 public table PlayerObject_SonicSuperAltPal
-	0x202080, 0x4040A0, 0x6060C0, 0x8080E0
+	0x2020A0, 0x006080, 0x004060, 0xA0A0E0
+	0x404060, 0x6060A0, 0x8080E0, 0xA0A0E0
+	0x606040, 0x8080A0, 0xA0A0E0, 0xC0C0E0
+	0x808040, 0xA0A0A0, 0xC0C0E0, 0xE0E0E0
+	0xA0A040, 0xC0C0A0, 0xE0E0E0, 0xE0E0E0
+	0xC0C040, 0xE0E0A0, 0xE0E0E0, 0xE0E0E0
+	0xE0E040, 0xE0E0A0, 0xE0E0E0, 0xE0E0E0
+	0xE0E060, 0xE0E0E0, 0xE0E0E0, 0xE0E0E0
+	0xE0E080, 0xE0E0E0, 0xE0E0E0, 0xE0E0E0
+	0xE0E060, 0xE0E0C0, 0xE0E0E0, 0xE0E0E0
+	0xE0E040, 0xE0E0A0, 0xE0E0E0, 0xE0E0E0
+	0xE0E020, 0xE0E080, 0xE0E0C0, 0xE0E0E0
+	0xE0E000, 0xE0E060, 0xE0E0A0, 0xE0E0E0
+	0xE0E000, 0xE0E040, 0xE0E080, 0xE0E0C0
+	0xE0E000, 0xE0E060, 0xE0E0A0, 0xE0E0E0
+	0xE0E000, 0xE0E080, 0xE0E0C0, 0xE0E0E0
+end table
+
+public table PlayerObject_SonicSuperAltPal2
+	0x202080, 0x2040c0, 0x6060e0, 0xA0A0E0
 	0x404060, 0x6060A0, 0x8080E0, 0xA0A0E0
 	0x606040, 0x8080A0, 0xA0A0E0, 0xC0C0E0
 	0x808040, 0xA0A0A0, 0xC0C0E0, 0xE0E0E0
@@ -371,9 +390,9 @@ function PlayerObject_ProcessSuperPalS
 	end if
 	temp1 = PlayerObject_value2
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperPal)
-	SetPaletteEntry(0, 2, temp0)
+	SetPaletteEntry(0, 4, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperAltPal)
-	SetPaletteEntry(1, 2, temp0)
+	SetPaletteEntry(1, 4, temp0)
 	temp1++
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperPal)
 	SetPaletteEntry(0, 3, temp0)
@@ -381,14 +400,14 @@ function PlayerObject_ProcessSuperPalS
 	SetPaletteEntry(1, 3, temp0)
 	temp1++
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperPal)
-	SetPaletteEntry(0, 4, temp0)
+	SetPaletteEntry(0, 2, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperAltPal)
-	SetPaletteEntry(1, 4, temp0)
+	SetPaletteEntry(1, 2, temp0)
 	temp1++
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperPal)
-	SetPaletteEntry(0, 5, temp0)
+	//SetPaletteEntry(0, 5, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_SonicSuperAltPal)
-	SetPaletteEntry(1, 5, temp0)
+	//SetPaletteEntry(1, 5, temp0)
 end function
 
 
@@ -419,24 +438,24 @@ function PlayerObject_ProcessSuperPalT
 	end if
 	temp1 = PlayerObject_value2
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperPal)
-	SetPaletteEntry(0, 13, temp0)
+	SetPaletteEntry(0, 11, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperAltPal)
-	SetPaletteEntry(1, 13, temp0)
+	SetPaletteEntry(1, 11, temp0)
 	temp1++
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperPal)
-	SetPaletteEntry(0, 17, temp0)
+	SetPaletteEntry(0, 9, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperAltPal)
-	SetPaletteEntry(1, 17, temp0)
+	SetPaletteEntry(1, 9, temp0)
 	temp1++
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperPal)
-	SetPaletteEntry(0, 18, temp0)
+	SetPaletteEntry(0, 8, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperAltPal)
-	SetPaletteEntry(1, 18, temp0)
+	SetPaletteEntry(1, 8, temp0)
 	temp1++
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperPal)
-	SetPaletteEntry(0, 16, temp0)
+	SetPaletteEntry(0, 6, temp0)
 	GetTableValue(temp0, temp1, PlayerObject_TailsSuperAltPal)
-	SetPaletteEntry(1, 16, temp0)
+	SetPaletteEntry(1, 6, temp0)
 end function
 
 

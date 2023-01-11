@@ -168,11 +168,11 @@ end event
 event ObjectStartup
 	SetPaletteEntry(0, 192, 0x000000)
 	if Stage.actNum == 1
-		SetMusicTrack("FlyingBattery.ogg", 0, 76552)
+		SetMusicTrack("09.ogg", 0, 39518)
 		SpeedUpMusic = CNZSetup_SpeedUpMusic1P
 		SlowDownMusic = CNZSetup_SlowDownMusic1P
 	else
-		SetMusicTrack("CarnavalNight2.ogg", 0, 1)
+		SetMusicTrack("0A.ogg", 0, 134471)
 		SpeedUpMusic = CNZSetup_SpeedUpMusic2P
 		SlowDownMusic = CNZSetup_SlowDownMusic2P
 	end if

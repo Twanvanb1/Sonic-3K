@@ -211,12 +211,12 @@ end event
 
 event ObjectStartup
 	SetMusicTrack("ActComplete.ogg", 1, false)
-	SetMusicTrack("Invincibility.ogg", 2, 000001)
+	SetMusicTrack("2C.ogg", 2, 77207)
 	SetMusicTrack("Continue.ogg", 3, false)
 	SetMusicTrack("Boss.ogg", 4, true)
 	SetMusicTrack("GameOver.ogg", 5, false)
-	SetMusicTrack("Drowning.ogg", 6, false)
-	SetMusicTrack("Invincibility.ogg", 7, 000001)
+	SetMusicTrack("31.ogg", 6, false)
+	SetMusicTrack("2C.ogg", 7, 77207)
 
 	stage.timeOver = false
 

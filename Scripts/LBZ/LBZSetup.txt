@@ -259,12 +259,12 @@ end event
 
 event ObjectStartup
 	if stage.actNum == 1
-		SetMusicTrack("LaunchBase1.ogg", 0, 1)
+		SetMusicTrack("0D.ogg", 0, 400141)
 		SpeedUpMusic = LBZSETUP_SpeedUpMusic1P
 		SlowDownMusic = LBZSETUP_SlowDownMusic1P
 	end if
 	if stage.actNum == 2
-		SetMusicTrack("LaunchBase2.ogg", 0, 393419)
+		SetMusicTrack("0E.ogg", 0, 400141)
 		SpeedUpMusic = LBZSETUP_SpeedUpMusic2P
 		SlowDownMusic = LBZSETUP_SlowDownMusic2P
 	end if

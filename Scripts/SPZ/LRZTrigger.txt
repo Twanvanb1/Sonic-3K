@@ -54,9 +54,9 @@ event ObjectMain
 
 	switch object.state
 	case STATE_PAUSE
-		// Letting the player fall for a second
+		// Letting the player fall for half a second
 		object.timer++
-		if object.timer == 15
+		if object.timer == 30
 			object.timer = 0
 			object.state++
 		end if

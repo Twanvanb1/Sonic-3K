@@ -25,19 +25,28 @@ public table Water_table38
 end table
 
 function Water_Function103
-	if Stage.actNum == 1
-		stage.newWaterLevel = 0x5080000
-	else 
-		stage.newWaterLevel = 0x52C0000
+	if stage.playerListPos >= 2
+		stage.waterLevel = 0x14080000
+	else
+		if Stage.actNum == 1
+			stage.newWaterLevel = 0x5080000
+		else 
+			stage.newWaterLevel = 0x52C0000
+		end if
 	end if
+	
 end function
 
 
 function Water_Function104
-	if Stage.actNum == 1
+	if stage.actNum == 1
 		stage.newWaterLevel = 0x5080000
-	else 
-		stage.newWaterLevel = 0x52C0000
+	else
+		if stage.playerListPos == 2
+			stage.newWaterLevel = 0x142C0000
+		else
+			stage.newWaterLevel = 0x52C0000
+		end if
 	end if
 end function
 
@@ -123,6 +132,7 @@ end function
 
 
 event ObjectMain
+	
 	temp0 = object[0].xpos
 	temp0 >>= 16
 	temp1 = object[0].ypos

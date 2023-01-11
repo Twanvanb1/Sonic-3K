@@ -216,12 +216,12 @@ end event
 
 event ObjectStartup
 	if stage.actNum == 1
-		SetMusicTrack("MarbleGarden.ogg", 0, 1)
+		SetMusicTrack("05.ogg", 0, 38477)
 		SpeedUpMusic = MGZSetup_SpeedUpMusic1P
 		SlowDownMusic = MGZSetup_SlowDownMusic1P
 	end if
 	if stage.actNum == 2
-		SetMusicTrack("IceCap2.ogg", 0, 1)
+		SetMusicTrack("06.ogg", 0, 100890)
 		SpeedUpMusic = MGZSetup_SpeedUpMusic2P
 		SlowDownMusic = MGZSetup_SlowDownMusic2P
 	end if
