@@ -1,0 +1,371 @@
+
+// Aliases
+private alias 40 : TYPE_AIZSETUP
+private alias object.value10 : object.aniTileTimer
+private alias object.value5  : object.FlameDuration
+private alias object.value6  : object.FlameIndex
+private alias object.value7  : object.PlantIndex
+private alias object.value12  : object.Vine1Index
+private alias object.value13  : object.Vine2Index
+
+
+
+// Function declarations
+reserve function AIZSetup_SpeedUpMusic1P
+reserve function AIZSetup_SlowDownMusic1P
+reserve function AIZSetup_SpeedUpMusic2P
+reserve function AIZSetup_SlowDownMusic2P
+reserve function AIZSetup_InitSuperSonicPal
+
+// Static Values
+public value AIZSetup_value33 = 0;
+
+
+// Tables
+private table AIZSetup_BG1FrameTable
+	919, 929, 939, 949
+end table
+private table AIZSetup_BG2FrameTable
+	910, 920, 930, 940
+end table
+private table AIZSetup_BG3FrameTable
+	911, 921, 931, 941
+end table
+private table AIZSetup_BG4FrameTable
+	912, 922, 932, 942
+end table
+private table AIZSetup_BG5FrameTable
+	913, 923, 933, 943
+end table
+private table AIZSetup_BG6FrameTable
+	914, 924, 934, 944
+end table
+private table AIZSetup_BG7FrameTable
+	915, 925, 935, 945
+end table
+private table AIZSetup_BG8FrameTable
+	916, 926, 936, 946
+end table
+private table AIZSetup_BG9FrameTable
+	917, 927, 937, 947
+end table
+private table AIZSetup_BG10FrameTable
+	918, 928, 938, 948
+end table
+
+
+//plants
+private table AIZSetup_FG1FrameTable
+	978, 981, 987, 993
+end table
+
+private table AIZSetup_FG2FrameTable
+	979, 982, 985, 988
+end table
+
+private table AIZSetup_FG3FrameTable
+	980, 983, 986, 989
+end table
+
+private table AIZSetup_FG4FrameTable
+	980, 983, 986, 989
+end table
+
+//ground fire
+
+private table AIZSetup_G1FrameTable
+	950, 957, 964, 971
+end table
+
+private table AIZSetup_G2FrameTable
+	951, 958, 965, 972
+end table
+
+private table AIZSetup_G3FrameTable
+	952, 959, 966, 973
+end table
+
+private table AIZSetup_G4FrameTable
+	953, 960, 967, 974
+end table
+
+private table AIZSetup_G5FrameTable
+	954, 961, 968, 975
+end table
+
+private table AIZSetup_G6FrameTable
+	955, 962, 969, 976
+end table
+
+private table AIZSetup_G7FrameTable
+	956, 963, 970, 977
+end table
+
+private table AIZSetup_G8FrameTable
+	957, 964, 971, 978
+end table
+
+//flowers
+
+private table AIZSetup_flowers1FrameTable
+	766, 768, 770, 772, 774, 774, 772, 770, 768, 766
+end table
+
+private table AIZSetup_flowers2FrameTable
+	767, 769, 771, 773, 775, 775, 773, 771, 769, 767
+end table
+
+//vine 1 act 1
+private table AIZSetup_Vine1FrameTable
+	0, 0, 754, 757, 754, 757, 760, 763, 757, 757, 0
+end table
+
+private table AIZSetup_Vine1AFrameTable
+	749, 752, 755, 758, 755, 758, 761, 764, 758, 758, 752
+end table
+
+private table AIZSetup_Vine1BFrameTable
+	750, 753, 756, 759, 756, 759, 762, 765, 759, 759, 753
+end table
+
+//vine 1 act 2
+private table AIZSetup_Vine12FrameTable
+	0, 0, 0, 987, 0, 987, 990, 993, 987, 987, 978
+end table
+
+private table AIZSetup_Vine1A2FrameTable
+	979, 982, 985, 988, 985, 988, 991, 994, 988, 988, 982
+end table
+
+private table AIZSetup_Vine1B2FrameTable
+	980, 983, 986, 989, 986, 989, 992, 995, 989, 989, 983
+end table
+
+//vine 2 act 1
+private table AIZSetup_Vine2FrameTable
+	0, 0, 754, 757, 760, 763, 760, 757, 754
+end table
+
+private table AIZSetup_Vine2AFrameTable
+	749, 752, 755, 758, 761, 764, 761, 758, 755
+end table
+
+private table AIZSetup_Vine2BFrameTable
+	750, 753, 756, 759, 762, 765, 762, 759, 756
+end table
+
+//vine 2 act 2
+private table AIZSetup_Vine22FrameTable
+	0, 0, 0, 0, 987, 990, 993, 990, 987 
+end table
+
+private table AIZSetup_Vine2A2FrameTable
+	985, 979, 982, 985, 988, 991, 994, 991, 988
+end table
+
+private table AIZSetup_Vine2B2FrameTable
+	986, 980, 983, 986, 989, 992, 995, 992, 989
+end table
+
+public alias AIZSetup_value33 : AIZSetup_flashTimer
+
+function AIZSetup_InitSuperSonicPal
+	temp0 = 0
+	GetPaletteEntry(1, 2, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	GetPaletteEntry(1, 3, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	GetPaletteEntry(1, 4, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	GetPaletteEntry(1, 4, temp1)
+	SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+	temp0++
+	CopyPalette(1, 0, 4, 2, 4)
+	while temp0 < 64
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 0, temp1)
+		temp0++
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 1, temp1)
+		temp0++
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 2, temp1)
+		temp0++
+		GetTableValue(temp1, temp0, PlayerObject_SonicSuperPal)
+		SetPaletteEntry(3, 3, temp1)
+		temp0 -= 3
+		SetPaletteFade(5, 3, 4, 48, 0, 4)
+		GetPaletteEntry(5, 0, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+		GetPaletteEntry(5, 1, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+		GetPaletteEntry(5, 2, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+		GetPaletteEntry(5, 3, temp1)
+		SetTableValue(temp1, temp0, PlayerObject_SonicSuperAltPal)
+		temp0++
+	loop
+end function
+
+function AIZSetup_SpeedUpMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("AngelIsland_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function AIZSetup_SlowDownMusic1P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+function AIZSetup_SpeedUpMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			SwapMusicTrack("AngelIsland2_F.ogg", 0, 1, 0x1F40)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
+			SwapMusicTrack("Invincibility_F.ogg", 2, 0x78B1, 0x1F40)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2_F.ogg", 0, 1)
+			SetMusicTrack("Invincibility_F.ogg", 2, 0x78B1)
+			break
+		end switch
+	else
+		stage.musicFlag = 1
+	end if
+end function
+
+
+function AIZSetup_SlowDownMusic2P
+	CheckEqual(object[25].type, TypeName[Music Event])
+	temp0 = checkResult
+	CheckEqual(object[25].propertyValue, 2)
+	temp0 &= checkResult
+	CheckEqual(stage.musicFlag, 0)
+	temp0 &= checkResult
+	if temp0 == false
+		switch music.currentTrack
+		case 0
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			SwapMusicTrack("AngelIsland2.ogg", 0, 1, 0x30D4)
+			break
+		case 2
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SwapMusicTrack("Invincibility.ogg", 2, 0x9717, 0x30D4)
+			break
+		case 4
+		case 6
+		case 7
+			SetMusicTrack("AngelIsland2.ogg", 0, 1)
+			SetMusicTrack("Invincibility.ogg", 2, 0x9717)
+			break
+		end switch
+	else
+		stage.musicFlag = 2
+	end if
+end function
+
+
+event ObjectMain
+	
+end event
+
+event ObjectDraw
+
+
+end event
+
+event ObjectStartup
+	if Stage.actNum == 1
+		SetMusicTrack("0F.ogg", 0, 192801)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic1P
+		SlowDownMusic = AIZSetup_SlowDownMusic1P
+	else
+		SetMusicTrack("10.ogg", 0, 135196)
+		SpeedUpMusic = AIZSetup_SpeedUpMusic2P
+		SlowDownMusic = AIZSetup_SlowDownMusic2P
+	end if
+
+	animalType1 = TypeName[Flicky]
+	animalType2 = TypeName[Cucky]
+	object[10].type = TypeName[MHZ Setup]
+	object[10].priority = PRIORITY_ACTIVE
+	object[10].drawOrder = 0
+
+end event
+
+event RSDKDraw
+	DrawSprite(0)
+end event
+
+event RSDKLoad
+	LoadSpriteSheet("Global/Display.gif")
+	SpriteFrame(-16, -16, 32, 32, 1, 143)
+end event
