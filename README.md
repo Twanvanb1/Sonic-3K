@@ -6,7 +6,7 @@
     [Via Steam](https://store.steampowered.com/app/1794960/Sonic_Origins/)
 
 # FAQ
-### Q: I found a bug/I have a feature request!
+### Q: I found a bug!
 A: It's still a WIP so bugs are to be expected, submit them under the `issues`tab and i _will_ fix them.
 
 ### Q: I have a feature request will you add it? 
