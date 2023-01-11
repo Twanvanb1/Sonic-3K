@@ -9,12 +9,32 @@ reserve function Monitor_DebugSpawn
 public value Monitor_value26 = 0;
 
 // Tables
+// This variant uses S2 shields only
 public table Monitor_table15
-	1, 2, 3, 4, 5, 12, 13, 1, 2, 1
+	1  // MONITOR_RINGS
+	2  // MONITOR_SHIELD_BLUE
+	3  // MONITOR_INVINCIBILITY
+	4  // MONITOR_SPEEDSHOES
+	5  // MONITOR_1UP_SONIC
+	6  // MONITOR_EGGMAN
+	13 // MONITOR_TELEPORT
+	1  // MONITOR_RINGS
+	2  // MONITOR_SHIELD_BLUE
+	1  // MONITOR_RINGS
 end table
 
+// This table uses S3 shields as well!
 public table Monitor_table14
-	1, 2, 3, 4, 5, 9, 10, 11, 12, 13
+	1  // MONITOR_RINGS
+	2  // MONITOR_SHIELD_BLUE
+	3  // MONITOR_INVINCIBILITY
+	4  // MONITOR_SPEEDSHOES
+	5  // MONITOR_1UP_SONIC
+	9  // MONITOR_SHIELD_BUBBLE
+	10 // MONITOR_SHIELD_FIRE
+	11 // MONITOR_SHIELD_LIGHTNING
+	6  // MONITOR_EGGMAN
+	13 // MONITOR_TELEPORT
 end table
 
 
@@ -191,7 +211,7 @@ event ObjectStartup
 	SpriteFrame(-8, -12, 16, 14, 18, 51)
 	SpriteFrame(-8, -12, 16, 14, 35, 51)
 	SpriteFrame(-8, -12, 16, 14, 18, 66)
-	SpriteFrame(-8, -12, 16, 14, 35, 66)
+	//SpriteFrame(-8, -12, 16, 14, 35, 66)
 	SpriteFrame(-8, -12, 16, 14, 18, 81)
 	SpriteFrame(-8, -12, 16, 14, 35, 81)
 	SpriteFrame(-8, -12, 16, 14, 18, 96)
@@ -231,7 +251,7 @@ event ObjectStartup
 	foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
 		object[arrayPos0].value31 = object[arrayPos0].propertyValue
 		object[arrayPos0].value31 >>= 4
-		object[arrayPos0].propertyValue &= 15
+		object[arrayPos0].propertyValue &= 13
 	next
 	if stage.playerListPos == 1
 		foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
@@ -273,16 +293,19 @@ event ObjectStartup
 				object[arrayPos0].propertyValue = 14
 			next
 		else
-			if options.shieldType =< 0
+			if options.shieldType == 0
 				foreach (TypeName[Monitor], arrayPos0, ALL_ENTITIES)
-					if object[arrayPos0].propertyValue >= 9
-						if object[arrayPos0].propertyValue <= 11
+					if object[arrayPos0].propertyValue >= 1
+						if object[arrayPos0].propertyValue <= 2
 							if object[arrayPos0].value31 == 0
 								object[arrayPos0].type = TypeName[Blank Object]
 							else
 								object[arrayPos0].propertyValue = object[arrayPos0].value31
 							end if
 						end if
+						if object[arrayPos0].propertyValue >= 13
+							object[arrayPos0].type = TypeName[Blank Object]
+						end if	
 					end if
 				next
 			end if
